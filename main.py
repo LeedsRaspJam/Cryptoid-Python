@@ -1,9 +1,29 @@
+ '''
+                                           __                __        __ 
+                                          /  |              /  |      /  |
+  _______   ______   __    __   ______   _%% |_     ______  %%/   ____%% |
+ /       | /      \ /  |  /  | /      \ / %%   |   /      \ /  | /    %% |
+/%%%%%%%/ /%%%%%%  |%% |  %% |/%%%%%%  |%%%%%%/   /%%%%%%  |%% |/%%%%%%% |
+%% |      %% |  %%/ %% |  %% |%% |  %% |  %% | __ %% |  %% |%% |%% |  %% |
+%% \_____ %% |      %% \__%% |%% |__%% |  %% |/  |%% \__%% |%% |%% \__%% |
+%%       |%% |      %%    %% |%%    %%/   %%  %%/ %%    %%/ %% |%%    %% |
+ %%%%%%%/ %%/        %%%%%%% |%%%%%%%/     %%%%/   %%%%%%/  %%/  %%%%%%%/ 
+                    /  \__%% |%% |                                        
+                    %%    %%/ %% |                                        
+                     %%%%%%/  %%/ 
+                     
+Main Python Code                                        
+'''
+
 from PyQt5 import QtWidgets, QtCore, uic
 import sys
 import random
+import os
 import time
-import RPi.GPIO as GPIO
-import hcsr04sensor
+if os.uname()[1] == 'cryptoid':
+    import RPi.GPIO as GPIO
+    import hcsr04sensor
+    gpioInit()
 
 class MainWindow(QtWidgets.QMainWindow):
 
@@ -33,14 +53,11 @@ class MainWindow(QtWidgets.QMainWindow):
             self.mwLabel.setText("Hello World!")
             textState = "Default"
     
-
-
     def toggleUltrasonicTimer(self):
         if self.ultrasonicTimer.isActive() == False:
             self.ultrasonicTimer.start(500)
         else:
             self.ultrasonicTimer.stop()
-
 
     def closeApp(self):
         sys.exit()
@@ -63,7 +80,6 @@ def ultrasonicPoll(self, trig, echo, trig2, echo2):
     self.distanceValue2.setText(str(round(distance2)) + " cm")
 
 def main():
-    gpioInit()
     app = QtWidgets.QApplication(sys.argv)
     main = MainWindow()
     main.show()
