@@ -19,7 +19,7 @@ class MainWindow(QtWidgets.QMainWindow):
             textState = "Default"
 
         if textState == "Default":
-            self.mwLabel.setText("Hello!")
+            self.mwLabel.setText("World Hello!")
             textState = "Changed"
         elif textState == "Changed":
             self.mwLabel.setText("Hello World!")
