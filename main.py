@@ -15,6 +15,9 @@
 Main Python Code                                        
 '''
 
+def gpioInit():
+    GPIO.setmode(GPIO.BCM) # Set mode to BCM numbering
+    
 from PyQt5 import QtWidgets, QtCore, uic
 import sys
 import random
@@ -62,9 +65,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def closeApp(self):
         sys.exit()
 
-def gpioInit():
-    GPIO.setmode(GPIO.BCM) # Set mode to BCM numbering
-    
+
 def ultrasonicPoll(self, trig, echo, trig2, echo2):
     '''
     sensor1 = hcsr04sensor.sensor.Measurement(trig, echo) # Init both sensors
