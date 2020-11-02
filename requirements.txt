@@ -1,1 +1,3 @@
 PyQt5
+RPi.GPIO
+hcsr04sensor
