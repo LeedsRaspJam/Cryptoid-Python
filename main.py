@@ -65,7 +65,6 @@ class MainWindow(QtWidgets.QMainWindow):
     def closeApp(self):
         sys.exit()
 
-
 def ultrasonicPoll(self, trig, echo, trig2, echo2):
     '''
     sensor1 = hcsr04sensor.sensor.Measurement(trig, echo) # Init both sensors
