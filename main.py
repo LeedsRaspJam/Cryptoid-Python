@@ -64,8 +64,11 @@ def beepBuzzer(self, noteList):
         buzzerPWM.ChangeFrequency(freq)
 
 def gpioInit(self):
+
     GPIO.setmode(GPIO.BCM) # Set mode to BCM numbering
     GPIO.setup(18, GPIO.OUT)
+
+    global buzzerPWM
     buzzerPWM = GPIO.PWM(18, 0)
     buzzerPWM.ChangeDutyCycle(20)
 
@@ -110,7 +113,7 @@ class MainWindow(QtWidgets.QMainWindow):
         
         gpioInit(self)
         beepBuzzer(self, ["A", "D", "E"])
-        
+
         self.ultrasonicTimer = QtCore.QTimer()
         self.ultrasonicTimer.timeout.connect(lambda: ultrasonicPoll(self, 22, 12, 23, 1))
 
