@@ -1,3 +1,4 @@
+#!/bin/python3
 '''
                                            __                __        __ 
                                           /  |              /  |      /  |
@@ -23,12 +24,12 @@ import time
 
 if os.uname()[1] == 'cryptoid':
     import RPi.GPIO as GPIO
-    import hcsr04sensor
+    from hcsr04sensor import sensor
     import serial
 
 def ultrasonicPoll(self, trig, echo, trig2, echo2):
-    sensor1 = hcsr04sensor.sensor.Measurement(trig, echo) # Init both sensors
-    sensor2 = hcsr04sensor.sensor.Measurement(trig2, echo2)
+    sensor1 = sensor.Measurement(trig, echo) # Init both sensors
+    sensor2 = sensor.Measurement(trig2, echo2)
     distance1 = sensor1.raw_distance() # Get raw distance readings
     distance2 = sensor2.raw_distance()
 
