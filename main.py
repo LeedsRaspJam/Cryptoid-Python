@@ -62,15 +62,15 @@ def beepBuzzer(self, noteList):
         freq = notes[x]
         print(freq)
         buzzerPWM.ChangeFrequency(freq)
-
+        buzzerPWM.ChangeDutyCycle(20)
+    buzzerPWM.ChangeDutyCycle(0)
 def gpioInit(self):
 
     GPIO.setmode(GPIO.BCM) # Set mode to BCM numbering
     GPIO.setup(18, GPIO.OUT)
 
     global buzzerPWM
-    buzzerPWM = GPIO.PWM(18, 0)
-    buzzerPWM.ChangeDutyCycle(20)
+    buzzerPWM = GPIO.PWM(18, 1000)
 
 class MainWindow(QtWidgets.QMainWindow):
 
