@@ -101,7 +101,7 @@ class MainWindow(QtWidgets.QMainWindow):
         uic.loadUi('mainwindow.ui', self)
 
         stm32 = serial.Serial('/dev/ttyS0', 115200, parity=serial.PARITY_EVEN, timeout=1) # Open serial comms with the STM32
-        stm32.write("INIT\n") # Init the STM32
+        stm32.write("INIT\n".encode()) # Init the STM32
         '''while True: # Check for response
             response = stm32.readline()
             if response == "OK":
