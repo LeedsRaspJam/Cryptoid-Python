@@ -61,7 +61,7 @@ def beepBuzzer(self, noteList):
         freq = notes[x]
         print(freq)
         buzzerPWM.ChangeFrequency(freq)
-        buzzerPWM.ChangeDutyCycle(20)
+        buzzerPWM.ChangeDutyCycle(80)
         time.sleep(0.5)
     buzzerPWM.ChangeDutyCycle(0)
     
