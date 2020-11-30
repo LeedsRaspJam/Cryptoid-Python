@@ -87,6 +87,7 @@ class MainWindow(QtWidgets.QMainWindow):
         elif textState == "Changed":
             self.mwLabel.setText("Hello World!")
             textState = "Default"
+        beepBuzzer(self, ["A", "D", "E"])
     
     def toggleUltrasonicTimer(self):
         if self.ultrasonicTimer.isActive() == False:
