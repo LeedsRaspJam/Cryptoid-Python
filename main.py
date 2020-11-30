@@ -104,11 +104,11 @@ class MainWindow(QtWidgets.QMainWindow):
 
         stm32 = serial.Serial('/dev/ttyAMA0', 115200, parity=serial.PARITY_EVEN, timeout=1) # Open serial comms with the STM32
         print("Trying to initialize the STM32")
-        stm32.write("INIT\r\n".encode()) # Init the STM32
         while True: # Check for response
+            stm32.write("INIT\r\n".encode()) # Init the STM32
             response = stm32.readline()
             print(response)
-            if response == "OK\r\n":
+            if response == 'OK\r\n':
                 print("STM32 is working")
                 setSTM32Text(self, True)
                 break
