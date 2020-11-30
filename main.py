@@ -62,6 +62,7 @@ def beepBuzzer(self, noteList):
         print(freq)
         buzzerPWM.ChangeFrequency(freq)
         buzzerPWM.ChangeDutyCycle(20)
+        time.sleep(0.5)
     buzzerPWM.ChangeDutyCycle(0)
     
 def gpioInit(self):
