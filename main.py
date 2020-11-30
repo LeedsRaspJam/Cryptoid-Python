@@ -106,7 +106,7 @@ class MainWindow(QtWidgets.QMainWindow):
         stm32.write("INIT\r\n".encode()) # Init the STM32
         while True: # Check for response
             response = stm32.readline()
-            if response == "OK":
+            if response == "OK\r\n":
                 print("STM32 is working")
                 setSTM32Text(self, True)
                 break
