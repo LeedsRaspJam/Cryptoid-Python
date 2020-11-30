@@ -63,6 +63,7 @@ def beepBuzzer(self, noteList):
         buzzerPWM.ChangeFrequency(freq)
         buzzerPWM.ChangeDutyCycle(20)
     buzzerPWM.ChangeDutyCycle(0)
+    
 def gpioInit(self):
 
     GPIO.setmode(GPIO.BCM) # Set mode to BCM numbering
@@ -102,13 +103,13 @@ class MainWindow(QtWidgets.QMainWindow):
         uic.loadUi('mainwindow.ui', self)
 
         stm32 = serial.Serial('/dev/ttyAMA0', 115200, parity=serial.PARITY_EVEN, timeout=1) # Open serial comms with the STM32
-        stm32.write("INIT\n".encode()) # Init the STM32
-        '''while True: # Check for response
+        stm32.write("INIT\r\n".encode()) # Init the STM32
+        while True: # Check for response
             response = stm32.readline()
             if response == "OK":
                 print("STM32 is working")
                 setSTM32Text(self, True)
-                break'''
+                break
         
         gpioInit(self)
         beepBuzzer(self, ["A", "D", "E"])
