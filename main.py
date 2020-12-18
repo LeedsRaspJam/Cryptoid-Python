@@ -46,32 +46,9 @@ def setSTM32Text(self, state):
     elif state == False:
         self.stm32Connected.setText("STM32 Disconnected")
         self.stm32Connected.setStyleSheet("color:#ff0000")
-
-def beepBuzzer(self, noteList):
-    notes = {
-        "A": 440,
-        "B": 494,
-        "C": 523,
-        "D": 587,
-        "E": 659,
-        "F": 698,
-        "G": 784
-    }
-    for x in noteList:
-        freq = notes[x]
-        print(freq)
-        buzzerPWM.ChangeFrequency(freq)
-        buzzerPWM.ChangeDutyCycle(80)
-        time.sleep(0.5)
-    buzzerPWM.ChangeDutyCycle(0)
     
 def gpioInit(self):
-
     GPIO.setmode(GPIO.BCM) # Set mode to BCM numbering
-    GPIO.setup(18, GPIO.OUT)
-
-    global buzzerPWM
-    buzzerPWM = GPIO.PWM(18, 1000)
 
 class MainWindow(QtWidgets.QMainWindow):
 
@@ -88,7 +65,6 @@ class MainWindow(QtWidgets.QMainWindow):
         elif textState == "Changed":
             self.mwLabel.setText("Hello World!")
             textState = "Default"
-        beepBuzzer(self, ["A", "D", "E"])
     
     def toggleUltrasonicTimer(self):
         if self.ultrasonicTimer.isActive() == False:
@@ -116,7 +92,6 @@ class MainWindow(QtWidgets.QMainWindow):
                 break
         
         gpioInit(self)
-        beepBuzzer(self, ["A", "D", "E"])
 
         self.ultrasonicTimer = QtCore.QTimer()
         self.ultrasonicTimer.timeout.connect(lambda: ultrasonicPoll(self, 22, 12, 23, 1))
