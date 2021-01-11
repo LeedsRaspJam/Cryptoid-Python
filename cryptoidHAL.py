@@ -121,3 +121,11 @@ def halINIT(self):
             self.logTb.append("STM32 is working")
             setSTM32Text(self, True)
             break
+    
+def setSTM32Text(self, state):
+    if state == True:
+        self.stm32Connected.setText("STM32 Connected") # Set text + colour
+        self.stm32Connected.setStyleSheet("color:#33cc33")
+    elif state == False:
+        self.stm32Connected.setText("STM32 Disconnected")
+        self.stm32Connected.setStyleSheet("color:#ff0000")
