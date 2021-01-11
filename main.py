@@ -152,6 +152,9 @@ class MainWindow(QtWidgets.QMainWindow):
     def resetSTM(self): # Send Software Reset instruction
         stm32.write("RSTS\r\n".encode())
         self.logTb.append("Resetting now...")
+        time.sleep(1.5)
+        stm32.reset_input_buffer()
+        self.logTb.append("Reset Complete")
 
     def clearLog(self): # Clear the log
         self.logTb.clear()
