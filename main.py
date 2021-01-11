@@ -86,8 +86,10 @@ class MainWindow(QtWidgets.QMainWindow):
         super(MainWindow, self).__init__(*args, **kwargs)
 
         uic.loadUi('mainwindow.ui', self)
+        
         gpioInit(self)
-
+        halINIT(self)
+        
         self.ultrasonicTimer = QtCore.QTimer()
         self.ultrasonicTimer.timeout.connect(lambda: ultrasonicPoll(self, 22, 12, 23, 1))
 
