@@ -41,17 +41,17 @@ def beepSPKR(self, freq, duration):
         self.logTb.append("SPKR")
         stm32.write("SPKR\r\n".encode())
         response = stm32.readline()
-        self.logTb.append(response)
+        self.logTb.append(str(response))
         if response.decode() == "OK\r\n":
             stm32.write(str(freq).encode())
             stm32.write("\r\n".encode())
             response = stm32.readline()
-            self.logTb.append(response)
+            self.logTb.append(str(response))
             if response.decode() == "OK\r\n":
                 stm32.write(str(duration).encode())
                 stm32.write("\r\n".encode())
                 response = stm32.readline()
-                self.logTb.append(response)
+                self.logTb.append(str(response))
                 if response.decode() == "OK\r\n":
                     break
 
@@ -61,22 +61,22 @@ def setLED(self, ledID, rValue, gValue, bValue):
             self.logTb.append("LEDA")
             stm32.write("LEDA\r\n".encode()) # Send command
             response = stm32.readline() # Read response
-            self.logTb.append(response) # Print response
+            self.logTb.append(str(response)) # Print response
             if response.decode() == "OK\r\n": # If response recieved
                 stm32.write(str(rValue).encode()) # Send first set of data
                 stm32.write("\r\n".encode()) # Send newline
                 response = stm32.readline() # Get second response
-                self.logTb.append(response) # Print second response
+                self.logTb.append(str(response)) # Print second response
                 if response.decode() == "OK\r\n": # If response recieved
                     stm32.write(str(gValue).encode()) # Send second set of data
                     stm32.write("\r\n".encode()) # Send newline
                     response = stm32.readline() # Get third response
-                    self.logTb.append(response) # Print third response
+                    self.logTb.append(str(response)) # Print third response
                     if response.decode() == "OK\r\n": # If response recieved
                         stm32.write(str(bValue).encode()) # Send third set of data
                         stm32.write("\r\n".encode()) # Send newline
                         response = stm32.readline() # Get fourth response
-                        self.logTb.append(response) # Print third response
+                        self.logTb.append(str(response)) # Print third response
                         if response.decode() == "OK\r\n": # If response recieved
                             break # Sent successfully, break from loop.
 
@@ -85,27 +85,27 @@ def setLED(self, ledID, rValue, gValue, bValue):
             self.logTb.append("LEDS")
             stm32.write("LEDS\r\n".encode())
             response = stm32.readline()
-            self.logTb.append(response)
+            self.logTb.append(str(response))
             if response.decode() == "OK\r\n":
                 stm32.write(ledID.encode())
                 stm32.write("\r\n".encode())
                 response = stm32.readline()
-                self.logTb.append(response)
+                self.logTb.append(str(response))
                 if response.decode() == "OK\r\n":
                     stm32.write(str(rValue).encode())
                     stm32.write("\r\n".encode())
                     response = stm32.readline()
-                    self.logTb.append(response)
+                    self.logTb.append(str(response))
                     if response.decode() == "OK\r\n":
                         stm32.write(str(gValue).encode())
                         stm32.write("\r\n".encode())
                         response = stm32.readline()
-                        self.logTb.append(response)
+                        self.logTb.append(str(response))
                         if response.decode() == "OK\r\n":
                             stm32.write(str(bValue).encode())
                             stm32.write("\r\n".encode())
                             response = stm32.readline()
-                            self.logTb.append(response)
+                            self.logTb.append(str(response))
                             if response.decode() == "OK\r\n":
                                 break
 
@@ -164,7 +164,7 @@ class MainWindow(QtWidgets.QMainWindow):
             stm32.write("INIT\r\n".encode()) # Init the STM32
             self.logTb.append("INIT")
             response = stm32.readline()
-            self.logTb.append(response)
+            self.logTb.append(str(response))
             if response.decode() == "OK\r\n":
                 self.logTb.append("STM32 is working")
                 setSTM32Text(self, True)
