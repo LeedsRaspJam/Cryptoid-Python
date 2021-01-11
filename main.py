@@ -26,7 +26,6 @@ from cryptoidHAL import *
 if os.uname()[1] == 'cryptoid':
     import RPi.GPIO as GPIO
     from hcsr04sensor import sensor
-    import serial
 
 def ultrasonicPoll(self, trig, echo, trig2, echo2):
     sensor1 = sensor.Measurement(trig, echo) # Init both sensors
@@ -87,20 +86,6 @@ class MainWindow(QtWidgets.QMainWindow):
         super(MainWindow, self).__init__(*args, **kwargs)
 
         uic.loadUi('mainwindow.ui', self)
-
-        global stm32
-        stm32 = serial.Serial('/dev/ttyAMA0', 115200, parity=serial.PARITY_EVEN) # Open serial comms with the STM32
-        self.logTb.append("Trying to initialize the STM32")
-        while True: # Check for response
-            stm32.write("INIT\r\n".encode()) # Init the STM32
-            self.logTb.append("INIT")
-            response = stm32.readline()
-            self.logTb.append(str(response))
-            if response.decode() == "OK\r\n":
-                self.logTb.append("STM32 is working")
-                setSTM32Text(self, True)
-                break
-        
         gpioInit(self)
 
         self.ultrasonicTimer = QtCore.QTimer()

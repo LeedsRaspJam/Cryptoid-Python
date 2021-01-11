@@ -16,6 +16,8 @@
 HAL Module                                     
 '''
 
+import serial
+
 def beepSPKR(self, freq, duration):
     while True:
         self.logTb.append("SPKR")
@@ -105,3 +107,17 @@ def resetSTM(self): # Send Software Reset instruction
     time.sleep(1.5)
     stm32.reset_input_buffer()
     self.logTb.append("Reset Complete")
+
+def halINIT(self):
+    global stm32
+    stm32 = serial.Serial('/dev/ttyAMA0', 115200, parity=serial.PARITY_EVEN) # Open serial comms with the STM32
+    self.logTb.append("Trying to initialize the STM32")
+    while True: # Check for response
+        stm32.write("INIT\r\n".encode()) # Init the STM32
+        self.logTb.append("INIT")
+        response = stm32.readline()
+        self.logTb.append(str(response))
+        if response.decode() == "OK\r\n":
+            self.logTb.append("STM32 is working")
+            setSTM32Text(self, True)
+            break
