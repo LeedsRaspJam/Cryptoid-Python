@@ -39,6 +39,50 @@ def ultrasonicPoll(self, trig, echo, trig2, echo2):
     self.distanceValue1.setText(str(round(distance1)) + " cm") # Set labels back in Qt GUI
     self.distanceValue2.setText(str(round(distance2)) + " cm")
 
+def setLED(ledID, rValue, gValue, bValue):
+    if ledID == "all": # If setting all LEDs
+        while True: # Loop until all data sent
+            stm32.write("LEDA\r\n".encode()) # Send command
+            response = stm32.readLine() # Read response
+            print(response) # Print response
+            if response.decode() == "OK\r\n": # If response recieved
+                stm32.write(str(rValue) + "\r\n".encode()) # Send first set of data
+                response = stm32.readLine() # Get second response
+                print(response) # Print second response
+                if response.decode() == "OK\r\n": # If response recieved
+                    stm32.write(str(gValue) + "\r\n".encode()) # Send second set of data
+                    response = stm32.readLine() # Get third response
+                    print(response) # Print third response
+                    if response.decode() == "OK\r\n": # If response recieved
+                        stm32.write(str(bValue) + "\r\n".encode()) # Send third set of data
+                        response = stm32.readLine() # Get fourth response
+                        print(response) # Print third response
+                        if response.decode() == "OK\r\n": # If response recieved
+                            break # Sent successfully, break from loop.
+    else:
+        while True:
+            stm32.write("LEDS\r\n".encode())
+            response = stm32.readLine()
+            print(response)
+            if response.decode() == "OK\r\n":
+                stm32.write(ledID + "\r\n".encode())
+                response = stm32.readLine()
+                print(response)
+                if response.decode() == "OK\r\n":
+                    stm32.write(str(rValue) + "\r\n".encode())
+                    response = stm32.readLine()
+                    print(response)
+                    if response.decode() == "OK\r\n":
+                        stm32.write(str(gValue) + "\r\n".encode())
+                        response = stm32.readLine()
+                        print(response)
+                        if response.decode() == "OK\r\n":
+                            stm32.write(str(bValue) + "\r\n".encode())
+                            response = stm32.readLine()
+                            print(response)
+                            if response.decode() == "OK\r\n":
+                                break
+
 def setSTM32Text(self, state):
     if state == True:
         self.stm32Connected.setText("STM32 Connected") # Set text + colour
