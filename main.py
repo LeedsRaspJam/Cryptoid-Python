@@ -33,11 +33,27 @@ def ultrasonicPoll(self, trig, echo, trig2, echo2):
     distance1 = sensor1.raw_distance() # Get raw distance readings
     distance2 = sensor2.raw_distance()
 
-    '''distance1 = random.randint(0, 999) # Fake values while we're not on actual HW
-    distance2 = random.randint(0, 999)'''
-
     self.distanceValue1.setText(str(round(distance1)) + " cm") # Set labels back in Qt GUI
     self.distanceValue2.setText(str(round(distance2)) + " cm")
+
+def beepSPKR(self, freq, duration):
+    while True:
+        print("SPKR")
+        stm32.write("SPKR\r\n".encode())
+        response = stm32.readline()
+        print(response)
+        if response.decode() == "OK\r\n":
+            stm32.write(str(freq).encode())
+            stm32.write("\r\n".encode())
+            response = stm32.readline()
+            print(response)
+            if response.decode() == "OK\r\n":
+                stm32.write(str(duration).encode())
+                stm32.write("\r\n".encode())
+                response = stm32.readline()
+                print(response)
+                if response.decode() == "OK\r\n":
+                    break
 
 def setLED(self, ledID, rValue, gValue, bValue):
     if ledID == "all": # If setting all LEDs
@@ -63,6 +79,7 @@ def setLED(self, ledID, rValue, gValue, bValue):
                         print(response) # Print third response
                         if response.decode() == "OK\r\n": # If response recieved
                             break # Sent successfully, break from loop.
+
     else: # If only setting one
         while True:
             print("LEDS")
@@ -107,6 +124,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def buttonFunction(self):
         setLED(self, "2", 50, 150, 250)
+        beepLED(self, 3000, 10000)
     
     def toggleUltrasonicTimer(self):
         if self.ultrasonicTimer.isActive() == False:
