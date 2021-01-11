@@ -123,7 +123,8 @@ def gpioInit(self):
 class MainWindow(QtWidgets.QMainWindow):
 
     def buttonFunction(self):
-        setLED(self, "2", 50, 150, 250)
+        setLED(self, "all", 0, 0, 255)
+
         beepSPKR(self, 523, 200)
         time.sleep(0.2)
         beepSPKR(self, 523, 200)
@@ -135,16 +136,13 @@ class MainWindow(QtWidgets.QMainWindow):
         beepSPKR(self, 415, 200)
         time.sleep(0.6)
         beepSPKR(self, 466, 200)
-        time.sleep(0.6)
+        time.sleep(0.4)
         beepSPKR(self, 523, 200)
         time.sleep(0.3)
         beepSPKR(self, 466,200)
         time.sleep(0.2)
         beepSPKR(self, 523, 200)
-        
 
-
-    
     def toggleUltrasonicTimer(self):
         if self.ultrasonicTimer.isActive() == False:
             self.ultrasonicTimer.start(500)
