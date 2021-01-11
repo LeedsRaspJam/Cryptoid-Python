@@ -124,7 +124,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def buttonFunction(self):
         setLED(self, "2", 50, 150, 250)
-        beepLED(self, 3000, 10000)
+        beepSPKR(self, 3000, 10000)
     
     def toggleUltrasonicTimer(self):
         if self.ultrasonicTimer.isActive() == False:
