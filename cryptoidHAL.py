@@ -13,7 +13,7 @@
                     %%    %%/ %% |                                        
                      %%%%%%/  %%/ 
                      
-HAL Libraies                                     
+HAL Module                                     
 '''
 
 def beepSPKR(self, freq, duration):

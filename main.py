@@ -109,8 +109,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.enableUltrasonicPoll.clicked.connect(self.toggleUltrasonicTimer)
         self.doAThing.clicked.connect(self.buttonFunction)
         self.clearBtn.clicked.connect(self.clearLog)
-        self.resetBtn.clicked.connect(self.resetSTM)
-        self.versBtn.clicked.connect(self.printVer)
+        self.resetBtn.clicked.connect(resetSTM)
+        self.versBtn.clicked.connect(printVer)
         self.actionQuit.triggered.connect(self.closeApp)
 
 def main():
