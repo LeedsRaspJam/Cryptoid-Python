@@ -11,12 +11,25 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Cryptoid</string>
+   <string>Cryptoid (Control Utility)</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
+     <widget class="QLabel" name="mwLabel">
+      <property name="text">
+       <string>Hello World!</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2"/>
+      </item>
       <item>
        <widget class="QLabel" name="stm32Connected">
         <property name="styleSheet">
@@ -27,17 +40,10 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QTextBrowser" name="logTb"/>
+      </item>
      </layout>
-    </item>
-    <item>
-     <widget class="QLabel" name="mwLabel">
-      <property name="text">
-       <string>Hello World!</string>
-      </property>
-      <property name="alignment">
-       <set>Qt::AlignCenter</set>
-      </property>
-     </widget>
     </item>
     <item>
      <layout class="QHBoxLayout" name="ultrasonicLayout1">
@@ -74,18 +80,18 @@
     <item>
      <layout class="QHBoxLayout" name="ultrasonicLayout2">
       <item>
-       <widget class="QPushButton" name="enableUltrasonicPoll">
+       <widget class="QPushButton" name="doAThing">
         <property name="text">
-         <string>Toggle Ultrasonic Polling</string>
+         <string>Test functions</string>
         </property>
        </widget>
       </item>
      </layout>
     </item>
     <item>
-     <widget class="QPushButton" name="doAThing">
+     <widget class="QPushButton" name="enableUltrasonicPoll">
       <property name="text">
-       <string>Test functions</string>
+       <string>Toggle Ultrasonic Polling</string>
       </property>
      </widget>
     </item>

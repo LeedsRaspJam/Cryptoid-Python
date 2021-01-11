@@ -160,6 +160,7 @@ class MainWindow(QtWidgets.QMainWindow):
         global stm32
         stm32 = serial.Serial('/dev/ttyAMA0', 115200, parity=serial.PARITY_EVEN) # Open serial comms with the STM32
         print("Trying to initialize the STM32")
+        self.tb.append("test")
         while True: # Check for response
             stm32.write("INIT\r\n".encode()) # Init the STM32
             print("INIT")
