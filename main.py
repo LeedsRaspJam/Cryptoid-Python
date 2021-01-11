@@ -159,10 +159,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def printVer(self): # Print STM version info
         stm32.write("VERS\r\n".encode())
         response = stm32.readline().decode()
-        responseSplit = response.split("*")
-        self.logTb.append(responseSplit[0])
-        self.logTb.append(responseSplit[1])
-
+        self.logTb.append(str(response))
     def closeApp(self):
         sys.exit()
 
