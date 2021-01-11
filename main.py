@@ -160,12 +160,12 @@ class MainWindow(QtWidgets.QMainWindow):
         stm32.write("VERS\r\n".encode())
         response = stm32.readline().decode()
         response2 = stm32.readline().decode()
-        response3 = stm32.readLine().decode()
+        response3 = stm32.readline().decode()
 
         self.logTb.append(str(response))
         self.logTb.append(str(response2))
         self.logTb.append(str(response3))
-        
+
     def closeApp(self):
         sys.exit()
 
