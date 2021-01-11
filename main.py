@@ -47,16 +47,19 @@ def setLED(self, ledID, rValue, gValue, bValue):
             response = stm32.readline() # Read response
             print(response) # Print response
             if response.decode() == "OK\r\n": # If response recieved
-                stm32.write(str(rValue) + "\r\n".encode()) # Send first set of data
+                stm32.write(str(rValue).encode()) # Send first set of data
+                stm32.write("\r\n") # Send newline
                 print("sent first set")
                 response = stm32.readline() # Get second response
                 print(response) # Print second response
                 if response.decode() == "OK\r\n": # If response recieved
-                    stm32.write(str(gValue) + "\r\n".encode()) # Send second set of data
+                    stm32.write(str(gValue).encode()) # Send second set of data
+                    stm32.write("\r\n") # Send newline
                     response = stm32.readline() # Get third response
                     print(response) # Print third response
                     if response.decode() == "OK\r\n": # If response recieved
-                        stm32.write(str(bValue) + "\r\n".encode()) # Send third set of data
+                        stm32.write(str(bValue).encode()) # Send third set of data
+                        stm32.write("\r\n")
                         response = stm32.readline() # Get fourth response
                         print(response) # Print third response
                         if response.decode() == "OK\r\n": # If response recieved
