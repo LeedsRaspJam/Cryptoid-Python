@@ -42,14 +42,13 @@ def ultrasonicPoll(self, trig, echo, trig2, echo2):
 def setLED(self, ledID, rValue, gValue, bValue):
     if ledID == "all": # If setting all LEDs
         while True: # Loop until all data sent
+            print("LEDA")
             stm32.write("LEDA\r\n".encode()) # Send command
-            print("send LEDA")
             response = stm32.readline() # Read response
             print(response) # Print response
             if response.decode() == "OK\r\n": # If response recieved
                 stm32.write(str(rValue).encode()) # Send first set of data
                 stm32.write("\r\n".encode()) # Send newline
-                print("sent first set")
                 response = stm32.readline() # Get second response
                 print(response) # Print second response
                 if response.decode() == "OK\r\n": # If response recieved
@@ -63,31 +62,35 @@ def setLED(self, ledID, rValue, gValue, bValue):
                         response = stm32.readline() # Get fourth response
                         print(response) # Print third response
                         if response.decode() == "OK\r\n": # If response recieved
-                            print("done")
                             break # Sent successfully, break from loop.
-    '''else:
+    else:
         while True:
+            print("LEDS")
             stm32.write("LEDS\r\n".encode())
             response = stm32.readline()
             print(response)
             if response.decode() == "OK\r\n":
-                stm32.write(ledID + "\r\n".encode())
+                stm32.write(ledID.encode())
+                stm32.write("\r\n".encode())
                 response = stm32.readline()
                 print(response)
                 if response.decode() == "OK\r\n":
-                    stm32.write(str(rValue) + "\r\n".encode())
+                    stm32.write(str(rValue).encode())
+                    stm32.write("\r\n".encode())
                     response = stm32.readline()
                     print(response)
                     if response.decode() == "OK\r\n":
-                        stm32.write(str(gValue) + "\r\n".encode())
+                        stm32.write(str(gValue).encode())
+                        stm32.write("\r\n".encode())
                         response = stm32.readline()
                         print(response)
                         if response.decode() == "OK\r\n":
-                            stm32.write(str(bValue) + "\r\n".encode())
+                            stm32.write(str(bValue).encode())
+                            stm32.write("\r\n".encode())
                             response = stm32.readline()
                             print(response)
                             if response.decode() == "OK\r\n":
-                                break'''
+                                break
 
 def setSTM32Text(self, state):
     if state == True:
@@ -103,8 +106,7 @@ def gpioInit(self):
 class MainWindow(QtWidgets.QMainWindow):
 
     def buttonFunction(self):
-        print("button pressed")
-        setLED(self, "all", 50, 150, 250)
+        setLED(self, 2, 50, 150, 250)
     
     def toggleUltrasonicTimer(self):
         if self.ultrasonicTimer.isActive() == False:
@@ -125,6 +127,7 @@ class MainWindow(QtWidgets.QMainWindow):
         print("Trying to initialize the STM32")
         while True: # Check for response
             stm32.write("INIT\r\n".encode()) # Init the STM32
+            print("INIT")
             response = stm32.readline()
             print(response)
             if response.decode() == "OK\r\n":
