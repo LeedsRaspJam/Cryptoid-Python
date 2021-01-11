@@ -63,7 +63,7 @@ def setLED(self, ledID, rValue, gValue, bValue):
                         print(response) # Print third response
                         if response.decode() == "OK\r\n": # If response recieved
                             break # Sent successfully, break from loop.
-    else:
+    else: # If only setting one
         while True:
             print("LEDS")
             stm32.write("LEDS\r\n".encode())
