@@ -152,10 +152,19 @@ class MainWindow(QtWidgets.QMainWindow):
     def resetSTM(self): # Send Software Reset instruction
         stm32.write("RSTS\r\n".encode())
         self.logTb.append("Resetting now...")
+        response = stm32.readline()
+        self.logTb.append(str(response))
 
     def clearLog(self): # Clear the log
         self.logTb.clear()
     
+    def printVer(self): # Print STM version info
+        stm32.write("VERS\r\n".encode())
+        response = stm32.readline()
+        response2 = stm32.readline()
+        self.logTb.append(str(response))
+        self.logTb.append(str(response2))
+
     def closeApp(self):
         sys.exit()
 
@@ -186,6 +195,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.doAThing.clicked.connect(self.buttonFunction)
         self.clearBtn.clicked.connect(self.clearLog)
         self.resetBtn.clicked.connect(self.resetSTM)
+        self.versBtn.clicked.connect(self.printVer)
         self.actionQuit.triggered.connect(self.closeApp)
 
 def main():
