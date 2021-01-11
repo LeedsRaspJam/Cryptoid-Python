@@ -106,7 +106,7 @@ def gpioInit(self):
 class MainWindow(QtWidgets.QMainWindow):
 
     def buttonFunction(self):
-        setLED(self, 2, 50, 150, 250)
+        setLED(self, "2", 50, 150, 250)
     
     def toggleUltrasonicTimer(self):
         if self.ultrasonicTimer.isActive() == False:
