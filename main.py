@@ -101,7 +101,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def buttonFunction(self):
         print("button pressed")
-        setLED(self, "ALL", 50, 150, 250)
+        setLED(self, "all", 50, 150, 250)
     
     def toggleUltrasonicTimer(self):
         if self.ultrasonicTimer.isActive() == False:
