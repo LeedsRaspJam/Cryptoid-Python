@@ -152,8 +152,6 @@ class MainWindow(QtWidgets.QMainWindow):
     def resetSTM(self): # Send Software Reset instruction
         stm32.write("RSTS\r\n".encode())
         self.logTb.append("Resetting now...")
-        response = stm32.readline()
-        self.logTb.append(str(response))
 
     def clearLog(self): # Clear the log
         self.logTb.clear()
@@ -161,8 +159,9 @@ class MainWindow(QtWidgets.QMainWindow):
     def printVer(self): # Print STM version info
         stm32.write("VERS\r\n".encode())
         response = stm32.readline()
-        response2 = stm32.readline()
         self.logTb.append(str(response))
+        stm32.write("OK\r\n".encode())
+        response2 = stm32.readline()
         self.logTb.append(str(response2))
 
     def closeApp(self):
