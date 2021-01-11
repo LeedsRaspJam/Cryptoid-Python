@@ -132,16 +132,16 @@ class MainWindow(QtWidgets.QMainWindow):
         time.sleep(0.2)
         beepSPKR(self, 880, 200)
         time.sleep(0.4)
-        beepSPKR(self, 349, 200)
+        beepSPKR(self, 369, 200)
         time.sleep(0.4)
         beepSPKR(self, 392, 200)
         time.sleep(0.4)
         beepSPKR(self, 880, 200)
         time.sleep(0.2)
-        beepSPKR(self, 392, 200)
-        time.sleep(0.2)
-        beepSPKR(self, 880, 200)
-        time.sleep(0.2)
+        beepSPKR(self, 392, 300)
+        time.sleep(0.3)
+        beepSPKR(self, 880, 300)
+        time.sleep(0.3)
 
 
     
