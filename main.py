@@ -39,7 +39,7 @@ def ultrasonicPoll(self, trig, echo, trig2, echo2):
     self.distanceValue1.setText(str(round(distance1)) + " cm") # Set labels back in Qt GUI
     self.distanceValue2.setText(str(round(distance2)) + " cm")
 
-def setLED(ledID, rValue, gValue, bValue):
+def setLED(self, ledID, rValue, gValue, bValue):
     if ledID == "all": # If setting all LEDs
         while True: # Loop until all data sent
             stm32.write("LEDA\r\n".encode()) # Send command
@@ -97,18 +97,7 @@ def gpioInit(self):
 class MainWindow(QtWidgets.QMainWindow):
 
     def buttonFunction(self):
-        global textState
-        try: 
-            textState
-        except NameError: 
-            textState = "Default"
-
-        if textState == "Default":
-            self.mwLabel.setText("World Hello!")
-            textState = "Changed"
-        elif textState == "Changed":
-            self.mwLabel.setText("Hello World!")
-            textState = "Default"
+        lambda: setLED("ALL", 50, 150, 250)
     
     def toggleUltrasonicTimer(self):
         if self.ultrasonicTimer.isActive() == False:
