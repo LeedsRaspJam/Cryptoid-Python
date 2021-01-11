@@ -386,16 +386,9 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="vrbsBtn">
-        <property name="text">
-         <string>Toggle Verbose</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QPushButton" name="versBtn">
         <property name="text">
-         <string>Get FW Ver.</string>
+         <string>Get STM32 FW Version</string>
         </property>
        </widget>
       </item>

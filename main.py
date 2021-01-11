@@ -169,14 +169,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.logTb.append(str(response2))
         self.logTb.append(str(response3))
 
-    def toggleVrbs(self): # Toggle verbose output
-        stm32.write("VRBS\r\n".encode())
-        response = stm32.readline()
-        respons2 = stm32.readline()
-
-        self.logTb.append(str(response))
-        self.logTb.append(str(response2))
-
     def closeApp(self):
         sys.exit()
 
@@ -208,7 +200,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.clearBtn.clicked.connect(self.clearLog)
         self.resetBtn.clicked.connect(self.resetSTM)
         self.versBtn.clicked.connect(self.printVer)
-        self.vrbsBtn.clicked.connect(self.toggleVrbs)
         self.actionQuit.triggered.connect(self.closeApp)
 
 def main():
