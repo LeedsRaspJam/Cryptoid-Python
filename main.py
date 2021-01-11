@@ -43,42 +43,45 @@ def setLED(self, ledID, rValue, gValue, bValue):
     if ledID == "all": # If setting all LEDs
         while True: # Loop until all data sent
             stm32.write("LEDA\r\n".encode()) # Send command
-            response = stm32.readLine() # Read response
+            print("send LEDA")
+            response = stm32.readline() # Read response
             print(response) # Print response
             if response.decode() == "OK\r\n": # If response recieved
                 stm32.write(str(rValue) + "\r\n".encode()) # Send first set of data
-                response = stm32.readLine() # Get second response
+                print("sent first set")
+                response = stm32.readline() # Get second response
                 print(response) # Print second response
                 if response.decode() == "OK\r\n": # If response recieved
                     stm32.write(str(gValue) + "\r\n".encode()) # Send second set of data
-                    response = stm32.readLine() # Get third response
+                    response = stm32.readline() # Get third response
                     print(response) # Print third response
                     if response.decode() == "OK\r\n": # If response recieved
                         stm32.write(str(bValue) + "\r\n".encode()) # Send third set of data
-                        response = stm32.readLine() # Get fourth response
+                        response = stm32.readline() # Get fourth response
                         print(response) # Print third response
                         if response.decode() == "OK\r\n": # If response recieved
+                            print("done")
                             break # Sent successfully, break from loop.
     else:
         while True:
             stm32.write("LEDS\r\n".encode())
-            response = stm32.readLine()
+            response = stm32.readline()
             print(response)
             if response.decode() == "OK\r\n":
                 stm32.write(ledID + "\r\n".encode())
-                response = stm32.readLine()
+                response = stm32.readline()
                 print(response)
                 if response.decode() == "OK\r\n":
                     stm32.write(str(rValue) + "\r\n".encode())
-                    response = stm32.readLine()
+                    response = stm32.readline()
                     print(response)
                     if response.decode() == "OK\r\n":
                         stm32.write(str(gValue) + "\r\n".encode())
-                        response = stm32.readLine()
+                        response = stm32.readline()
                         print(response)
                         if response.decode() == "OK\r\n":
                             stm32.write(str(bValue) + "\r\n".encode())
-                            response = stm32.readLine()
+                            response = stm32.readline()
                             print(response)
                             if response.decode() == "OK\r\n":
                                 break
@@ -97,7 +100,7 @@ def gpioInit(self):
 class MainWindow(QtWidgets.QMainWindow):
 
     def buttonFunction(self):
-        lambda: setLED("ALL", 50, 150, 250)
+        lambda: setLED(self, "ALL", 50, 150, 250)
     
     def toggleUltrasonicTimer(self):
         if self.ultrasonicTimer.isActive() == False:
@@ -113,6 +116,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         uic.loadUi('mainwindow.ui', self)
 
+        global stm32
         stm32 = serial.Serial('/dev/ttyAMA0', 115200, parity=serial.PARITY_EVEN) # Open serial comms with the STM32
         print("Trying to initialize the STM32")
         while True: # Check for response
