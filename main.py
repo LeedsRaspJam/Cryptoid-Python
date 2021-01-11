@@ -172,7 +172,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def toggleVrbs(self): # Toggle verbose output
         stm32.write("VRBS\r\n".encode())
         response = stm32.readline()
-        respons2 = stm32.readline()
+        response2 = stm32.readline()
 
         self.logTb.append(str(response))
         self.logTb.append(str(response2))
