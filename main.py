@@ -149,6 +149,13 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             self.ultrasonicTimer.stop()
 
+    def resetSTM(self): # Send Software Reset instruction
+        stm32.write("RSTS\r\n".encode())
+        self.logTb.append("Resetting now...")
+
+    def clearLog(self): # Clear the log
+        self.logTb.clear()
+    
     def closeApp(self):
         sys.exit()
 
@@ -177,6 +184,8 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.enableUltrasonicPoll.clicked.connect(self.toggleUltrasonicTimer)
         self.doAThing.clicked.connect(self.buttonFunction)
+        self.clearBtn.clicked.connect(self.clearLog)
+        self.resetBtn.clicked.connect(self.resetSTM)
         self.actionQuit.triggered.connect(self.closeApp)
 
 def main():
