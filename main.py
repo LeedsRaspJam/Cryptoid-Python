@@ -62,7 +62,7 @@ def setLED(self, ledID, rValue, gValue, bValue):
                         if response.decode() == "OK\r\n": # If response recieved
                             print("done")
                             break # Sent successfully, break from loop.
-    else:
+    '''else:
         while True:
             stm32.write("LEDS\r\n".encode())
             response = stm32.readline()
@@ -84,7 +84,7 @@ def setLED(self, ledID, rValue, gValue, bValue):
                             response = stm32.readline()
                             print(response)
                             if response.decode() == "OK\r\n":
-                                break
+                                break'''
 
 def setSTM32Text(self, state):
     if state == True:
