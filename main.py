@@ -100,7 +100,8 @@ def gpioInit(self):
 class MainWindow(QtWidgets.QMainWindow):
 
     def buttonFunction(self):
-        lambda: setLED(self, "ALL", 50, 150, 250)
+        print("button pressed")
+        setLED(self, "ALL", 50, 150, 250)
     
     def toggleUltrasonicTimer(self):
         if self.ultrasonicTimer.isActive() == False:
