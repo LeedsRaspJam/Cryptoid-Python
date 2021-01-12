@@ -204,7 +204,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.logTb.append("Resetting now...")
         time.sleep(1.5)
         stm32.reset_input_buffer()
-        setSTM32Text(False)
+        setSTM32Text(self, False)
         self.logTb.append("Reset Complete")
 
     def clearLog(self): # Clear the log
