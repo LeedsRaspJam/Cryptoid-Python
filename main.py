@@ -249,7 +249,7 @@ class MainWindow(QtWidgets.QMainWindow):
         gValue, okPressed = QtWidgets.QInputDialog.getInt(self, "Green", "Green?", 255, 0, 255, 25)
         bValue, okPressed = QtWidgets.QInputDialog.getInt(self, "Blue", "Blue?", 255, 0, 255, 25)
         if okPressed:
-            setLED(self, str(ledID), rValue, gValue, bValue)
+            setLED(self, str(ledID-1), rValue, gValue, bValue)
 
     def allLED(self): # Set all LEDs
         rValue, okPressed = QtWidgets.QInputDialog.getInt(self, "Red", "Red?", 255, 0, 255, 25)
