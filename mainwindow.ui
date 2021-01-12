@@ -451,14 +451,14 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QPushButton" name="stopAllMtrBtn">
+       <widget class="QPushButton" name="alllMotorBtn">
         <property name="text">
          <string>Set All Motors</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="allMotorBtn">
+       <widget class="QPushButton" name="stopAllMtrBtn">
         <property name="text">
          <string>Stop All Motors</string>
         </property>
