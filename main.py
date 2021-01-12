@@ -188,6 +188,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.ultrasonicTimer.stop()
 
     def initSTM(self): # Send INIT command
+        self.logTb.append("Trying to initialize the STM32")
         while True: # Check for response
             stm32.write("INIT\r\n".encode()) # Init the STM32
             self.logTb.append("INIT")
@@ -218,17 +219,28 @@ class MainWindow(QtWidgets.QMainWindow):
         self.logTb.append(str(response2))
         self.logTb.append(str(response3))
 
-    def motorSet(self):
+    def motorSet(self): # Set one motor
         motorID, okPressed = QtWidgets.QInputDialog.getInt(self, "Motor ID", "Motor ID?", 1, 1, 4, 1)
         direction, okPressed = QtWidgets.QInputDialog.getInt(self, "Direction", "1 is FWD, 2 is BWD:", 1, 1, 2, 1)
         speed, okPressed = QtWidgets.QInputDialog.getInt(self, "Speed", "Speed?", 255, 1, 255, 25)
         if okPressed:
             setMotor(self, motorID, direction, speed)
 
-    def stopMotorBtn(self):
+    def stopMotorBtn(self): # Stop one motor
         motorID, okPressed = QtWidgets.QInputDialog.getInt(self, "Motor ID", "Motor ID?", 1, 1, 4, 1)
         if okPressed:
             stopMotor(self, motorID)
+
+    def allMotor(self): # Set all motors
+        direction, okPressed = QtWidgets.QInputDialog.getInt(self, "Direction", "1 is FWD, 2 is BWD:", 1, 1, 2, 1)
+        speed, okPressed = QtWidgets.QInputDialog.getInt(self, "Speed", "Speed?", 255, 1, 255, 25)
+        if okPressed:
+            for i in range(4):
+                setMotor(self, i+1, direction, speed)
+
+    def stopAllMotorBtn(self): # Stop all motors
+        for i in range(4):
+            stopMotor(self, i+1)
 
     def closeApp(self):
         sys.exit()
@@ -240,7 +252,6 @@ class MainWindow(QtWidgets.QMainWindow):
 
         global stm32
         stm32 = serial.Serial('/dev/ttyAMA0', 115200, parity=serial.PARITY_EVEN) # Open serial comms with the STM32
-        self.logTb.append("Trying to initialize the STM32")
         self.initSTM()
         
         gpioInit(self)
@@ -255,6 +266,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.versBtn.clicked.connect(self.printVer)
         self.motorBtn.clicked.connect(self.motorSet)
         self.stopMtrBtn.clicked.connect(self.stopMotorBtn)
+        self.allMotorBtn.clicked.connect(self.allMotor)
+        self.stopAllMtrBtn.clicked.connect(self.stopAllMotorBtn)
         self.reInit.clicked.connect(self.initSTM)
         self.actionQuit.triggered.connect(self.closeApp)
 
