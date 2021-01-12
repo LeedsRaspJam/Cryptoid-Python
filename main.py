@@ -285,8 +285,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.allMotorBtn.clicked.connect(self.allMotor)
         self.stopAllMtrBtn.clicked.connect(self.stopAllMotorBtn)
         self.reInit.clicked.connect(self.initSTM)
-        self.setLEDBtn(self.setLED)
-        self.allLEDBtn(self.allLED)
+        self.setLEDBtn.clicked.connect(self.setLED)
+        self.allLEDBtn.clicked.connect(self.allLED)
         self.actionQuit.triggered.connect(self.closeApp)
 
 def main():
