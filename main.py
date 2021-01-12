@@ -187,6 +187,17 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             self.ultrasonicTimer.stop()
 
+    def initSTM(self):
+        while True: # Check for response
+            stm32.write("INIT\r\n".encode()) # Init the STM32
+            self.logTb.append("INIT")
+            response = stm32.readline()
+            self.logTb.append(str(response))
+            if response.decode() == "OK\r\n":
+                self.logTb.append("STM32 is working")
+                setSTM32Text(self, True)
+                break
+
     def resetSTM(self): # Send Software Reset instruction
         stm32.write("RSTS\r\n".encode())
         self.logTb.append("Resetting now...")
@@ -230,15 +241,7 @@ class MainWindow(QtWidgets.QMainWindow):
         global stm32
         stm32 = serial.Serial('/dev/ttyAMA0', 115200, parity=serial.PARITY_EVEN) # Open serial comms with the STM32
         self.logTb.append("Trying to initialize the STM32")
-        while True: # Check for response
-            stm32.write("INIT\r\n".encode()) # Init the STM32
-            self.logTb.append("INIT")
-            response = stm32.readline()
-            self.logTb.append(str(response))
-            if response.decode() == "OK\r\n":
-                self.logTb.append("STM32 is working")
-                setSTM32Text(self, True)
-                break
+        initSTM(self)
         
         gpioInit(self)
 
@@ -252,6 +255,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.versBtn.clicked.connect(self.printVer)
         self.motorBtn.clicked.connect(self.motorSet)
         self.stopMtrBtn.clicked.connect(self.stopMotorBtn)
+        self.reInit.clicked.connect(self.initSTM)
         self.actionQuit.triggered.connect(self.closeApp)
 
 def main():
