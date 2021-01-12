@@ -451,7 +451,7 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QPushButton" name="alllMotorBtn">
+       <widget class="QPushButton" name="allMotorBtn">
         <property name="text">
          <string>Set All Motors</string>
         </property>
