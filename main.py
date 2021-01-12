@@ -187,7 +187,7 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             self.ultrasonicTimer.stop()
 
-    def initSTM(self):
+    def initSTM(self): # Send INIT command
         while True: # Check for response
             stm32.write("INIT\r\n".encode()) # Init the STM32
             self.logTb.append("INIT")
@@ -241,7 +241,7 @@ class MainWindow(QtWidgets.QMainWindow):
         global stm32
         stm32 = serial.Serial('/dev/ttyAMA0', 115200, parity=serial.PARITY_EVEN) # Open serial comms with the STM32
         self.logTb.append("Trying to initialize the STM32")
-        initSTM(self)
+        self.initSTM(self)
         
         gpioInit(self)
 
