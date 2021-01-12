@@ -243,6 +243,21 @@ class MainWindow(QtWidgets.QMainWindow):
         for i in range(4):
             stopMotor(self, i+1)
 
+    def setLED(self): # Set one LED
+        ledID, okPressed = QtWidgets.QInputDialog.getInt(self, "LED ID", "LED ID?", 1, 1, 36, 1)
+        rValue, okPressed = QtWidgets.QInputDialog.getInt(self, "Red", "Red?", 255, 1, 255, 25)
+        gValue, okPressed = QtWidgets.QInputDialog.getInt(self, "Green", "Green?", 255, 1, 255, 25)
+        bValue, okPressed = QtWidgets.QInputDialog.getInt(self, "Blue", "Blue?", 255, 1, 255, 25)
+        if okPressed:
+            setLED(self, str(ledID), rValue, gValue, bValue)
+
+    def allLED(self): # Set all LEDs
+        rValue, okPressed = QtWidgets.QInputDialog.getInt(self, "Red", "Red?", 255, 1, 255, 25)
+        gValue, okPressed = QtWidgets.QInputDialog.getInt(self, "Green", "Green?", 255, 1, 255, 25)
+        bValue, okPressed = QtWidgets.QInputDialog.getInt(self, "Blue", "Blue?", 255, 1, 255, 25)
+        if okPressed:
+            setLED(self, "all", rValue, gValue, bValue)
+
     def closeApp(self):
         sys.exit()
 
@@ -270,6 +285,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.allMotorBtn.clicked.connect(self.allMotor)
         self.stopAllMtrBtn.clicked.connect(self.stopAllMotorBtn)
         self.reInit.clicked.connect(self.initSTM)
+        self.setLEDBtn(self.setLED)
+        self.allLEDBtn(self.allLED)
         self.actionQuit.triggered.connect(self.closeApp)
 
 def main():
