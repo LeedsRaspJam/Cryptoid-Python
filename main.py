@@ -109,6 +109,30 @@ def setLED(self, ledID, rValue, gValue, bValue):
                             if response.decode() == "OK\r\n":
                                 break
 
+def setMotor(self, motorID, direction, speed): # Set one motor
+    while True:
+        self.logTb.append("SETM")
+        stm32.write("SETM\r\n".encode())
+        response = stm32.readline()
+        self.logTb.append(str(response))
+        if response.decode() == "OK\r\n":
+            stm32.write(str(motorID).encode())
+            stm32.write("\r\n".encode())
+            response = stm32.readline()
+            self.logTb.append(str(response))
+            if response.decode() == "OK\r\n":
+                stm32.write(str(direction).encode())
+                stm32.write("\r\n".encode())
+                response = stm32.readline()
+                self.logTb.append(str(response))
+                if response.decode() == "OK\r\n":
+                    stm32.write(str(speed).encode())
+                    stm32.write("\r\n".encode())
+                    response = stm32.readline()
+                    self.logTb.append(str(response))
+                    if response.decode() == "OK\r\n":
+                        break
+
 def setSTM32Text(self, state):
     if state == True:
         self.stm32Connected.setText("STM32 Connected") # Set text + colour
@@ -171,11 +195,10 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def motorSet(self):
         motorID, okPressed = QtWidgets.QInputDialog.getInt(self, "Motor ID", "Motor ID?", 1, 1, 4, 1)
-        if okPressed:
-            print(motorID)
+        direction, okPressed = QtWidgets.QInputDialog.getInt(self, "Direction", "1 is FWD, 2 is BWD:", 1, 1, 2, 1)
         speed, okPressed = QtWidgets.QInputDialog.getInt(self, "Speed", "Speed?", 255, 1, 255, 25)
         if okPressed:
-            print(speed)
+            setMotor(self, motorID, direction, speed)
 
     def closeApp(self):
         sys.exit()
