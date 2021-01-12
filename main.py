@@ -169,6 +169,14 @@ class MainWindow(QtWidgets.QMainWindow):
         self.logTb.append(str(response2))
         self.logTb.append(str(response3))
 
+    def motorSet(self):
+        motorID, okPressed = QInputDialog().getInt(self, "Motor ID", "Motor ID?", 1, 1, 4, 1)
+        if okPressed:
+            print(motorID)
+        speed, okPressed = QInputDialog().getInt(self, "Speed", "Speed?", 255, 1, 255, 25)
+        if okPressed:
+            print(speed)
+
     def closeApp(self):
         sys.exit()
 
@@ -200,6 +208,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.clearBtn.clicked.connect(self.clearLog)
         self.resetBtn.clicked.connect(self.resetSTM)
         self.versBtn.clicked.connect(self.printVer)
+        self.motorBtn.clicked.connect(self.motorSet)
         self.actionQuit.triggered.connect(self.closeApp)
 
 def main():
