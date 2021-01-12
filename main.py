@@ -241,7 +241,7 @@ class MainWindow(QtWidgets.QMainWindow):
         global stm32
         stm32 = serial.Serial('/dev/ttyAMA0', 115200, parity=serial.PARITY_EVEN) # Open serial comms with the STM32
         self.logTb.append("Trying to initialize the STM32")
-        self.initSTM(self)
+        self.initSTM()
         
         gpioInit(self)
 
