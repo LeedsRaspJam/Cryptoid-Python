@@ -383,6 +383,13 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QPushButton" name="stopMtrBtn">
+        <property name="text">
+         <string>Stop Motor</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </item>
    </layout>

@@ -133,6 +133,20 @@ def setMotor(self, motorID, direction, speed): # Set one motor
                     if response.decode() == "OK\r\n":
                         break
 
+def stopMotor(self, motorID): # Stop one motor
+    while True:
+        self.logTb.append("STPM")
+        stm32.write("STPM\r\n".encode())
+        response = stm32.readline()
+        self.logTb.append(str(response))
+        if response.decode() == "OK\r\n":
+            stm32.write(str(motorID).encode())
+            stm32.write("\r\n".encode())
+            response = stm32.readline()
+            self.logTb.append(str(response))
+            if response.decode() == "OK\r\n":
+                break
+
 def setSTM32Text(self, state):
     if state == True:
         self.stm32Connected.setText("STM32 Connected") # Set text + colour
@@ -200,6 +214,11 @@ class MainWindow(QtWidgets.QMainWindow):
         if okPressed:
             setMotor(self, motorID, direction, speed)
 
+    def stopMotorBtn(self):
+        motorID, okPressed = QtWidgets.QInputDialog.getInt(self, "Motor ID", "Motor ID?", 1, 1, 4, 1)
+        if okPressed:
+            stopMotor(self, motorID)
+
     def closeApp(self):
         sys.exit()
 
@@ -232,6 +251,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.resetBtn.clicked.connect(self.resetSTM)
         self.versBtn.clicked.connect(self.printVer)
         self.motorBtn.clicked.connect(self.motorSet)
+        self.stopMtrBtn.clicked.connect(self.stopMotorBtn)
         self.actionQuit.triggered.connect(self.closeApp)
 
 def main():
