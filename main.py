@@ -38,7 +38,7 @@ def ultrasonicPoll(self):
     if distance1 > 10 or distance2 > 10:
         emergencyStop(self)
     else:
-        setLED(self, "all" 0, 255, 0)
+        setLED(self, "all", 0, 255, 0)
 
 def emergencyStop(self):
     for i in range(4):
