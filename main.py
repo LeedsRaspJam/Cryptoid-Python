@@ -27,9 +27,8 @@ if os.uname()[1] == 'cryptoid':
     from hcsr04sensor import sensor
     import serial
 
-def ultrasonicPoll(self, trig, echo, trig2, echo2):
-    sensor1 = sensor.Measurement(trig, echo) # Init both sensors
-    sensor2 = sensor.Measurement(trig2, echo2)
+def ultrasonicPoll(self):
+    global sensor1, sensor2
     distance1 = sensor1.raw_distance() # Get raw distance readings
     distance2 = sensor2.raw_distance()
 
@@ -157,6 +156,9 @@ def setSTM32Text(self, state):
     
 def gpioInit(self):
     GPIO.setmode(GPIO.BCM) # Set mode to BCM numbering
+    global sensor1, sensor2
+    sensor1 = sensor.Measurement(22, 12) # Init both sensors
+    sensor2 = sensor.Measurement(23, 1)
 
 class MainWindow(QtWidgets.QMainWindow):
 
@@ -273,7 +275,7 @@ class MainWindow(QtWidgets.QMainWindow):
         gpioInit(self)
 
         self.ultrasonicTimer = QtCore.QTimer()
-        self.ultrasonicTimer.timeout.connect(lambda: ultrasonicPoll(self, 22, 12, 23, 1))
+        self.ultrasonicTimer.timeout.connect(lambda: ultrasonicPoll(self))
 
         self.enableUltrasonicPoll.clicked.connect(self.toggleUltrasonicTimer)
         self.doAThing.clicked.connect(self.buttonFunction)
