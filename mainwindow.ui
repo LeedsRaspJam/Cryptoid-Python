@@ -336,7 +336,7 @@
       <item>
        <widget class="QLabel" name="distanceLabel1">
         <property name="text">
-         <string>Distance - Sensor 1:</string>
+         <string>Distance - Sensor 1 (Front):</string>
         </property>
        </widget>
       </item>
@@ -350,7 +350,7 @@
       <item>
        <widget class="QLabel" name="distanceLabel2">
         <property name="text">
-         <string>Distance - Sensor 2:</string>
+         <string>Distance - Sensor 2 (Back):</string>
         </property>
        </widget>
       </item>
