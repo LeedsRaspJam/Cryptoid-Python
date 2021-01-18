@@ -28,9 +28,9 @@ if os.uname()[1] == 'cryptoid':
     import serial
 
 def ultrasonicPoll(self):
-    global sensor1, sensor2
-    distance1 = sensor1.raw_distance(sample_size=5, sample_wait=0.03) # Get raw distance readings
-    distance2 = sensor2.raw_distance(sample_size=5, sample_wait=0.03)
+    global sensor1, sensor2, currentColour
+    distance1 = sensor1.raw_distance(sample_size=5, sample_wait=0.04) # Get raw distance readings
+    distance2 = sensor2.raw_distance(sample_size=5, sample_wait=0.04)
 
     self.distanceValue1.setText(str(round(distance1)) + " cm") # Set labels back in Qt GUI
     self.distanceValue2.setText(str(round(distance2)) + " cm")
@@ -39,11 +39,14 @@ def ultrasonicPoll(self):
         emergencyStop(self)
     else:
         setLED(self, "all", 0, 255, 0)
+        currentColour = "red"
 
 def emergencyStop(self):
     for i in range(4):
         stopMotor(self, i+1)
-    setLED(self, "all", 255, 0, 0)
+    if currentColour != "green":
+        setLED(self, "all", 255, 0, 0)
+        currentColour = "green"
 
 def beepSPKR(self, freq, duration):
     while True:
@@ -200,6 +203,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.ultrasonicTimer.stop()
 
     def initSTM(self): # Send INIT command
+        global currentColour
         self.logTb.append("Trying to initialize the STM32")
         while True: # Check for response
             stm32.write("INIT\r\n".encode()) # Init the STM32
@@ -209,6 +213,7 @@ class MainWindow(QtWidgets.QMainWindow):
             if response.decode() == "OK\r\n":
                 self.logTb.append("STM32 is working")
                 setSTM32Text(self, True)
+                currentColour = "green"
                 break
 
     def resetSTM(self): # Send Software Reset instruction
