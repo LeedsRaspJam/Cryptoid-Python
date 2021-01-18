@@ -35,6 +35,16 @@ def ultrasonicPoll(self):
     self.distanceValue1.setText(str(round(distance1)) + " cm") # Set labels back in Qt GUI
     self.distanceValue2.setText(str(round(distance2)) + " cm")
 
+    if distance1 > 10 or distance2 > 10:
+        emergencyStop(self)
+    else:
+        setLED(self, "all" 0, 255, 0)
+
+def emergencyStop(self):
+    for i in range(4):
+        stopMotor(self, i+1)
+    setLED(self, "all", 255, 0, 0)
+
 def beepSPKR(self, freq, duration):
     while True:
         self.logTb.append("SPKR")
