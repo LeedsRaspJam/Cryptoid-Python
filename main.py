@@ -29,8 +29,8 @@ if os.uname()[1] == 'cryptoid':
 
 def ultrasonicPoll(self):
     global sensor1, sensor2
-    distance1 = sensor1.raw_distance(sample_size=5, sample_wait=0.05) # Get raw distance readings
-    distance2 = sensor2.raw_distance(sample_size=5, sample_wait=0.05)
+    distance1 = sensor1.raw_distance(sample_size=5, sample_wait=0.03) # Get raw distance readings
+    distance2 = sensor2.raw_distance(sample_size=5, sample_wait=0.03)
 
     self.distanceValue1.setText(str(round(distance1)) + " cm") # Set labels back in Qt GUI
     self.distanceValue2.setText(str(round(distance2)) + " cm")
