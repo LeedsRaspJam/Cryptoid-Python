@@ -126,6 +126,8 @@ def setLED(self, ledID, rValue, gValue, bValue):
                             break # Sent successfully, break from loop.
 
     else: # If only setting one
+        ledBuffer[int(ledID)] = [rValue, gValue, bValue]
+        print(ledBuffer)
         while True:
             self.logTb.append("LEDS")
             stm32.write("LEDS\r\n".encode())
@@ -156,7 +158,6 @@ def setLED(self, ledID, rValue, gValue, bValue):
 
 def setMotor(self, motorID, direction, speed): # Set one motor
     motorBuffer[motorID] = [direction, speed]
-    print(motorBuffer)
     while True:
         self.logTb.append("SETM")
         stm32.write("SETM\r\n".encode())
@@ -181,6 +182,7 @@ def setMotor(self, motorID, direction, speed): # Set one motor
                         break
 
 def stopMotor(self, motorID): # Stop one motor
+    motorBuffer[motorID] = [0, 0]
     while True:
         self.logTb.append("STPM")
         stm32.write("STPM\r\n".encode())
