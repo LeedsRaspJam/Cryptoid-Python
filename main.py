@@ -91,7 +91,7 @@ def ultrasonicPoll(self):
         setLED(self, "all", 0, 255, 0)
 
 def controllerPoll(self):
-    with ControllerResource as joystick:
+    with ControllerResource() as joystick:
         while joystick.connected:
             x = joystick['lx']
             y = joystick['ry']
