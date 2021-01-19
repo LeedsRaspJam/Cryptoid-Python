@@ -267,6 +267,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.thread = QtCore.QThread()
         self.worker = controllerWorker()
         self.worker.moveToThread(self.thread)
+        self.thread.started.connect(self.worker.run)
         self.thread.start()
 
     def toggleUltrasonicTimer(self):
