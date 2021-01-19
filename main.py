@@ -81,7 +81,7 @@ def ultrasonicPoll(self):
     self.distanceValue1.setText(str(round(distance1)) + " cm") # Set labels back in Qt GUI
     self.distanceValue2.setText(str(round(distance2)) + " cm")
 
-    if distance1 < 20 or distance2 < 20:
+    if distance1 < 35 or distance2 < 35:
         if ledBuffer[0] == [0, 255, 0]:
             for i in range(4):
                 stopMotor(self, i+1)
