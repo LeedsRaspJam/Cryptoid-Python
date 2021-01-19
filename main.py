@@ -102,7 +102,7 @@ def controllerPoll(self):
     y_corrected = abs(right_y) * 155
 
     if left_x < 0:
-        l_value = left_x * y_corrected
+        l_value = abs(left_x) * y_corrected
         r_value = 0
     elif left_x > 0:
         l_value = 0
