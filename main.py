@@ -94,11 +94,11 @@ def controllerPoll(self):
     right_y = gamepad.axis("RIGHT-Y")
     print(right_y)
     for x in range(4):
-        if left_x > 0:
+        if right_y > 0:
             setMotor(self, x+1, 1, right_y*255)
-        if left_x < 0:
+        if right_y < 0:
             setMotor(self, x+1, 2, abs(right_y*255))
-        if left_x == 0:
+        if right_y == 0:
             stopMotor(self, x+1)
 
 def beepSPKR(self, freq, duration):
