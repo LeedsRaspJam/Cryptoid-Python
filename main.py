@@ -235,10 +235,10 @@ class controllerWorker(QtCore.QObject):
                 print(y)
                 if x > 0.5:
                     for x in range(4):
-                        setMotor(MainWindow, x, 1, 205)
+                        print("on")
                 else:
                     for x in range(4):
-                        stopMotor(MainWindow, x)
+                        print("off")
 
 class MainWindow(QtWidgets.QMainWindow):
 
