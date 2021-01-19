@@ -92,11 +92,12 @@ def ultrasonicPoll(self):
 
 def controllerPoll(self):
     left_x = gamepad.axis("LEFT-X")
+    print(left_x)
     for x in range(4):
         if left_x > 0:
-            setMotor(self, x, 1, left_x*255)
+            setMotor(self, x+1, 1, left_x*255)
         if left_x < 0:
-            setMotor(self, x, 2, abs(left_x*255))
+            setMotor(self, x+1, 2, abs(left_x*255))
 
 def beepSPKR(self, freq, duration):
     while True:
@@ -354,7 +355,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.controllerTimer = QtCore.QTimer()
         self.controllerTimer.timeout.connect(lambda: controllerPoll(self))
-        self.controllerTimer.start(25)
+        self.controllerTimer.start(250)
 
         self.enableUltrasonicPoll.clicked.connect(self.toggleUltrasonicTimer)
         self.doAThing.clicked.connect(self.buttonFunction)
