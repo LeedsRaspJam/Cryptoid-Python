@@ -26,6 +26,7 @@ if os.uname()[1] == 'cryptoid':
     import RPi.GPIO as GPIO
     import hcsr04sensor as sensor
     import serial
+    from approxeng.input.selectbinder import ControllerResource
 
 global motorBuffer, ledBuffer
 motorBuffer = {
@@ -88,6 +89,16 @@ def ultrasonicPoll(self):
             setLED(self, "all", 254, 0, 0)
     elif ledBuffer[0] == [254, 0, 0]:
         setLED(self, "all", 0, 255, 0)
+
+def controllerPoll(self):
+    with ControllerResource() as pad:
+        x = pad['lx']
+        y = pad['ry']
+        print(x)
+        print(y)
+        if x > 0.5:
+            for x in range(4):
+                setMotor(self, x, 1, 205)
 
 def beepSPKR(self, freq, duration):
     while True:
@@ -340,6 +351,10 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.ultrasonicTimer = QtCore.QTimer()
         self.ultrasonicTimer.timeout.connect(lambda: ultrasonicPoll(self))
+
+        self.controllerTimer = QtCore.QTimer()
+        self.controllerTimer.timeout.connect(lambda: controllerPoll(self))
+        self.controllerTimer.start(100)
 
         self.enableUltrasonicPoll.clicked.connect(self.toggleUltrasonicTimer)
         self.doAThing.clicked.connect(self.buttonFunction)
