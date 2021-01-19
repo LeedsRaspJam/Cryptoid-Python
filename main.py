@@ -91,7 +91,7 @@ def ultrasonicPoll(self):
     elif ledBuffer[0] == [254, 0, 0]:
         setLED(self, "all", 0, 255, 0)
 
-def controllerPoll(self):
+def controllerPoll():
     with ControllerResource() as joystick:
         while joystick.connected:
             x = joystick['lx']
@@ -357,7 +357,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ultrasonicTimer = QtCore.QTimer()
         self.ultrasonicTimer.timeout.connect(lambda: ultrasonicPoll(self))
 
-        controllerThread = threading.Thread(target=controllerPoll, args=(self))
+        controllerThread = threading.Thread(target=controllerPoll)
         controllerThread.start()
 
         self.enableUltrasonicPoll.clicked.connect(self.toggleUltrasonicTimer)
