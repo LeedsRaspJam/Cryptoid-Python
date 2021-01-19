@@ -92,16 +92,32 @@ def ultrasonicPoll(self):
 
 def controllerPoll(self):
     right_y = gamepad.axis("RIGHT-Y")
-    print(right_y)
+    left_x = gamepad.axis("LEFT-X")
+
+    if right_y < 0:
+        isBackward = True
+    
+    print(left_x)
     y_corrected = abs(right_y) * 155
     y_corrected = y_corrected + 100
-    for x in range(4):
-        if right_y > 0:
-            setMotor(self, x+1, 1, y_corrected)
-        if right_y < 0:
-            setMotor(self, x+1, 2, abs(y_corrected))
-        if right_y == 0:
-            stopMotor(self, x+1)
+
+    if left_x > 0:
+        l_value = left_x * y_corrected
+        r_value = 0
+    elif left_x < 0:
+        l_value = 0
+        r_value = abs(left_x) * y_corrected
+
+    if !isBackward:
+        setMotor(self, 1, 1, l_value)
+        setMotor(self, 3, 1, l_value)
+        setMotor(self, 2, 1, r_value)
+        setMotor(self, 4, 1, r_value)
+    elif isBackward:
+        setMotor(self, 1, 2, l_value)
+        setMotor(self, 3, 2, l_value)
+        setMotor(self, 2, 2, r_value)
+        setMotor(self, 4, 2, r_value)
 
 def beepSPKR(self, freq, duration):
     while True:
