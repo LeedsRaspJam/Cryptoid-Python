@@ -249,7 +249,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def toggleUltrasonicTimer(self):
         if self.ultrasonicTimer.isActive() == False:
-            self.ultrasonicTimer.start(250)
+            self.ultrasonicTimer.start(100)
         else:
             self.ultrasonicTimer.stop()
 
