@@ -253,6 +253,7 @@ class controllerWorker(QtCore.QObject):
                                         response = stm32.readline()
                                         if response.decode() == "OK\r\n":
                                             break
+                elif x < 0.5:
                     for x in range(4):
                         motorBuffer[x] = [0, 0]
                         while True:
@@ -264,7 +265,7 @@ class controllerWorker(QtCore.QObject):
                                 response = stm32.readline()
                                 if response.decode() == "OK\r\n":
                                     break
-                                
+
 class MainWindow(QtWidgets.QMainWindow):
 
     def buttonFunction(self):
