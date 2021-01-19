@@ -21,6 +21,7 @@ import sys
 import random
 import os
 import time
+import threading
 
 if os.uname()[1] == 'cryptoid':
     import RPi.GPIO as GPIO
@@ -92,16 +93,17 @@ def ultrasonicPoll(self):
 
 def controllerPoll(self):
     with ControllerResource() as joystick:
-        x = joystick['lx']
-        y = joystick['ry']
-        print(x)
-        print(y)
-        if x > 0.5:
-            for x in range(4):
-                setMotor(self, x, 1, 205)
-        else:
-            for x in range(4):
-                stopMotor(self, x)
+        while joystick.connected:
+            x = joystick['lx']
+            y = joystick['ry']
+            print(x)
+            print(y)
+            if x > 0.5:
+                for x in range(4):
+                    setMotor(self, x, 1, 205)
+            else:
+                for x in range(4):
+                    stopMotor(self, x)
 
 def beepSPKR(self, freq, duration):
     while True:
@@ -355,9 +357,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ultrasonicTimer = QtCore.QTimer()
         self.ultrasonicTimer.timeout.connect(lambda: ultrasonicPoll(self))
 
-        self.controllerTimer = QtCore.QTimer()
-        self.controllerTimer.timeout.connect(lambda: controllerPoll(self))
-        self.controllerTimer.start(25)
+        controllerThread = threading.Thread(target=controllerPoll, args=(self))
+        controllerThread.start()
 
         self.enableUltrasonicPoll.clicked.connect(self.toggleUltrasonicTimer)
         self.doAThing.clicked.connect(self.buttonFunction)
