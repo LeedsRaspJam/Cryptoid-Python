@@ -96,7 +96,7 @@ def controllerPoll(self):
         for x in range(4):
             setMotor(x, 1, 205)
     else:
-        for x in range(4)
+        for x in range(4):
             stopMotor(x)
 
 def beepSPKR(self, freq, duration):
