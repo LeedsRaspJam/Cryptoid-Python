@@ -235,11 +235,36 @@ class controllerWorker(QtCore.QObject):
                 print(y)
                 if x > 0.5:
                     for x in range(4):
-                        print("on")
-                else:
+                        motorBuffer[x] = [1, 255]
+                        while True:
+                            stm32.write("SETM\r\n".encode())
+                            response = stm32.readline()
+                            if response.decode() == "OK\r\n":
+                                stm32.write(str(x).encode())
+                                stm32.write("\r\n".encode())
+                                response = stm32.readline()
+                                if response.decode() == "OK\r\n":
+                                    stm32.write(str(1).encode())
+                                    stm32.write("\r\n".encode())
+                                    response = stm32.readline()
+                                    if response.decode() == "OK\r\n":
+                                        stm32.write(str(255).encode())
+                                        stm32.write("\r\n".encode())
+                                        response = stm32.readline()
+                                        if response.decode() == "OK\r\n":
+                                            break
                     for x in range(4):
-                        print("off")
-
+                        motorBuffer[x] = [0, 0]
+                        while True:
+                            stm32.write("STPM\r\n".encode())
+                            response = stm32.readline()
+                            if response.decode() == "OK\r\n":
+                                stm32.write(str(x).encode())
+                                stm32.write("\r\n".encode())
+                                response = stm32.readline()
+                                if response.decode() == "OK\r\n":
+                                    break
+                                
 class MainWindow(QtWidgets.QMainWindow):
 
     def buttonFunction(self):
