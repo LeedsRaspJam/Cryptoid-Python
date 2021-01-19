@@ -21,12 +21,12 @@ import sys
 import random
 import os
 import time
-import Gamepad
 
 if os.uname()[1] == 'cryptoid':
     import RPi.GPIO as GPIO
     import hcsr04sensor as sensor
     import serial
+    import Gamepad
 
 global motorBuffer, ledBuffer
 motorBuffer = {
@@ -115,9 +115,6 @@ def controllerPoll(self):
         l_value = l_value + 100
     if r_value != 0 and y_corrected != 0:
         r_value = r_value + 100
-
-    print(l_value)
-    print(r_value)
 
     if isBackward == False:
         setMotor(self, 1, 1, l_value)
@@ -386,7 +383,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.controllerTimer = QtCore.QTimer()
         self.controllerTimer.timeout.connect(lambda: controllerPoll(self))
-        self.controllerTimer.start(125)
+        self.controllerTimer.start(100)
 
         self.enableUltrasonicPoll.clicked.connect(self.toggleUltrasonicTimer)
         self.doAThing.clicked.connect(self.buttonFunction)
