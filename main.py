@@ -24,7 +24,7 @@ import time
 
 if os.uname()[1] == 'cryptoid':
     import RPi.GPIO as GPIO
-    from hcsr04sensor import sensor
+    from hcsr04sensor import *
     import serial
 
 global motorBuffer, ledBuffer
