@@ -81,6 +81,14 @@ def ultrasonicPoll(self):
     self.distanceValue1.setText(str(round(distance1)) + " cm") # Set labels back in Qt GUI
     self.distanceValue2.setText(str(round(distance2)) + " cm")
 
+    if distance1 < 20 or distance2 < 20:
+        if ledBuffer["0"] == [0, 255, 0]:
+            for i in range(4):
+                stopMotor(self, i+1)
+            setLED(self, "all", 254, 0, 0)
+    else if ledBuffer["0"] == [254, 0, 0]:
+        setLED(self, "all", 0, 255, 0)
+
 def beepSPKR(self, freq, duration):
     while True:
         self.logTb.append("SPKR")
@@ -104,7 +112,6 @@ def setLED(self, ledID, rValue, gValue, bValue):
     if ledID == "all": # If setting all LEDs
         for key in ledBuffer:
             ledBuffer[key] = [rValue, gValue, bValue]
-        print(ledBuffer)
         while True: # Loop until all data sent
             self.logTb.append("LEDA")
             stm32.write("LEDA\r\n".encode()) # Send command
@@ -130,7 +137,6 @@ def setLED(self, ledID, rValue, gValue, bValue):
 
     else: # If only setting one
         ledBuffer[int(ledID)] = [rValue, gValue, bValue]
-        print(ledBuffer)
         while True:
             self.logTb.append("LEDS")
             stm32.write("LEDS\r\n".encode())
@@ -201,9 +207,13 @@ def stopMotor(self, motorID): # Stop one motor
 
 def setSTM32Text(self, state):
     if state == True:
+        for key in ledBuffer:
+            ledBuffer[key] = [0, 255, 0]
         self.stm32Connected.setText("STM32 Connected") # Set text + colour
         self.stm32Connected.setStyleSheet("color:#33cc33")
     elif state == False:
+        for key in ledBuffer:
+            ledBuffer[key] = [255, 0, 0]
         self.stm32Connected.setText("STM32 Disconnected")
         self.stm32Connected.setStyleSheet("color:#ff0000")
     
