@@ -91,13 +91,15 @@ def ultrasonicPoll(self):
         setLED(self, "all", 0, 255, 0)
 
 def controllerPoll(self):
-    left_x = gamepad.axis("LEFT-X")
-    print(left_x)
+    right_y = gamepad.axis("RIGHT-Y")
+    print(right_y)
     for x in range(4):
         if left_x > 0:
-            setMotor(self, x+1, 1, left_x*255)
+            setMotor(self, x+1, 1, right_y*255)
         if left_x < 0:
-            setMotor(self, x+1, 2, abs(left_x*255))
+            setMotor(self, x+1, 2, abs(right_y*255))
+        if left_x == 0:
+            stopMotor(self, x+1)
 
 def beepSPKR(self, freq, duration):
     while True:
