@@ -110,8 +110,11 @@ def controllerPoll(self):
         r_value = abs(left_x) * y_corrected
         r_value = r_value + 100
     elif left_x == 0:
-        l_value = y_corrected + 100
-        r_value = y_corrected + 100
+        l_value = y_corrected
+        r_value = y_corrected
+        if y_corrected != 0:
+            l_value = l_value + 100
+            r_value = r_value + 100
 
     print(l_value)
     print(r_value)
