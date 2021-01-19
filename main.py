@@ -93,11 +93,13 @@ def ultrasonicPoll(self):
 def controllerPoll(self):
     right_y = gamepad.axis("RIGHT-Y")
     print(right_y)
+    y_corrected = right_y * 155
+    y_corrected = y_corrected + 100
     for x in range(4):
         if right_y > 0:
-            setMotor(self, x+1, 1, 100+right_y*155)
+            setMotor(self, x+1, 1, y_corrected)
         if right_y < 0:
-            setMotor(self, x+1, 2, abs(100+right_y*155))
+            setMotor(self, x+1, 2, abs(y_corrected))
         if right_y == 0:
             stopMotor(self, x+1)
 
