@@ -227,24 +227,24 @@ def gpioInit(self):
 
 class controllerWorker(QtCore.QObject):
     def setMotorTh(self, motorID, direction, speed): # Set one motor
-    motorBuffer[motorID] = [direction, speed]
-    while True:
-        stm32.write("SETM\r\n".encode())
-        response = stm32.readline()
-        if response.decode() == "OK\r\n":
-            stm32.write(str(motorID).encode())
-            stm32.write("\r\n".encode())
+        motorBuffer[motorID] = [direction, speed]
+        while True:
+            stm32.write("SETM\r\n".encode())
             response = stm32.readline()
             if response.decode() == "OK\r\n":
-                stm32.write(str(direction).encode())
+                stm32.write(str(motorID).encode())
                 stm32.write("\r\n".encode())
                 response = stm32.readline()
                 if response.decode() == "OK\r\n":
-                    stm32.write(str(speed).encode())
+                    stm32.write(str(direction).encode())
                     stm32.write("\r\n".encode())
                     response = stm32.readline()
                     if response.decode() == "OK\r\n":
-                        break
+                        stm32.write(str(speed).encode())
+                        stm32.write("\r\n".encode())
+                        response = stm32.readline()
+                        if response.decode() == "OK\r\n":
+                            break
 
     def stopMotorTh(self, motorID): # Stop one motor
         motorBuffer[motorID] = [0, 0]
