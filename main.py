@@ -95,9 +95,9 @@ def controllerPoll(self):
     print(right_y)
     for x in range(4):
         if right_y > 0:
-            setMotor(self, x+1, 1, right_y*255)
+            setMotor(self, x+1, 1, 100+right_y*155)
         if right_y < 0:
-            setMotor(self, x+1, 2, abs(right_y*255))
+            setMotor(self, x+1, 2, abs(100+right_y*155))
         if right_y == 0:
             stopMotor(self, x+1)
 
