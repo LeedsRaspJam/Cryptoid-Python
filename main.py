@@ -96,6 +96,8 @@ def controllerPoll(self):
 
     if right_y < 0:
         isBackward = True
+    elif right_y > 0:
+        isBackward = False
     
     print(left_x)
     y_corrected = abs(right_y) * 155
