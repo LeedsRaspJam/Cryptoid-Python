@@ -110,8 +110,8 @@ def controllerPoll(self):
         l_value = 0
         r_value = abs(left_x) * y_corrected
     elif left_x == 0:
-        l_value = 0
-        r_value = 0
+        l_value = 1
+        r_value = 1
 
     if isBackward == False:
         setMotor(self, 1, 1, l_value)
