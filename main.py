@@ -93,7 +93,7 @@ def ultrasonicPoll(self):
 def controllerPoll(self):
     right_y = gamepad.axis("RIGHT-Y")
     print(right_y)
-    y_corrected = right_y * 155
+    y_corrected = abs(right_y) * 155
     y_corrected = y_corrected + 100
     for x in range(4):
         if right_y > 0:
