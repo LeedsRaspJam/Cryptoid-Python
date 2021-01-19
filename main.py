@@ -21,7 +21,6 @@ import sys
 import random
 import os
 import time
-import threading
 
 if os.uname()[1] == 'cryptoid':
     import RPi.GPIO as GPIO
@@ -90,20 +89,6 @@ def ultrasonicPoll(self):
             setLED(self, "all", 254, 0, 0)
     elif ledBuffer[0] == [254, 0, 0]:
         setLED(self, "all", 0, 255, 0)
-
-def controllerPoll(self):
-    with ControllerResource() as joystick:
-        while joystick.connected:
-            x = joystick['lx']
-            y = joystick['ry']
-            print(x)
-            print(y)
-            if x > 0.5:
-                for x in range(4):
-                    setMotor(self, x, 1, 205)
-            else:
-                for x in range(4):
-                    stopMotor(self, x)
 
 def beepSPKR(self, freq, duration):
     while True:
@@ -240,6 +225,21 @@ def gpioInit(self):
     sensor1 = sensor.Measurement(22, 12) # Init both sensors
     sensor2 = sensor.Measurement(23, 1)
 
+class controllerWorker(QtCore.QObject):
+    def run(self):
+        with ControllerResource() as joystick:
+            while joystick.connected:
+                x = joystick['lx']
+                y = joystick['ry']
+                print(x)
+                print(y)
+                if x > 0.5:
+                    for x in range(4):
+                        setMotor(self, x, 1, 205)
+                else:
+                    for x in range(4):
+                        stopMotor(self, x)
+
 class MainWindow(QtWidgets.QMainWindow):
 
     def buttonFunction(self):
@@ -262,6 +262,12 @@ class MainWindow(QtWidgets.QMainWindow):
         beepSPKR(self, 466,200)
         time.sleep(0.2)
         beepSPKR(self, 523, 200)
+
+    def createControllerThread(self):
+        self.thread = QtCore.QThread()
+        self.worker = controllerWorker()
+        self.worker.moveToThread(self.thread)
+        self.thread.start()
 
     def toggleUltrasonicTimer(self):
         if self.ultrasonicTimer.isActive() == False:
@@ -357,11 +363,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ultrasonicTimer = QtCore.QTimer()
         self.ultrasonicTimer.timeout.connect(lambda: ultrasonicPoll(self))
 
-        controllerThread = threading.Thread(target=controllerPoll, args=(self,))
-        controllerThread.start()
-
         self.enableUltrasonicPoll.clicked.connect(self.toggleUltrasonicTimer)
-        self.doAThing.clicked.connect(self.buttonFunction)
+        self.doAThing.clicked.connect(self.createControllerThread) #buttonFunction)
         self.clearBtn.clicked.connect(self.clearLog)
         self.resetBtn.clicked.connect(self.resetSTM)
         self.versBtn.clicked.connect(self.printVer)
