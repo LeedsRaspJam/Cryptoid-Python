@@ -232,7 +232,7 @@ class controllerWorker(QtCore.QObject):
                 x = joystick['lx']
                 y = joystick['ry']
                 if x > 0.5:
-                    for i in range(1, 4):
+                    for i in range(4):
                         print(i)
                         motorBuffer[i] = [1, 255]
                         while True:
@@ -253,7 +253,7 @@ class controllerWorker(QtCore.QObject):
                                         if response.decode() == "OK\r\n":
                                             break
                 elif x < 0.5:
-                    for i in range(1, 4):
+                    for i in range(4):
                         print(i)
                         motorBuffer[i] = [0, 0]
                         while True:
