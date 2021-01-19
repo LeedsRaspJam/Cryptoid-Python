@@ -265,10 +265,10 @@ class controllerWorker(QtCore.QObject):
                 y = joystick['ry']
                 if x > 0.5:
                     for i in range(4):
-                        setMotorTh(self, i)
+                        self.setMotorTh(self, i)
                 elif x < 0.5:
                     for i in range(4):
-                        stopMotorTh(self, i)
+                        self.stopMotorTh(self, i)
 
 class MainWindow(QtWidgets.QMainWindow):
 
