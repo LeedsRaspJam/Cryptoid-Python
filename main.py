@@ -99,12 +99,14 @@ def controllerPoll(self):
     elif right_y <= 0:
         isBackward = False
     
-    y_corrected = abs(right_y) * 255
+    y_corrected = abs(right_y) * 155
+    if y_corrected != 0:
+        y_corrected + 100
 
-    if left_x > 0:
+    if left_x < 0:
         l_value = left_x * y_corrected
         r_value = 0
-    elif left_x < 0:
+    elif left_x > 0:
         l_value = 0
         r_value = abs(left_x) * y_corrected
     elif left_x == 0:
@@ -113,7 +115,7 @@ def controllerPoll(self):
 
     print(l_value)
     print(r_value)
-    
+
     if isBackward == False:
         setMotor(self, 1, 1, l_value)
         setMotor(self, 3, 1, l_value)
