@@ -231,16 +231,15 @@ class controllerWorker(QtCore.QObject):
             while joystick.connected:
                 x = joystick['lx']
                 y = joystick['ry']
-                print(x)
-                print(y)
                 if x > 0.5:
-                    for x in range(4):
-                        motorBuffer[x] = [1, 255]
+                    for i in range(1, 4):
+                        print(i)
+                        motorBuffer[i] = [1, 255]
                         while True:
                             stm32.write("SETM\r\n".encode())
                             response = stm32.readline()
                             if response.decode() == "OK\r\n":
-                                stm32.write(str(x).encode())
+                                stm32.write(str(i).encode())
                                 stm32.write("\r\n".encode())
                                 response = stm32.readline()
                                 if response.decode() == "OK\r\n":
@@ -254,13 +253,14 @@ class controllerWorker(QtCore.QObject):
                                         if response.decode() == "OK\r\n":
                                             break
                 elif x < 0.5:
-                    for x in range(4):
-                        motorBuffer[x] = [0, 0]
+                    for i in range(1, 4):
+                        print(i)
+                        motorBuffer[i] = [0, 0]
                         while True:
                             stm32.write("STPM\r\n".encode())
                             response = stm32.readline()
                             if response.decode() == "OK\r\n":
-                                stm32.write(str(x).encode())
+                                stm32.write(str(i).encode())
                                 stm32.write("\r\n".encode())
                                 response = stm32.readline()
                                 if response.decode() == "OK\r\n":
