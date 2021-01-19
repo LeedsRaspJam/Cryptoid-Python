@@ -92,14 +92,16 @@ def ultrasonicPoll(self):
 
 def controllerPoll(self):
     with ControllerResource() as joystick:
-        while joystick.connected:
-            x = joystick['lx']
-            y = joystick['ry']
-            print(x)
-            print(y)
-            if x > 0.5:
-                for x in range(4):
-                    setMotor(self, x, 1, 205)
+        x = joystick['lx']
+        y = joystick['ry']
+        print(x)
+        print(y)
+        if x > 0.5:
+            for x in range(4):
+                setMotor(self, x, 1, 205)
+        else:
+            for x in range(4):
+                stopMotor(self, x)
 
 def beepSPKR(self, freq, duration):
     while True:
