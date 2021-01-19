@@ -27,14 +27,16 @@ if os.uname()[1] == 'cryptoid':
     from hcsr04sensor import sensor
     import serial
 
-global motorBuffer = {
+global motorBuffer, ledBuffer
+
+motorBuffer = {
     1: [0, 0]
     2: [0, 0]
     3: [0, 0]
     4: [0, 0]
 }
 
-global ledBuffer = {
+ledBuffer = {
     1: [0, 0, 0]
     2: [0, 0, 0]
     3: [0, 0, 0]
@@ -203,8 +205,10 @@ def setSTM32Text(self, state):
     
 def gpioInit(self):
     GPIO.setmode(GPIO.BCM) # Set mode to BCM numbering
-    global sensor1 = sensor.Measurement(22, 12) # Init both sensors
-    global sensor2 = sensor.Measurement(23, 1)
+
+    global sensor1, sensor2
+    sensor1 = sensor.Measurement(22, 12) # Init both sensors
+    sensor2 = sensor.Measurement(23, 1)
 
 class MainWindow(QtWidgets.QMainWindow):
 
