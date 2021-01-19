@@ -75,8 +75,8 @@ ledBuffer = {
 }
 
 def ultrasonicPoll(self):
-    distance1 = sensor1.raw_distance(sample_size=5, sample_wait=0.03) # Get raw distance readings
-    distance2 = sensor2.raw_distance(sample_size=5, sample_wait=0.03)
+    distance1 = sensor1.raw_distance(sample_size=3, sample_wait=0.04) # Get raw distance readings
+    distance2 = sensor2.raw_distance(sample_size=3, sample_wait=0.04)
 
     self.distanceValue1.setText(str(round(distance1)) + " cm") # Set labels back in Qt GUI
     self.distanceValue2.setText(str(round(distance2)) + " cm")
@@ -249,7 +249,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def toggleUltrasonicTimer(self):
         if self.ultrasonicTimer.isActive() == False:
-            self.ultrasonicTimer.start(500)
+            self.ultrasonicTimer.start(250)
         else:
             self.ultrasonicTimer.stop()
 
