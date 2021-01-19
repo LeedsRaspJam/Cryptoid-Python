@@ -115,9 +115,9 @@ def controllerPoll(self):
 
     if l_value != 0:
         l_value = l_value + 100
-    elif r_value !=:
+    elif r_value != 0:
         r_value = r_value + 100
-        
+
     if isBackward == False:
         setMotor(self, 1, 1, l_value)
         setMotor(self, 3, 1, l_value)
