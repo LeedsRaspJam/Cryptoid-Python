@@ -30,10 +30,10 @@ if os.uname()[1] == 'cryptoid':
 global motorBuffer, ledBuffer
 
 motorBuffer = {
-    "1": [0 0]
-    "2": [0 0]
-    "3": [0 0]
-    "4": [0 0]
+    "1": [0, 0]
+    "2": [0, 0]
+    "3": [0, 0]
+    "4": [0, 0]
 }
 
 ledBuffer = {
@@ -72,7 +72,7 @@ ledBuffer = {
     "33": [0 0, 0]
     "34": [0 0, 0]
     "35": [0 0, 0]
-    "36: [0. 0. 0]
+    "36": [0. 0. 0]
 }
 
 def ultrasonicPoll(self):
