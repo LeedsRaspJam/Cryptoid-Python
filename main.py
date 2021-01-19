@@ -36,6 +36,7 @@ motorBuffer = {
 }
 
 ledBuffer = {
+    0: [0, 0, 0],
     1: [0, 0, 0],
     2: [0, 0, 0],
     3: [0, 0, 0],
@@ -70,8 +71,7 @@ ledBuffer = {
     32: [0, 0, 0],
     33: [0, 0, 0],
     34: [0, 0, 0],
-    35: [0, 0, 0],
-    36: [0, 0, 0]
+    35: [0, 0, 0]
 }
 
 def ultrasonicPoll(self):
@@ -102,6 +102,9 @@ def beepSPKR(self, freq, duration):
 
 def setLED(self, ledID, rValue, gValue, bValue):
     if ledID == "all": # If setting all LEDs
+        for key in ledBuffer:
+            ledBuffer[key] = [rValue, gValue, bValue]
+        print(ledBuffer)
         while True: # Loop until all data sent
             self.logTb.append("LEDA")
             stm32.write("LEDA\r\n".encode()) # Send command
