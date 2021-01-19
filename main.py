@@ -101,7 +101,7 @@ def controllerPoll(self):
     
     print(left_x)
     y_corrected = abs(right_y) * 155
-    y_corrected = y_corrected + 100
+    y_corrected = y_corrected 
 
     if left_x > 0:
         l_value = left_x * y_corrected
@@ -110,19 +110,19 @@ def controllerPoll(self):
         l_value = 0
         r_value = abs(left_x) * y_corrected
     elif left_x == 0:
-        l_value = 1
-        r_value = 1
+        l_value = y_corrected
+        r_value = y_corrected
 
     if isBackward == False:
-        setMotor(self, 1, 1, l_value)
-        setMotor(self, 3, 1, l_value)
-        setMotor(self, 2, 1, r_value)
-        setMotor(self, 4, 1, r_value)
+        setMotor(self, 1, 1, l_value+100)
+        setMotor(self, 3, 1, l_value+100)
+        setMotor(self, 2, 1, r_value+100)
+        setMotor(self, 4, 1, r_value+100)
     elif isBackward == True:
-        setMotor(self, 1, 2, l_value)
-        setMotor(self, 3, 2, l_value)
-        setMotor(self, 2, 2, r_value)
-        setMotor(self, 4, 2, r_value)
+        setMotor(self, 1, 2, l_value+100)
+        setMotor(self, 3, 2, l_value+100)
+        setMotor(self, 2, 2, r_value+100)
+        setMotor(self, 4, 2, r_value+100)
 
 def beepSPKR(self, freq, duration):
     while True:
