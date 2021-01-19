@@ -21,12 +21,12 @@ import sys
 import random
 import os
 import time
+import Gamepad
 
 if os.uname()[1] == 'cryptoid':
     import RPi.GPIO as GPIO
     import hcsr04sensor as sensor
     import serial
-    from approxeng.input.selectbinder import ControllerResource
 
 global motorBuffer, ledBuffer
 motorBuffer = {
@@ -90,6 +90,10 @@ def ultrasonicPoll(self):
     elif ledBuffer[0] == [254, 0, 0]:
         setLED(self, "all", 0, 255, 0)
 
+def controllerPoll(self):
+    left_x = gamepad.axis("LEFT-X")
+    print(left_x)
+    
 def beepSPKR(self, freq, duration):
     while True:
         self.logTb.append("SPKR")
@@ -221,54 +225,11 @@ def setSTM32Text(self, state):
 def gpioInit(self):
     GPIO.setmode(GPIO.BCM) # Set mode to BCM numbering
 
-    global sensor1, sensor2
+    global sensor1, sensor2, gamepad
     sensor1 = sensor.Measurement(22, 12) # Init both sensors
     sensor2 = sensor.Measurement(23, 1)
-
-class controllerWorker(QtCore.QObject):
-    def setMotorTh(self, motorID, direction, speed): # Set one motor
-        motorBuffer[motorID] = [direction, speed]
-        while True:
-            stm32.write("SETM\r\n".encode())
-            response = stm32.readline()
-            if response.decode() == "OK\r\n":
-                stm32.write(str(motorID).encode())
-                stm32.write("\r\n".encode())
-                response = stm32.readline()
-                if response.decode() == "OK\r\n":
-                    stm32.write(str(direction).encode())
-                    stm32.write("\r\n".encode())
-                    response = stm32.readline()
-                    if response.decode() == "OK\r\n":
-                        stm32.write(str(speed).encode())
-                        stm32.write("\r\n".encode())
-                        response = stm32.readline()
-                        if response.decode() == "OK\r\n":
-                            break
-
-    def stopMotorTh(self, motorID): # Stop one motor
-        motorBuffer[motorID] = [0, 0]
-        while True:
-            stm32.write("STPM\r\n".encode())
-            response = stm32.readline()
-            if response.decode() == "OK\r\n":
-                stm32.write(str(motorID).encode())
-                stm32.write("\r\n".encode())
-                response = stm32.readline()
-                if response.decode() == "OK\r\n":
-                    break
-
-    def run(self):
-        with ControllerResource() as joystick:
-            while joystick.connected:
-                x = joystick['lx']
-                y = joystick['ry']
-                if x > 0.5:
-                    for i in range(4):
-                        self.setMotorTh(i, 1, 255)
-                elif x < 0.5:
-                    for i in range(4):
-                        self.stopMotorTh(i)
+    gamepad = Gamepad.PS4()
+    gamepad.startBackgroundUpdates()
 
 class MainWindow(QtWidgets.QMainWindow):
 
@@ -292,13 +253,6 @@ class MainWindow(QtWidgets.QMainWindow):
         beepSPKR(self, 466,200)
         time.sleep(0.2)
         beepSPKR(self, 523, 200)
-
-    def createControllerThread(self):
-        self.thread = QtCore.QThread()
-        self.worker = controllerWorker()
-        self.worker.moveToThread(self.thread)
-        self.thread.started.connect(self.worker.run)
-        self.thread.start()
 
     def toggleUltrasonicTimer(self):
         if self.ultrasonicTimer.isActive() == False:
@@ -394,8 +348,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ultrasonicTimer = QtCore.QTimer()
         self.ultrasonicTimer.timeout.connect(lambda: ultrasonicPoll(self))
 
+        self.controllerTimer = QtCore.QTimer()
+        self.controllerTimer.timeout.connect(lambda: controllerPoll(self))
+
         self.enableUltrasonicPoll.clicked.connect(self.toggleUltrasonicTimer)
-        self.doAThing.clicked.connect(self.createControllerThread) #buttonFunction)
+        self.doAThing.clicked.connect(self.buttonFunction)
         self.clearBtn.clicked.connect(self.clearLog)
         self.resetBtn.clicked.connect(self.resetSTM)
         self.versBtn.clicked.connect(self.printVer)
