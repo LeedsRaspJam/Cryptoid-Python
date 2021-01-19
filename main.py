@@ -226,6 +226,38 @@ def gpioInit(self):
     sensor2 = sensor.Measurement(23, 1)
 
 class controllerWorker(QtCore.QObject):
+    def setMotorTh(self, motorID, direction, speed): # Set one motor
+    motorBuffer[motorID] = [direction, speed]
+    while True:
+        stm32.write("SETM\r\n".encode())
+        response = stm32.readline()
+        if response.decode() == "OK\r\n":
+            stm32.write(str(motorID).encode())
+            stm32.write("\r\n".encode())
+            response = stm32.readline()
+            if response.decode() == "OK\r\n":
+                stm32.write(str(direction).encode())
+                stm32.write("\r\n".encode())
+                response = stm32.readline()
+                if response.decode() == "OK\r\n":
+                    stm32.write(str(speed).encode())
+                    stm32.write("\r\n".encode())
+                    response = stm32.readline()
+                    if response.decode() == "OK\r\n":
+                        break
+
+    def stopMotorTh(self, motorID): # Stop one motor
+        motorBuffer[motorID] = [0, 0]
+        while True:
+            stm32.write("STPM\r\n".encode())
+            response = stm32.readline()
+            if response.decode() == "OK\r\n":
+                stm32.write(str(motorID).encode())
+                stm32.write("\r\n".encode())
+                response = stm32.readline()
+                if response.decode() == "OK\r\n":
+                    break
+
     def run(self):
         with ControllerResource() as joystick:
             while joystick.connected:
@@ -233,38 +265,10 @@ class controllerWorker(QtCore.QObject):
                 y = joystick['ry']
                 if x > 0.5:
                     for i in range(4):
-                        print(i)
-                        motorBuffer[i] = [1, 255]
-                        while True:
-                            stm32.write("SETM\r\n".encode())
-                            response = stm32.readline()
-                            if response.decode() == "OK\r\n":
-                                stm32.write(str(i).encode())
-                                stm32.write("\r\n".encode())
-                                response = stm32.readline()
-                                if response.decode() == "OK\r\n":
-                                    stm32.write(str(1).encode())
-                                    stm32.write("\r\n".encode())
-                                    response = stm32.readline()
-                                    if response.decode() == "OK\r\n":
-                                        stm32.write(str(255).encode())
-                                        stm32.write("\r\n".encode())
-                                        response = stm32.readline()
-                                        if response.decode() == "OK\r\n":
-                                            break
+                        setMotorTh(self, i)
                 elif x < 0.5:
                     for i in range(4):
-                        print(i)
-                        motorBuffer[i] = [0, 0]
-                        while True:
-                            stm32.write("STPM\r\n".encode())
-                            response = stm32.readline()
-                            if response.decode() == "OK\r\n":
-                                stm32.write(str(i).encode())
-                                stm32.write("\r\n".encode())
-                                response = stm32.readline()
-                                if response.decode() == "OK\r\n":
-                                    break
+                        stopMotorTh(self, i)
 
 class MainWindow(QtWidgets.QMainWindow):
 
