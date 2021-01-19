@@ -116,6 +116,11 @@ def controllerPoll(self):
             l_value = l_value + 100
             r_value = r_value + 100
 
+    if l_value != 0 and y_corrected != 0:
+        l_value = l_value + 100
+    elif r_value != 0 and y_corrected != 0:
+        r_value = r_value + 100
+        
     print(l_value)
     print(r_value)
 
