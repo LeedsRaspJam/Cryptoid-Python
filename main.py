@@ -82,11 +82,11 @@ def ultrasonicPoll(self):
     self.distanceValue2.setText(str(round(distance2)) + " cm")
 
     if distance1 < 20 or distance2 < 20:
-        if ledBuffer["0"] == [0, 255, 0]:
+        if ledBuffer[0] == [0, 255, 0]:
             for i in range(4):
                 stopMotor(self, i+1)
             setLED(self, "all", 254, 0, 0)
-    elif ledBuffer["0"] == [254, 0, 0]:
+    elif ledBuffer[0] == [254, 0, 0]:
         setLED(self, "all", 0, 255, 0)
 
 def beepSPKR(self, freq, duration):
