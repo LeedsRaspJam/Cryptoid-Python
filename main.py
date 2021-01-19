@@ -94,9 +94,9 @@ def controllerPoll(self):
     right_y = gamepad.axis("RIGHT-Y")
     left_x = gamepad.axis("LEFT-X")
 
-    if right_y < 0:
+    if right_y > 0:
         isBackward = True
-    elif right_y >= 0:
+    elif right_y <= 0:
         isBackward = False
     
     print(left_x)
