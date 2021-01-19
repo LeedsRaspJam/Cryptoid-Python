@@ -27,23 +27,58 @@ if os.uname()[1] == 'cryptoid':
     from hcsr04sensor import sensor
     import serial
 
+global motorBuffer = {
+    1: [0, 0]
+    2: [0, 0]
+    3: [0, 0]
+    4: [0, 0]
+}
+
+global ledBuffer = {
+    1: [0, 0, 0]
+    2: [0, 0, 0]
+    3: [0, 0, 0]
+    4: [0, 0, 0]
+    5: [0, 0, 0]
+    6: [0, 0, 0]
+    7: [0, 0, 0]
+    8: [0, 0, 0]
+    9: [0, 0, 0]
+    10: [0, 0, 0]
+    11: [0, 0, 0]
+    12: [0, 0, 0]
+    13: [0, 0, 0]
+    14: [0, 0, 0]
+    15: [0, 0, 0]
+    16: [0, 0, 0]
+    17: [0, 0, 0]
+    18: [0, 0, 0]
+    19: [0, 0, 0]
+    20: [0, 0, 0]
+    21: [0, 0, 0]
+    22: [0, 0, 0]
+    23: [0, 0, 0]
+    24: [0, 0, 0]
+    25: [0, 0, 0]
+    26: [0, 0, 0]
+    27: [0, 0, 0]
+    28: [0, 0, 0]
+    29: [0, 0, 0]
+    30: [0, 0, 0]
+    31: [0, 0, 0]
+    32: [0, 0, 0]
+    33: [0, 0, 0]
+    34: [0, 0, 0]
+    35: [0, 0, 0]
+    36: [0. 0. 0]
+}
+
 def ultrasonicPoll(self):
-    global sensor1, sensor2
     distance1 = sensor1.raw_distance(sample_size=5, sample_wait=0.03) # Get raw distance readings
     distance2 = sensor2.raw_distance(sample_size=5, sample_wait=0.03)
 
     self.distanceValue1.setText(str(round(distance1)) + " cm") # Set labels back in Qt GUI
     self.distanceValue2.setText(str(round(distance2)) + " cm")
-
-    if distance1 < 10 or distance2 < 10:
-        emergencyStop(self)
-    else:
-        setLED(self, "all", 0, 255, 0)
-
-def emergencyStop(self):
-    for i in range(4):
-        stopMotor(self, i+1)
-    setLED(self, "all", 255, 0, 0)
 
 def beepSPKR(self, freq, duration):
     while True:
@@ -119,6 +154,8 @@ def setLED(self, ledID, rValue, gValue, bValue):
                                 break
 
 def setMotor(self, motorID, direction, speed): # Set one motor
+    motorBuffer[motorID] = [direction, speed]
+    print(motorBuffer)
     while True:
         self.logTb.append("SETM")
         stm32.write("SETM\r\n".encode())
@@ -166,9 +203,8 @@ def setSTM32Text(self, state):
     
 def gpioInit(self):
     GPIO.setmode(GPIO.BCM) # Set mode to BCM numbering
-    global sensor1, sensor2
-    sensor1 = sensor.Measurement(22, 12) # Init both sensors
-    sensor2 = sensor.Measurement(23, 1)
+    global sensor1 = sensor.Measurement(22, 12) # Init both sensors
+    global sensor2 = sensor.Measurement(23, 1)
 
 class MainWindow(QtWidgets.QMainWindow):
 
