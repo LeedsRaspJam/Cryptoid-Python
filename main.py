@@ -91,9 +91,9 @@ def ultrasonicPoll(self):
         setLED(self, "all", 0, 255, 0)
 
 def controllerPoll(self):
-    with ControllerResource() as pad:
-        x = pad['lx']
-        y = pad['ry']
+    with ControllerResource() as joystick:
+        x = joystick['lx']
+        y = joystick['ry']
         print(x)
         print(y)
         if x > 0.5:
