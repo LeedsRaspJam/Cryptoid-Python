@@ -428,11 +428,14 @@
            <layout class="QVBoxLayout" name="verticalLayout_9">
             <item>
              <widget class="QProgressBar" name="LBar">
+              <property name="minimum">
+               <number>100</number>
+              </property>
               <property name="maximum">
                <number>255</number>
               </property>
               <property name="value">
-               <number>-1</number>
+               <number>99</number>
               </property>
               <property name="textVisible">
                <bool>false</bool>
@@ -460,11 +463,14 @@
            <layout class="QVBoxLayout" name="verticalLayout_5">
             <item>
              <widget class="QProgressBar" name="RBar">
+              <property name="minimum">
+               <number>100</number>
+              </property>
               <property name="maximum">
                <number>255</number>
               </property>
               <property name="value">
-               <number>-1</number>
+               <number>99</number>
               </property>
               <property name="textVisible">
                <bool>false</bool>
