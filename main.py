@@ -375,7 +375,13 @@ class MainWindow(QtWidgets.QMainWindow):
     def stopAllMotorBtn(self): # Stop all motors
         for i in range(4):
             stopMotor(self, i+1)
+    
+    def startGP(self): # Start controller polling
+        self.controllerTimer.start(100)
 
+    def stopGP(self): # Stop controller polling
+        self.controllerTimer.stop()
+    
     def setLED(self): # Set one LED
         ledID, okPressed = QtWidgets.QInputDialog.getInt(self, "LED ID", "LED ID?", 1, 1, 36, 1)
         rValue, okPressed = QtWidgets.QInputDialog.getInt(self, "Red", "Red?", 255, 0, 255, 25)
@@ -410,7 +416,6 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.controllerTimer = QtCore.QTimer()
         self.controllerTimer.timeout.connect(lambda: controllerPoll(self))
-        self.controllerTimer.start(100)
 
         self.enableUltrasonicPoll.clicked.connect(self.toggleUltrasonicTimer)
         self.doAThing.clicked.connect(self.buttonFunction)
@@ -421,6 +426,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.stopMtrBtn.clicked.connect(self.stopMotorBtn)
         self.allMotorBtn.clicked.connect(self.allMotor)
         self.stopAllMtrBtn.clicked.connect(self.stopAllMotorBtn)
+        self.startGPBtn.clicked.connect(self.startGP)
+        self.stopGPBtn.clicked.connect(self.stopGP)
         self.reInit.clicked.connect(self.initSTM)
         self.setLEDBtn.clicked.connect(self.setLED)
         self.allLEDBtn.clicked.connect(self.allLED)
