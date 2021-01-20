@@ -399,7 +399,7 @@
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_9">
           <item>
-           <widget class="QProgressBar" name="xBar">
+           <widget class="QProgressBar" name="LBar">
             <property name="value">
              <number>-1</number>
             </property>
@@ -412,14 +412,14 @@
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="xLabel">
+           <widget class="QLabel" name="LLabel">
             <property name="font">
              <font>
               <pointsize>24</pointsize>
              </font>
             </property>
             <property name="text">
-             <string>X:</string>
+             <string>L:</string>
             </property>
            </widget>
           </item>
@@ -428,7 +428,7 @@
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_5">
           <item>
-           <widget class="QProgressBar" name="yBar">
+           <widget class="QProgressBar" name="RBar">
             <property name="value">
              <number>-1</number>
             </property>
@@ -441,14 +441,14 @@
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="yLabel">
+           <widget class="QLabel" name="RLabel">
             <property name="font">
              <font>
               <pointsize>24</pointsize>
              </font>
             </property>
             <property name="text">
-             <string>Y:</string>
+             <string>R:</string>
             </property>
            </widget>
           </item>
