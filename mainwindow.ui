@@ -437,6 +437,9 @@
               <property name="value">
                <number>99</number>
               </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
+              </property>
               <property name="textVisible">
                <bool>false</bool>
               </property>
@@ -471,6 +474,9 @@
               </property>
               <property name="value">
                <number>99</number>
+              </property>
+              <property name="alignment">
+               <set>Qt::AlignCenter</set>
               </property>
               <property name="textVisible">
                <bool>false</bool>
