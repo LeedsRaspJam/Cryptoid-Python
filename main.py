@@ -120,11 +120,12 @@ def controllerPoll(self):
     if r_value != 0 and y_corrected != 0:
         r_value = r_value + 100
 
-    self.LBar.setValue(l_value)
-    self.RBar.setValue(r_value)
-    if y_corrected == 0:
+    if isStopped == True:
         self.LBar.setValue(0)
         self.RBar.setValue(0)
+    else:
+        self.LBar.setValue(l_value)
+        self.RBar.setValue(r_value)
     
     if isStopped == True:
         self.directionLabel.setText("Stopped")
