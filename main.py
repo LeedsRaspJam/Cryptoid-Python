@@ -396,7 +396,10 @@ class MainWindow(QtWidgets.QMainWindow):
         bValue, okPressed = QtWidgets.QInputDialog.getInt(self, "Blue", "Blue?", 255, 0, 255, 25)
         if okPressed:
             setLED(self, "all", rValue, gValue, bValue)
-
+    
+    def allLEDOff(self): # Turn off all LEDs
+        setLED(self, "all", 0, 0, 0)
+        
     def closeApp(self):
         sys.exit()
 
@@ -431,6 +434,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.reInit.clicked.connect(self.initSTM)
         self.setLEDBtn.clicked.connect(self.setLED)
         self.allLEDBtn.clicked.connect(self.allLED)
+        self.allLEDOffBtn.clicked.connect(self.allLEDOff)
         self.actionQuit.triggered.connect(self.closeApp)
 
 def main():
@@ -439,5 +443,5 @@ def main():
     main.show()
     sys.exit(app.exec_())
 
-if __name__ == '__main__':         
+if __name__ == '__main__':
     main()
