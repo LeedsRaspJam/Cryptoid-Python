@@ -120,11 +120,15 @@ def controllerPoll(self):
     self.RBar.setValue(r_value)
 
     if isBackward == False:
+        self.directionLabel.setText("Forward") # Set text + colour
+        self.directionLabel.setStyleSheet("color:#33cc33")
         setMotor(self, 1, 1, l_value)
         setMotor(self, 3, 1, l_value)
         setMotor(self, 2, 1, r_value)
         setMotor(self, 4, 1, r_value)
     elif isBackward == True:
+        self.directionLabel.setText("Backward") # Set text + colour
+        self.directionLabel.setStyleSheet("color:#ff0000")
         setMotor(self, 1, 2, l_value)
         setMotor(self, 3, 2, l_value)
         setMotor(self, 2, 2, r_value)
