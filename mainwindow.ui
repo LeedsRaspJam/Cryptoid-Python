@@ -429,7 +429,7 @@
             <item>
              <widget class="QProgressBar" name="LBar">
               <property name="minimum">
-               <number>0</number>
+               <number>100</number>
               </property>
               <property name="maximum">
                <number>255</number>
@@ -464,7 +464,7 @@
             <item>
              <widget class="QProgressBar" name="RBar">
               <property name="minimum">
-               <number>0</number>
+               <number>100</number>
               </property>
               <property name="maximum">
                <number>255</number>
