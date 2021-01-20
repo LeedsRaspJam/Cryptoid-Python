@@ -285,7 +285,7 @@ def setSTM32Text(self, state):
 def gpioInit(self):
     GPIO.setmode(GPIO.BCM) # Set mode to BCM numbering
 
-    global sensor1, sensor2, gamepad
+    global sensor1, sensor2
     sensor1 = sensor.Measurement(22, 12) # Init both sensors
     sensor2 = sensor.Measurement(23, 1)
 
@@ -375,6 +375,7 @@ class MainWindow(QtWidgets.QMainWindow):
             stopMotor(self, i+1)
     
     def startGP(self): # Start controller polling
+        global gamepad
         gamepad = Gamepad.PS4()
         gamepad.startBackgroundUpdates()
         self.controllerTimer.start(100)
