@@ -87,6 +87,7 @@ def ultrasonicPoll(self):
             for i in range(4):
                 stopMotor(self, i+1)
             setLED(self, "all", 254, 0, 0)
+            MainWindow.stopGP(self)
     elif ledBuffer[0] == [254, 0, 0]:
         setLED(self, "all", 0, 255, 0)
 

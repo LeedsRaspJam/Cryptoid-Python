@@ -565,16 +565,16 @@
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_4">
             <item>
-             <widget class="QPushButton" name="closeCameraBtn">
+             <widget class="QPushButton" name="openCameraBtn">
               <property name="text">
-               <string>Close Camera</string>
+               <string>Open Camera</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="openCameraBtn">
+             <widget class="QPushButton" name="closeCameraBtn">
               <property name="text">
-               <string>Open Camera</string>
+               <string>Close Camera</string>
               </property>
              </widget>
             </item>
