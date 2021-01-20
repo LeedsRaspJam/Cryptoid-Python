@@ -115,7 +115,7 @@ def controllerPoll(self):
         l_value = y_corrected
         r_value = y_corrected
 
-    self.LBar.setValue(l_value)
+    self.LBar.setValue(l_value+100)
     self.RBar.setValue(r_value)
 
     if l_value != 0 and y_corrected != 0:
