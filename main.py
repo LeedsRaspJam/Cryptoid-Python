@@ -126,6 +126,10 @@ def controllerPoll(self):
     if isStopped == True:
         self.directionLabel.setText("Stopped")
         self.directionLabel.setStyleSheet("color:#000000")
+        setMotor(self, 1, 2, l_value)
+        setMotor(self, 3, 2, l_value)
+        setMotor(self, 2, 2, r_value)
+        setMotor(self, 4, 2, r_value)
     elif isBackward == False:
         self.directionLabel.setText("Forward") # Set text + colour
         self.directionLabel.setStyleSheet("color:#33cc33")
