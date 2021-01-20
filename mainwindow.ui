@@ -400,6 +400,9 @@
          <layout class="QVBoxLayout" name="verticalLayout_9">
           <item>
            <widget class="QProgressBar" name="LBar">
+            <property name="maximum">
+             <number>255</number>
+            </property>
             <property name="value">
              <number>-1</number>
             </property>
@@ -429,6 +432,9 @@
          <layout class="QVBoxLayout" name="verticalLayout_5">
           <item>
            <widget class="QProgressBar" name="RBar">
+            <property name="maximum">
+             <number>255</number>
+            </property>
             <property name="value">
              <number>-1</number>
             </property>
