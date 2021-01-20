@@ -100,7 +100,7 @@ def controllerPoll(self):
     elif right_y < 0:
         isBackward = False
         isStopped = False
-    elif right_y = 0:
+    elif right_y == 0:
         isStopped = True
     
     y_corrected = abs(right_y) * 155
