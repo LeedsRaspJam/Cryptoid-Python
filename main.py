@@ -121,8 +121,8 @@ def controllerPoll(self):
         r_value = r_value + 100
 
     if isStopped == True:
-        self.LBar.setValue(0)
-        self.RBar.setValue(0)
+        self.LBar.setValue(100)
+        self.RBar.setValue(100)
     else:
         self.LBar.setValue(l_value)
         self.RBar.setValue(r_value)
