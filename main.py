@@ -288,8 +288,6 @@ def gpioInit(self):
     global sensor1, sensor2, gamepad
     sensor1 = sensor.Measurement(22, 12) # Init both sensors
     sensor2 = sensor.Measurement(23, 1)
-    gamepad = Gamepad.PS4()
-    gamepad.startBackgroundUpdates()
 
 class MainWindow(QtWidgets.QMainWindow):
 
@@ -377,6 +375,8 @@ class MainWindow(QtWidgets.QMainWindow):
             stopMotor(self, i+1)
     
     def startGP(self): # Start controller polling
+        gamepad = Gamepad.PS4()
+        gamepad.startBackgroundUpdates()
         self.controllerTimer.start(100)
 
     def stopGP(self): # Stop controller polling
