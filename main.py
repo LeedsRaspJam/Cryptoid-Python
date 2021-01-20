@@ -96,8 +96,12 @@ def controllerPoll(self):
 
     if right_y > 0:
         isBackward = True
-    elif right_y <= 0:
+        isStopped = False
+    elif right_y < 0:
         isBackward = False
+        isStopped = False
+    elif right_y = 0:
+        isStopped = True
     
     y_corrected = abs(right_y) * 155
 
@@ -118,8 +122,11 @@ def controllerPoll(self):
 
     self.LBar.setValue(l_value)
     self.RBar.setValue(r_value)
-
-    if isBackward == False:
+    
+    if isStopped == True:
+        self.directionLabel.setText("Stopped")
+        self.directionLabel.setStyleSheet("color:#000000")
+    elif isBackward == False:
         self.directionLabel.setText("Forward") # Set text + colour
         self.directionLabel.setStyleSheet("color:#33cc33")
         setMotor(self, 1, 1, l_value)
