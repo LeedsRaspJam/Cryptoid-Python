@@ -27,7 +27,6 @@ if os.uname()[1] == 'cryptoid':
     import hcsr04sensor as sensor
     import serial
     import Gamepad
-    import cv2
 
 global motorBuffer, ledBuffer
 motorBuffer = {
