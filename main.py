@@ -116,8 +116,8 @@ def controllerPoll(self):
     if r_value != 0 and y_corrected != 0:
         r_value = r_value + 100
 
-    self.LBar.setValue(l_value*100)
-    self.RBar.setValue(r_value*100)
+    self.LBar.setValue(l_value)
+    self.RBar.setValue(r_value)
 
     if isBackward == False:
         setMotor(self, 1, 1, l_value)
