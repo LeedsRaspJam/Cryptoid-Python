@@ -204,6 +204,15 @@
                </color>
               </brush>
              </colorrole>
+             <colorrole role="PlaceholderText">
+              <brush brushstyle="NoBrush">
+               <color alpha="128">
+                <red>255</red>
+                <green>255</green>
+                <blue>255</blue>
+               </color>
+              </brush>
+             </colorrole>
             </active>
             <inactive>
              <colorrole role="WindowText">
@@ -260,6 +269,15 @@
                </color>
               </brush>
              </colorrole>
+             <colorrole role="PlaceholderText">
+              <brush brushstyle="NoBrush">
+               <color alpha="128">
+                <red>255</red>
+                <green>255</green>
+                <blue>255</blue>
+               </color>
+              </brush>
+             </colorrole>
             </inactive>
             <disabled>
              <colorrole role="WindowText">
@@ -310,6 +328,15 @@
              <colorrole role="ToolTipText">
               <brush brushstyle="SolidPattern">
                <color alpha="255">
+                <red>255</red>
+                <green>255</green>
+                <blue>255</blue>
+               </color>
+              </brush>
+             </colorrole>
+             <colorrole role="PlaceholderText">
+              <brush brushstyle="NoBrush">
+               <color alpha="128">
                 <red>255</red>
                 <green>255</green>
                 <blue>255</blue>
@@ -393,26 +420,78 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_6">
         <item>
-         <widget class="QGraphicsView" name="graphicsView">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>640</width>
-            <height>480</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>640</width>
-            <height>480</height>
-           </size>
-          </property>
-         </widget>
+         <layout class="QVBoxLayout" name="verticalLayout_5">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_7">
+            <item>
+             <widget class="QLabel" name="label_2">
+              <property name="text">
+               <string>X:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QProgressBar" name="progressBar">
+              <property name="value">
+               <number>24</number>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label">
+              <property name="text">
+               <string>Y:</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QProgressBar" name="progressBar_2">
+              <property name="value">
+               <number>24</number>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <spacer name="verticalSpacer_7">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeType">
+             <enum>QSizePolicy::Fixed</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>10</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QGraphicsView" name="graphicsView">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>640</width>
+              <height>480</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>640</width>
+              <height>480</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </item>
         <item>
          <spacer name="horizontalSpacer_6">
@@ -433,127 +512,32 @@
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_4">
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_7">
-            <item>
-             <widget class="QLabel" name="label">
-              <property name="text">
-               <string>X:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QProgressBar" name="progressBar">
-              <property name="value">
-               <number>24</number>
-              </property>
-             </widget>
-            </item>
-           </layout>
+           <widget class="QPushButton" name="pushButton">
+            <property name="text">
+             <string>Close Camera</string>
+            </property>
+           </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_8">
-            <item>
-             <widget class="QLabel" name="label_2">
-              <property name="text">
-               <string>Y:</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QProgressBar" name="progressBar_2">
-              <property name="value">
-               <number>24</number>
-              </property>
-             </widget>
-            </item>
-           </layout>
+           <widget class="QPushButton" name="pushButton_2">
+            <property name="text">
+             <string>Open Camera</string>
+            </property>
+           </widget>
           </item>
           <item>
-           <spacer name="verticalSpacer_10">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
+           <widget class="QPushButton" name="pushButton_3">
+            <property name="text">
+             <string>Start GP Polling</string>
             </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::Fixed</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>10</height>
-             </size>
-            </property>
-           </spacer>
+           </widget>
           </item>
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout_5">
-            <item>
-             <widget class="QPushButton" name="pushButton_2">
-              <property name="text">
-               <string>Open Camera</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="verticalSpacer_7">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButton">
-              <property name="text">
-               <string>Close Camera</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="verticalSpacer_8">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButton_3">
-              <property name="text">
-               <string>Start GP Polling</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <spacer name="verticalSpacer_9">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>40</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QPushButton" name="pushButton_4">
-              <property name="text">
-               <string>Stop GP Polling</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
+           <widget class="QPushButton" name="pushButton_4">
+            <property name="text">
+             <string>Stop GP Polling</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>
