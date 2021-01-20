@@ -467,7 +467,7 @@
                <number>0</number>
               </property>
               <property name="maximum">
-               <number>155</number>
+               <number>255</number>
               </property>
               <property name="value">
                <number>99</number>
