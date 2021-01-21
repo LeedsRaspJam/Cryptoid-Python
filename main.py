@@ -414,7 +414,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.cameraTimer.start(20)
 
     def showFrame(self): # Show frame from camera
-        camera.capture(rawCapture, format="bgr", use_video_port=True):
+        camera.capture(rawCapture, format="bgr", use_video_port=True)
         img = cv2.cvtColor(rawCapture, cv2.COLOR_BGR2RGB)
         img = QImage(img.data, img.shape[1], img.shape[0], QImage.Format_RGB888)
         self.cameraPixmap.setPixmap(QPixmap.fromImage(img))
