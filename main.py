@@ -421,8 +421,8 @@ class MainWindow(QtWidgets.QMainWindow):
             image = stream.array
 
         img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        img = QImage(img.data, img.shape[1], img.shape[0], QImage.Format_RGB888)
-        self.cameraPixmap.setPixmap(QPixmap.fromImage(img))
+        img = QtCore.QImage(img.data, img.shape[1], img.shape[0], QtCore.QImage.Format_RGB888)
+        self.cameraPixmap.setPixmap(QtCore.QPixmap.fromImage(img))
 
     def closeApp(self):
         sys.exit()
