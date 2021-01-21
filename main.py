@@ -22,7 +22,7 @@ import random
 import os
 import time
 
-if os.uname()[1] == 'cryptoid':
+if os.uname()[1] == 'raspberrypi':
     import RPi.GPIO as GPIO
     import hcsr04sensor as sensor
     import serial
@@ -429,7 +429,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         global stm32
         stm32 = serial.Serial('/dev/ttyAMA0', 115200, parity=serial.PARITY_EVEN) # Open serial comms with the STM32
-        self.initSTM()
+        #self.initSTM()
         
         gpioInit(self)
 
