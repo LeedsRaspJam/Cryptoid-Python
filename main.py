@@ -27,7 +27,7 @@ if os.uname()[1] == 'raspberrypi':
     import hcsr04sensor as sensor
     import serial
     import picamera
-    import opencv
+    import cv2
     import Gamepad
 
 global motorBuffer, ledBuffer
@@ -292,10 +292,10 @@ def gpioInit(self):
     sensor1 = sensor.Measurement(22, 12) # Init both sensors
     sensor2 = sensor.Measurement(23, 1)
 
-    camera = PiCamera()   
+    camera = picamera.PiCamera()   
     camera.resolution = (640, 480)    
     camera.framerate = 20
-    rawCapture = PiRGBArray(self.camera, size=(640, 480))
+    rawCapture = picamera.array.PiRGBArray(self.camera, size=(640, 480))
 
 class MainWindow(QtWidgets.QMainWindow):
 
