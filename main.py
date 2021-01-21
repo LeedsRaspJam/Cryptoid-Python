@@ -27,6 +27,7 @@ if os.uname()[1] == 'raspberrypi':
     import hcsr04sensor as sensor
     import serial
     import picamera
+    import picamera.array
     import cv2
     import Gamepad
 
@@ -295,7 +296,7 @@ def gpioInit(self):
     camera = picamera.PiCamera()   
     camera.resolution = (640, 480)    
     camera.framerate = 20
-    rawCapture = picamera.array.PiRGBArray(self.camera, size=(640, 480))
+    rawCapture = picamera.array.PiRGBArray(camera, size=(640, 480))
 
 class MainWindow(QtWidgets.QMainWindow):
 
@@ -440,7 +441,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.controllerTimer.timeout.connect(lambda: controllerPoll(self))
 
         self.cameraTimer = QtCore.QTimer()
-        self.cameraTimer.timeout.connect(lambda: showFrame(self))
+        self.cameraTimer.timeout.connect(lambda: self.showFrame())
 
         self.enableUltrasonicPoll.clicked.connect(self.toggleUltrasonicTimer)
         self.doAThing.clicked.connect(self.buttonFunction)
