@@ -295,7 +295,7 @@ def gpioInit(self):
 
     camera = picamera.PiCamera()   
     camera.resolution = (640, 480)    
-    camera.framerate = 20
+    camera.framerate = 30
     rawCapture = picamera.array.PiRGBArray(camera, size=(640, 480))
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -412,7 +412,7 @@ class MainWindow(QtWidgets.QMainWindow):
         setLED(self, "all", 0, 0, 0)
     
     def showCamera(self): # Show camera feed
-        self.cameraTimer.start(20)
+        self.cameraTimer.start(33)
 
     def showFrame(self): # Show frame from camera
         with picamera.array.PiRGBArray(camera) as stream:
