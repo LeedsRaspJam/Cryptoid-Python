@@ -16,7 +16,7 @@
 Main Python Code                                        
 '''    
 
-from PyQt5 import QtWidgets, QtCore, uic
+from PyQt5 import QtWidgets, QtCore, QtGui, uic
 import sys
 import random
 import os
@@ -416,13 +416,13 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def showFrame(self): # Show frame from camera
         with picamera.array.PiRGBArray(camera) as stream:
-            camera.capture(stream, format='bgr')
+            camera.capture(stream, format='rgb')
              # At this point the image is available as stream.array
             image = stream.array
 
-        img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        img = QtCore.QImage(img.data, img.shape[1], img.shape[0], QtCore.QImage.Format_RGB888)
-        self.cameraPixmap.setPixmap(QtCore.QPixmap.fromImage(img))
+        #img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        img = QtGui.QImage(img.data, img.shape[1], img.shape[0], QtGui.QImage.Format_RGB888)
+        self.cameraPixmap.setPixmap(QtGui.QPixmap.fromImage(img))
 
     def closeApp(self):
         sys.exit()
