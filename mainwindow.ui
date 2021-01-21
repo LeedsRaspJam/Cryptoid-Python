@@ -145,7 +145,7 @@
             </property>
             <property name="maximumSize">
              <size>
-              <width>240</width>
+              <width>320</width>
               <height>480</height>
              </size>
             </property>
@@ -525,13 +525,7 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_6">
           <item>
-           <widget class="QGraphicsView" name="graphicsView">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
+           <widget class="QLabel" name="cameraPixmap">
             <property name="minimumSize">
              <size>
               <width>640</width>
@@ -543,6 +537,12 @@
               <width>640</width>
               <height>480</height>
              </size>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
             </property>
            </widget>
           </item>
@@ -565,16 +565,30 @@
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_4">
             <item>
-             <widget class="QPushButton" name="openCameraBtn">
+             <widget class="QPushButton" name="showCameraBtn">
               <property name="text">
-               <string>Open Camera</string>
+               <string>Show Camera</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="closeCameraBtn">
+             <widget class="QPushButton" name="hideCameraBtn">
               <property name="text">
-               <string>Close Camera</string>
+               <string>Hide Camera</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="startRecBtn">
+              <property name="text">
+               <string>Start Recording</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="stopRecBtn">
+              <property name="text">
+               <string>Stop Recording</string>
               </property>
              </widget>
             </item>

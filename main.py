@@ -26,6 +26,8 @@ if os.uname()[1] == 'cryptoid':
     import RPi.GPIO as GPIO
     import hcsr04sensor as sensor
     import serial
+    import picamera
+    import opencv
     import Gamepad
 
 global motorBuffer, ledBuffer
@@ -286,9 +288,14 @@ def setSTM32Text(self, state):
 def gpioInit(self):
     GPIO.setmode(GPIO.BCM) # Set mode to BCM numbering
 
-    global sensor1, sensor2
+    global sensor1, sensor2, camera, rawCapture
     sensor1 = sensor.Measurement(22, 12) # Init both sensors
     sensor2 = sensor.Measurement(23, 1)
+
+    camera = PiCamera()   
+    camera.resolution = (640, 480)    
+    camera.framerate = 20
+    rawCapture = PiRGBArray(self.camera, size=(640, 480))
 
 class MainWindow(QtWidgets.QMainWindow):
 
@@ -402,7 +409,16 @@ class MainWindow(QtWidgets.QMainWindow):
     
     def allLEDOff(self): # Turn off all LEDs
         setLED(self, "all", 0, 0, 0)
-        
+    
+    def showCamera(self): # Show camera feed
+        camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
+        self.cameraTimer.start(20)
+
+    def showFrame(self): # Show frame from camera
+        img = cv2.cvtColor(rawCapture, cv2.COLOR_BGR2RGB)
+        img = QImage(img.data, img.shape[1], img.shape[0], QImage.Format_RGB888)
+        self.cameraPixmap.setPixmap(QPixmap.fromImage(img))
+
     def closeApp(self):
         sys.exit()
 
@@ -423,6 +439,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.controllerTimer = QtCore.QTimer()
         self.controllerTimer.timeout.connect(lambda: controllerPoll(self))
 
+        self.cameraTimer = QtCore.QTimer()
+        self.cameraTimer.timeout.connect(lambda: showFrame(self))
+
         self.enableUltrasonicPoll.clicked.connect(self.toggleUltrasonicTimer)
         self.doAThing.clicked.connect(self.buttonFunction)
         self.clearBtn.clicked.connect(self.clearLog)
@@ -438,6 +457,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setLEDBtn.clicked.connect(self.setLED)
         self.allLEDBtn.clicked.connect(self.allLED)
         self.allLEDOffBtn.clicked.connect(self.allLEDOff)
+        self.showCameraBtn.clicked.connect(self.showCamera)
         self.actionQuit.triggered.connect(self.closeApp)
 
 def main():
