@@ -412,11 +412,11 @@ class MainWindow(QtWidgets.QMainWindow):
         setLED(self, "all", 0, 0, 0)
     
     def showCamera(self): # Show camera feed
-        self.cameraTimer.start(100)
+        self.cameraTimer.start(200)
 
     def hideCamera(self): # Hide camera feed
         self.cameraTimer.stop()
-        
+
     def showFrame(self): # Show frame from camera
         with picamera.array.PiRGBArray(camera) as stream:
             camera.capture(stream, format='bgr')
