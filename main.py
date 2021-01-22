@@ -419,7 +419,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def showFrame(self): # Show frame from camera
         with picamera.array.PiRGBArray(camera) as stream:
-            camera.capture(stream, format='bgr')
+            camera.capture(stream, format='bgr', use_video_port=True)
             image = stream.array
 
         img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
