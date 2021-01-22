@@ -331,6 +331,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def initSTM(self): # Send INIT command
         self.logTb.append("Trying to initialize the STM32")
         while True: # Check for response
+            print("INIT STM32")
             stm32.write("INIT\r\n".encode()) # Init the STM32
             self.logTb.append("INIT")
             response = stm32.readline()
