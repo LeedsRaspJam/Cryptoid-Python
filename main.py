@@ -22,7 +22,7 @@ import random
 import os
 import time
 
-if os.uname()[1] == 'raspberrypi':
+if os.uname()[1] == 'cryptoid':
     import RPi.GPIO as GPIO
     import hcsr04sensor as sensor
     import serial
@@ -417,7 +417,6 @@ class MainWindow(QtWidgets.QMainWindow):
     def showFrame(self): # Show frame from camera
         with picamera.array.PiRGBArray(camera) as stream:
             camera.capture(stream, format='bgr')
-             # At this point the image is available as stream.array
             image = stream.array
 
         img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
@@ -434,7 +433,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         global stm32
         stm32 = serial.Serial('/dev/ttyAMA0', 115200, parity=serial.PARITY_EVEN) # Open serial comms with the STM32
-        #self.initSTM()
+        self.initSTM()
         
         gpioInit(self)
 
