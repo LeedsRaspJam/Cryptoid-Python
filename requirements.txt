@@ -1,6 +1,5 @@
 RPi.GPIO
 pyserial
 opencv-python
-opencv-contrib-python
 picamera
 PyQt5
