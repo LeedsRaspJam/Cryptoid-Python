@@ -307,7 +307,7 @@ class cameraThread(QtCore.QThread):
     def run(self):
         rawCapture = picamera.array.PiRGBArray(camera, size=(640, 480))
         frameID = 1
-        for frame in camera.capture_continuous(rawCapture, format="rgb", use_video_port=True):
+        for frame in camera.capture_continuous(rawCapture, format="rgb", use_video_port=True, resize=(320, 240)):
             if frameID < 4:
                 frameID = frameID + 1
                 frame.truncate()
@@ -439,7 +439,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.cameraQThread.start()
 
     def hideCamera(self): # Hide camera feed
-        self.cameraTimer.stop()
+        self.cameraQThread.terminate()
 
     def showFrame(self): # Show frame from camera
         with picamera.array.PiRGBArray(camera) as rawImage:
@@ -493,7 +493,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.allLEDBtn.clicked.connect(self.allLED)
         self.allLEDOffBtn.clicked.connect(self.allLEDOff)
         self.showCameraBtn.clicked.connect(self.showCamera)
-       # self.hideCameraBtn.clicked.connect(self.hideCamera)
+        self.hideCameraBtn.clicked.connect(self.hideCamera)
         self.startRecBtn.clicked.connect(self.startRec)
         self.stopRecBtn.clicked.connect(self.stopRec)
         self.actionQuit.triggered.connect(self.closeApp)
