@@ -415,6 +415,7 @@ class MainWindow(QtWidgets.QMainWindow):
         setLED(self, "all", 0, 0, 0)
 
     def showCamera(self): # Show camera feed
+        global image
         with picamera.array.PiRGBArray(camera) as stream:
             camera.capture_continuous(stream, format='bgr', use_video_port=True)
             image = stream.array
