@@ -435,7 +435,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def allLEDOff(self): # Turn off all LEDs
         setLED(self, "all", 0, 0, 0)
 
-    def showCamera(self): # Show camera feed
+  '''  def showCamera(self): # Show camera feed
         self.cameraTimer.start(200)
 
     def hideCamera(self): # Hide camera feed
@@ -453,7 +453,7 @@ class MainWindow(QtWidgets.QMainWindow):
         camera.start_recording("/home/pi/recordings/" + str(datetime.now()) + ".h264")
 
     def stopRec(self): # Stop recording
-        camera.stop_recording()
+        camera.stop_recording()'''
 
     def closeApp(self):
         sys.exit()
@@ -475,8 +475,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.controllerTimer = QtCore.QTimer()
         self.controllerTimer.timeout.connect(lambda: controllerPoll(self))
 
-        self.cameraTimer = QtCore.QTimer()
-        self.cameraTimer.timeout.connect(lambda: self.showFrame())
+       # self.cameraTimer = QtCore.QTimer()
+       # self.cameraTimer.timeout.connect(lambda: self.showFrame())
 
         self.cameraQThread = cameraThread(self.cameraPixmap)
         self.cameraQThread.start()
@@ -496,10 +496,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setLEDBtn.clicked.connect(self.setLED)
         self.allLEDBtn.clicked.connect(self.allLED)
         self.allLEDOffBtn.clicked.connect(self.allLEDOff)
-        self.showCameraBtn.clicked.connect(self.showCamera)
-        self.hideCameraBtn.clicked.connect(self.hideCamera)
-        self.startRecBtn.clicked.connect(self.startRec)
-        self.stopRecBtn.clicked.connect(self.stopRec)
+       # self.showCameraBtn.clicked.connect(self.showCamera)
+       # self.hideCameraBtn.clicked.connect(self.hideCamera)
+       # self.startRecBtn.clicked.connect(self.startRec)
+        #self.stopRecBtn.clicked.connect(self.stopRec)
         self.actionQuit.triggered.connect(self.closeApp)
 
 def main():
