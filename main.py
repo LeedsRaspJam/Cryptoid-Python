@@ -297,7 +297,7 @@ def gpioInit(self):
 
     camera = picamera.PiCamera()
     camera.resolution = (640, 480)
-    camera.framerate = 5
+    camera.framerate = 30
 
 class MainWindow(QtWidgets.QMainWindow):
 
@@ -429,7 +429,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.cameraPixmap.setPixmap(QtGui.QPixmap.fromImage(qImg))
     
     def startRec(self): # Start recording
-        camera.start_recording(str(datetime.now()) + ".h264")
+        camera.start_recording("/home/pi/recordings/" + str(datetime.now()) + ".h264")
 
     def stopRec(self): # Stop recording
         camera.stop_recording()
