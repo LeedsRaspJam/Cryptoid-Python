@@ -296,12 +296,13 @@ def gpioInit(self):
     sensor2 = sensor.Measurement(23, 1)
 
 class cameraThread(QtCore.QThread):
-    def __init__(self):
+    def __init__(self, pixmap):
         QtCore.QThread.__init__(self)
         global camera
         camera = picamera.PiCamera()
         camera.resolution = (640, 480)
         camera.framerate = 30
+
     
     def run(self, pixmap):
         #with picamera.array.PiRGBArray(camera) as rawImage:
@@ -315,7 +316,7 @@ class cameraThread(QtCore.QThread):
         for frame in camera.capture_continuous(rawCapture, format="rgb", use_video_port=True):
             image = frame.array
             qImg = QtGui.QImage(image, 640, 480, QtGui.QImage.Format_RGB888)
-            camerapixmap.setPixmap(QtGui.QPixmap.fromImage(qImg))
+            pixmap.setPixmap(QtGui.QPixmap.fromImage(qImg))
 
 class MainWindow(QtWidgets.QMainWindow):
 
@@ -475,8 +476,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.cameraTimer = QtCore.QTimer()
         self.cameraTimer.timeout.connect(lambda: self.showFrame())
 
-        global self.cameraPixmap
-        self.cameraQThread = cameraThread()
+        self.cameraQThread = cameraThread(self.cameraPixmap)
         self.cameraQThread.start(self.cameraPixmap)
 
         self.enableUltrasonicPoll.clicked.connect(self.toggleUltrasonicTimer)
