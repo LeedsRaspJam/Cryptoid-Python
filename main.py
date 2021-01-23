@@ -415,9 +415,10 @@ class MainWindow(QtWidgets.QMainWindow):
         setLED(self, "all", 0, 0, 0)
 
     def showCamera(self): # Show camera feed
-        global stream
+        global frame
         with picamera.array.PiRGBArray(camera) as stream:
             camera.capture_continuous(stream, format='rgb', use_video_port=True)
+            frame = stream.array
 
         self.cameraTimer.start(33)
 
@@ -425,7 +426,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.cameraTimer.stop()
 
     def showFrame(self): # Show frame from camera
-        img = QtGui.QImage(stream.array, 640, 480, QtGui.QImage.Format_RGB888)
+        img = QtGui.QImage(frame, 640, 480, QtGui.QImage.Format_RGB888)
         self.cameraPixmap.setPixmap(QtGui.QPixmap.fromImage(img))
 
     def closeApp(self):
