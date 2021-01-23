@@ -295,7 +295,7 @@ def gpioInit(self):
     sensor2 = sensor.Measurement(23, 1)
 
     camera = picamera.PiCamera()
-    camera.resolution = (1440, 1080)
+    camera.resolution = (640, 480)
     camera.framerate = 5
 
 class MainWindow(QtWidgets.QMainWindow):
@@ -421,10 +421,10 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def showFrame(self): # Show frame from camera
         with picamera.array.PiRGBArray(camera) as rawImage:
-            camera.capture(rawImage, format='rgb', use_video_port=True, resize=(640, 480))
+            camera.capture(rawImage, resize=(320, 240), format='rgb', use_video_port=True)
             frame = rawImage.array
 
-        qImg = QtGui.QImage(frame, 640, 480, QtGui.QImage.Format_RGB888)
+        qImg = QtGui.QImage(frame, 320, 240, QtGui.QImage.Format_RGB888)
         self.cameraPixmap.setPixmap(QtGui.QPixmap.fromImage(qImg))
 
     def closeApp(self):
