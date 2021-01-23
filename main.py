@@ -20,6 +20,7 @@ from PyQt5 import QtWidgets, QtCore, QtGui, uic
 import sys
 import random
 import os
+from datetime import datetime
 import time
 
 if os.uname()[1] == 'cryptoid':
@@ -426,6 +427,12 @@ class MainWindow(QtWidgets.QMainWindow):
 
         qImg = QtGui.QImage(frame, 640, 480, QtGui.QImage.Format_RGB888)
         self.cameraPixmap.setPixmap(QtGui.QPixmap.fromImage(qImg))
+    
+    def startRec(self): # Start recording
+        picamera.start_recording(str(datetime.now()))
+
+    def stopRec(self): # Stop recording
+        picamera.stop_recording()
 
     def closeApp(self):
         sys.exit()
@@ -467,6 +474,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.allLEDOffBtn.clicked.connect(self.allLEDOff)
         self.showCameraBtn.clicked.connect(self.showCamera)
         self.hideCameraBtn.clicked.connect(self.hideCamera)
+        self.startRecBtn.clicked.connect(self.startRec)
+        self.stopRecBtn.clicked.connect(self.stopRec)
         self.actionQuit.triggered.connect(self.closeApp)
 
 def main():
