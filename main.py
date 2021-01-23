@@ -420,12 +420,14 @@ class MainWindow(QtWidgets.QMainWindow):
         self.cameraTimer.stop()
 
     def showFrame(self): # Show frame from camera
+        print(time.time())
         with picamera.array.PiRGBArray(camera) as rawImage:
             camera.capture(rawImage, format='rgb', use_video_port=True)
             frame = rawImage.array
 
         qImg = QtGui.QImage(frame, 640, 480, QtGui.QImage.Format_RGB888)
         self.cameraPixmap.setPixmap(QtGui.QPixmap.fromImage(qImg))
+        print(time.time())
 
     def closeApp(self):
         sys.exit()
