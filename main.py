@@ -429,7 +429,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.cameraPixmap.setPixmap(QtGui.QPixmap.fromImage(qImg))
     
     def startRec(self): # Start recording
-        camera.start_recording(str(datetime.now()))
+        camera.start_recording(str(datetime.now()) + ".h264")
 
     def stopRec(self): # Stop recording
         camera.stop_recording()
