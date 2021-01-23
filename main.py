@@ -425,8 +425,8 @@ class MainWindow(QtWidgets.QMainWindow):
             camera.capture(stream, format='bgr', use_video_port=True)
             image = stream.array
 
-        img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        img = QtGui.QImage(img.data, 640, 480, QtGui.QImage.Format_RGB888)
+        #img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        img = QtGui.QImage(image, 640, 480, QtGui.QImage.Format_BGR888)
         self.cameraPixmap.setPixmap(QtGui.QPixmap.fromImage(img))
 
     def closeApp(self):
