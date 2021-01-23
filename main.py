@@ -429,10 +429,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.cameraPixmap.setPixmap(QtGui.QPixmap.fromImage(qImg))
     
     def startRec(self): # Start recording
-        picamera.start_recording(str(datetime.now()))
+        camera.start_recording(str(datetime.now()))
 
     def stopRec(self): # Stop recording
-        picamera.stop_recording()
+        camera.stop_recording()
 
     def closeApp(self):
         sys.exit()
