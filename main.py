@@ -304,6 +304,9 @@ class cameraThread(QtCore.QThread):
         camera.framerate = 30
         cameraPixmapB = pixmap
 
+    def __del__(self):
+        self.wait()
+
     def run(self):
         rawCapture = picamera.array.PiRGBArray(camera, size=(1408, 1056))
         frameID = 1
