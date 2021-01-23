@@ -297,7 +297,6 @@ def gpioInit(self):
     camera = picamera.PiCamera()
     camera.resolution = (640, 480)
     camera.framerate = 30
-    rawCapture = picamera.array.PiRGBArray(camera, size=(640, 480))
 
 class MainWindow(QtWidgets.QMainWindow):
 
@@ -415,17 +414,18 @@ class MainWindow(QtWidgets.QMainWindow):
         setLED(self, "all", 0, 0, 0)
 
     def showCamera(self): # Show camera feed
-        self.cameraTimer.start(33)
+        self.cameraTimer.start(200)
 
     def hideCamera(self): # Hide camera feed
         self.cameraTimer.stop()
 
     def showFrame(self): # Show frame from camera
-        with picamera.array.PiRGBArray(camera) as frame:
-            camera.capture(frame, format='rgb', use_video_port=True)
+        with picamera.array.PiRGBArray(camera) as rawImage:
+            camera.capture(rawImage, format='rgb', use_video_port=True)
+            frame = rawImage.array
 
-        img = QtGui.QImage(frame.array, 640, 480, QtGui.QImage.Format_RGB888)
-        self.cameraPixmap.setPixmap(QtGui.QPixmap.fromImage(img))
+        qImg = QtGui.QImage(frame, 640, 480, QtGui.QImage.Format_RGB888)
+        self.cameraPixmap.setPixmap(QtGui.QPixmap.fromImage(qImg))
 
     def closeApp(self):
         sys.exit()
