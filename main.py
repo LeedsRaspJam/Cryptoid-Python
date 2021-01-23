@@ -290,13 +290,13 @@ def setSTM32Text(self, state):
 def gpioInit(self):
     GPIO.setmode(GPIO.BCM) # Set mode to BCM numbering
 
-    global sensor1, sensor2, camera, rawCapture
+    global sensor1, sensor2, camera
     sensor1 = sensor.Measurement(22, 12) # Init both sensors
     sensor2 = sensor.Measurement(23, 1)
 
     camera = picamera.PiCamera()
     camera.resolution = (640, 480)
-    camera.framerate = 30
+    camera.framerate = 5
 
 class MainWindow(QtWidgets.QMainWindow):
 
@@ -390,7 +390,7 @@ class MainWindow(QtWidgets.QMainWindow):
         global gamepad
         gamepad = Gamepad.PS4()
         gamepad.startBackgroundUpdates()
-        self.controllerTimer.start(25)
+        self.controllerTimer.start(10)
 
     def stopGP(self): # Stop controller polling
         self.controllerTimer.stop()
@@ -414,20 +414,18 @@ class MainWindow(QtWidgets.QMainWindow):
         setLED(self, "all", 0, 0, 0)
 
     def showCamera(self): # Show camera feed
-        self.cameraTimer.start(100)
+        self.cameraTimer.start(200)
 
     def hideCamera(self): # Hide camera feed
         self.cameraTimer.stop()
 
     def showFrame(self): # Show frame from camera
-        print(time.time())
         with picamera.array.PiRGBArray(camera) as rawImage:
             camera.capture(rawImage, format='rgb', use_video_port=True)
             frame = rawImage.array
 
         qImg = QtGui.QImage(frame, 640, 480, QtGui.QImage.Format_RGB888)
         self.cameraPixmap.setPixmap(QtGui.QPixmap.fromImage(qImg))
-        print(time.time())
 
     def closeApp(self):
         sys.exit()
