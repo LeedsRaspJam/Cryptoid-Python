@@ -298,15 +298,15 @@ def gpioInit(self):
 class cameraThread(QtCore.QThread):
     def __init__(self, pixmap):
         QtCore.QThread.__init__(self)
-        global camera, cameraPixmap2, frameID
+        global camera, cameraPixmapB
         camera = picamera.PiCamera()
         camera.resolution = (640, 480)
         camera.framerate = 30
         cameraPixmap2 = pixmap
-        frameID = 1
 
     def run(self):
         rawCapture = picamera.array.PiRGBArray(camera, size=(640, 480))
+        frameID = 1
         for frame in camera.capture_continuous(rawCapture, format="rgb", use_video_port=True):
             if frameID < 4:
                 frameID = frameID + 1
@@ -316,7 +316,7 @@ class cameraThread(QtCore.QThread):
                 frameID = 1
                 image = frame.array
                 qImg = QtGui.QImage(image, 640, 480, QtGui.QImage.Format_RGB888)
-                cameraPixmap2.setPixmap(QtGui.QPixmap.fromImage(qImg))
+                cameraPixmapB.setPixmap(QtGui.QPixmap.fromImage(qImg))
                 frame.truncate()
                 frame.seek(0)
 
