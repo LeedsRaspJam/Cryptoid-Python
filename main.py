@@ -435,26 +435,6 @@ class MainWindow(QtWidgets.QMainWindow):
     def allLEDOff(self): # Turn off all LEDs
         setLED(self, "all", 0, 0, 0)
 
-  '''  def showCamera(self): # Show camera feed
-        self.cameraTimer.start(200)
-
-    def hideCamera(self): # Hide camera feed
-        self.cameraTimer.stop()
-
-    def showFrame(self): # Show frame from camera
-        with picamera.array.PiRGBArray(camera) as rawImage:
-            camera.capture(rawImage, format='rgb', use_video_port=True)
-            frame = rawImage.array
-
-        qImg = QtGui.QImage(frame, 640, 480, QtGui.QImage.Format_RGB888)
-        self.cameraPixmap.setPixmap(QtGui.QPixmap.fromImage(qImg))
-    
-    def startRec(self): # Start recording
-        camera.start_recording("/home/pi/recordings/" + str(datetime.now()) + ".h264")
-
-    def stopRec(self): # Stop recording
-        camera.stop_recording()'''
-
     def closeApp(self):
         sys.exit()
 
@@ -496,10 +476,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setLEDBtn.clicked.connect(self.setLED)
         self.allLEDBtn.clicked.connect(self.allLED)
         self.allLEDOffBtn.clicked.connect(self.allLEDOff)
-       # self.showCameraBtn.clicked.connect(self.showCamera)
-       # self.hideCameraBtn.clicked.connect(self.hideCamera)
-       # self.startRecBtn.clicked.connect(self.startRec)
-        #self.stopRecBtn.clicked.connect(self.stopRec)
         self.actionQuit.triggered.connect(self.closeApp)
 
 def main():
