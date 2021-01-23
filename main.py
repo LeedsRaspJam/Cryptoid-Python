@@ -319,6 +319,7 @@ class cameraThread(QtCore.QThread):
             image = frame.array
             qImg = QtGui.QImage(image, 320, 240, QtGui.QImage.Format_RGB888)
             cameraPixmap2.setPixmap(QtGui.QPixmap.fromImage(qImg))
+            frame.truncate()
             frame.seek(0)
 
 class MainWindow(QtWidgets.QMainWindow):
