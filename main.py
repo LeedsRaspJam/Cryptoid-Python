@@ -291,13 +291,31 @@ def setSTM32Text(self, state):
 def gpioInit(self):
     GPIO.setmode(GPIO.BCM) # Set mode to BCM numbering
 
-    global sensor1, sensor2, camera
+    global sensor1, sensor2
     sensor1 = sensor.Measurement(22, 12) # Init both sensors
     sensor2 = sensor.Measurement(23, 1)
 
-    camera = picamera.PiCamera()
-    camera.resolution = (640, 480)
-    camera.framerate = 30
+class cameraThread(QtCore.QThread):
+    def __init__(self):
+        QtCore.QThread.__init__(self)
+        global camera
+        camera = picamera.PiCamera()
+        camera.resolution = (640, 480)
+        camera.framerate = 30
+    
+    def run(self):
+        #with picamera.array.PiRGBArray(camera) as rawImage:
+        #        camera.capture(rawImage, format='rgb', use_video_port=True)
+         #       frame = rawImage.array
+
+        #qImg = QtGui.QImage(frame, 640, 480, QtGui.QImage.Format_RGB888)
+        #self.cameraPixmap.setPixmap(QtGui.QPixmap.fromImage(qImg))
+
+        rawCapture = picamera.array.PiRGBArray(camera, size=(640, 480))
+        for frame in camera.capture_continuous(rawCapture, format="rgb", use_video_port=True):
+            image = frame.array
+            qImg = QtGui.QImage(image, 640, 480, QtGui.QImage.Format_RGB888)
+            self.cameraPixmap.setPixmap(QtGui.QPixmap.fromImage(qImg))
 
 class MainWindow(QtWidgets.QMainWindow):
 
@@ -457,6 +475,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.cameraTimer = QtCore.QTimer()
         self.cameraTimer.timeout.connect(lambda: self.showFrame())
 
+        self.cameraQThread = cameraThread()
+        self.cameraQThread.start()
+        
         self.enableUltrasonicPoll.clicked.connect(self.toggleUltrasonicTimer)
         self.doAThing.clicked.connect(self.buttonFunction)
         self.clearBtn.clicked.connect(self.clearLog)
