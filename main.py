@@ -305,15 +305,7 @@ class cameraThread(QtCore.QThread):
         global cameraPixmap2
         cameraPixmap2 = pixmap
 
-    
     def run(self):
-        #with picamera.array.PiRGBArray(camera) as rawImage:
-        #        camera.capture(rawImage, format='rgb', use_video_port=True)
-         #       frame = rawImage.array
-
-        #qImg = QtGui.QImage(frame, 640, 480, QtGui.QImage.Format_RGB888)
-        #self.cameraPixmap.setPixmap(QtGui.QPixmap.fromImage(qImg))
-
         rawCapture = picamera.array.PiRGBArray(camera, size=(640, 480))
         for frame in camera.capture_continuous(rawCapture, format="rgb", use_video_port=True):
             image = frame.array
@@ -438,7 +430,7 @@ class MainWindow(QtWidgets.QMainWindow):
         setLED(self, "all", 0, 0, 0)
 
     def showCamera(self): # Show camera feed
-        self.cameraTimer.start(200)
+        self.cameraQThread.start()
 
     def hideCamera(self): # Hide camera feed
         self.cameraTimer.stop()
@@ -477,11 +469,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.controllerTimer = QtCore.QTimer()
         self.controllerTimer.timeout.connect(lambda: controllerPoll(self))
 
-       # self.cameraTimer = QtCore.QTimer()
-       # self.cameraTimer.timeout.connect(lambda: self.showFrame())
-
         self.cameraQThread = cameraThread(self.cameraPixmap)
-        self.cameraQThread.start()
 
         self.enableUltrasonicPoll.clicked.connect(self.toggleUltrasonicTimer)
         self.doAThing.clicked.connect(self.buttonFunction)
@@ -498,10 +486,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setLEDBtn.clicked.connect(self.setLED)
         self.allLEDBtn.clicked.connect(self.allLED)
         self.allLEDOffBtn.clicked.connect(self.allLEDOff)
-       # self.showCameraBtn.clicked.connect(self.showCamera)
+        self.showCameraBtn.clicked.connect(self.showCamera)
        # self.hideCameraBtn.clicked.connect(self.hideCamera)
-       # self.startRecBtn.clicked.connect(self.startRec)
-        #self.stopRecBtn.clicked.connect(self.stopRec)
+        self.startRecBtn.clicked.connect(self.startRec)
+        self.stopRecBtn.clicked.connect(self.stopRec)
         self.actionQuit.triggered.connect(self.closeApp)
 
 def main():
