@@ -300,12 +300,12 @@ class cameraThread(QtCore.QThread):
         QtCore.QThread.__init__(self)
         global camera, cameraPixmapB
         camera = picamera.PiCamera()
-        camera.resolution = (1400, 1050)
+        camera.resolution = (1408, 1056)
         camera.framerate = 30
         cameraPixmapB = pixmap
 
     def run(self):
-        rawCapture = picamera.array.PiRGBArray(camera, size=(1400, 1050))
+        rawCapture = picamera.array.PiRGBArray(camera, size=(1408, 1056))
         frameID = 1
         for frame in camera.capture_continuous(rawCapture, format="rgb", use_video_port=True):
             if frameID < 4:
@@ -315,7 +315,7 @@ class cameraThread(QtCore.QThread):
             elif frameID == 4:
                 frameID = 1
                 image = frame.array
-                qImg = QtGui.QImage(image, 1400, 1050, QtGui.QImage.Format_RGB888)
+                qImg = QtGui.QImage(image, 1408, 1056, QtGui.QImage.Format_RGB888)
                 cameraPixmapB.setPixmap(QtGui.QPixmap.fromImage(qImg))
                 frame.truncate()
                 frame.seek(0)
