@@ -300,7 +300,7 @@ class cameraThread(QtCore.QThread):
         QtCore.QThread.__init__(self)
         global camera
         camera = picamera.PiCamera()
-        camera.resolution = (640, 480)
+        camera.resolution = (320, 240)
         camera.framerate = 30
         global cameraPixmap2
         cameraPixmap2 = pixmap
@@ -314,10 +314,10 @@ class cameraThread(QtCore.QThread):
         #qImg = QtGui.QImage(frame, 640, 480, QtGui.QImage.Format_RGB888)
         #self.cameraPixmap.setPixmap(QtGui.QPixmap.fromImage(qImg))
 
-        rawCapture = picamera.array.PiRGBArray(camera, size=(640, 480))
+        rawCapture = picamera.array.PiRGBArray(camera, size=(320, 240))
         for frame in camera.capture_continuous(rawCapture, format="rgb", use_video_port=True):
             image = frame.array
-            qImg = QtGui.QImage(image, 640, 480, QtGui.QImage.Format_RGB888)
+            qImg = QtGui.QImage(image, 320, 240, QtGui.QImage.Format_RGB888)
             cameraPixmap2.setPixmap(QtGui.QPixmap.fromImage(qImg))
 
 class MainWindow(QtWidgets.QMainWindow):
