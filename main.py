@@ -1,6 +1,6 @@
 #!/bin/python3
 '''
-                                           __                __        __ 
+                                           __                __        __
                                           /  |              /  |      /  |
   _______   ______   __    __   ______   _%% |_     ______  %%/   ____%% |
  /       | /      \ /  |  /  | /      \ / %%   |   /      \ /  | /    %% |
@@ -8,15 +8,15 @@
 %% |      %% |  %%/ %% |  %% |%% |  %% |  %% | __ %% |  %% |%% |%% |  %% |
 %% \_____ %% |      %% \__%% |%% |__%% |  %% |/  |%% \__%% |%% |%% \__%% |
 %%       |%% |      %%    %% |%%    %%/   %%  %%/ %%    %%/ %% |%%    %% |
- %%%%%%%/ %%/        %%%%%%% |%%%%%%%/     %%%%/   %%%%%%/  %%/  %%%%%%%/ 
-                    /  \__%% |%% |                                        
-                    %%    %%/ %% |                                        
-                     %%%%%%/  %%/ 
-                     
-Main Python Code                                        
-'''    
+ %%%%%%%/ %%/        %%%%%%% |%%%%%%%/     %%%%/   %%%%%%/  %%/  %%%%%%%/
+                    /  \__%% |%% |
+                    %%    %%/ %% |
+                     %%%%%%/  %%/
 
-from PyQt5 import QtWidgets, QtCore, uic
+Main Python Code
+'''
+
+from PyQt5 import QtWidgets, QtCore, QtGui, uic
 import sys
 import random
 import os
@@ -24,29 +24,140 @@ import time
 
 if os.uname()[1] == 'cryptoid':
     import RPi.GPIO as GPIO
-    from hcsr04sensor import sensor
+    import hcsr04sensor as sensor
     import serial
+    import picamera
+    import picamera.array
+    import cv2
+    import Gamepad
+
+global motorBuffer, ledBuffer
+motorBuffer = {
+    1: [0, 0],
+    2: [0, 0],
+    3: [0, 0],
+    4: [0, 0]
+}
+
+ledBuffer = {
+    0: [0, 0, 0],
+    1: [0, 0, 0],
+    2: [0, 0, 0],
+    3: [0, 0, 0],
+    4: [0, 0, 0],
+    5: [0, 0, 0],
+    6: [0, 0, 0],
+    7: [0, 0, 0],
+    8: [0, 0, 0],
+    9: [0, 0, 0],
+    10: [0, 0, 0],
+    11: [0, 0, 0],
+    12: [0, 0, 0],
+    13: [0, 0, 0],
+    14: [0, 0, 0],
+    15: [0, 0, 0],
+    16: [0, 0, 0],
+    17: [0, 0, 0],
+    18: [0, 0, 0],
+    19: [0, 0, 0],
+    20: [0, 0, 0],
+    21: [0, 0, 0],
+    22: [0, 0, 0],
+    23: [0, 0, 0],
+    24: [0, 0, 0],
+    25: [0, 0, 0],
+    26: [0, 0, 0],
+    27: [0, 0, 0],
+    28: [0, 0, 0],
+    29: [0, 0, 0],
+    30: [0, 0, 0],
+    31: [0, 0, 0],
+    32: [0, 0, 0],
+    33: [0, 0, 0],
+    34: [0, 0, 0],
+    35: [0, 0, 0]
+}
 
 def ultrasonicPoll(self):
-    global sensor1, sensor2, currentColour
-    distance1 = sensor1.raw_distance(sample_size=5, sample_wait=0.04) # Get raw distance readings
-    distance2 = sensor2.raw_distance(sample_size=5, sample_wait=0.04)
+    distance1 = sensor1.raw_distance(sample_size=2, sample_wait=0.03) # Get raw distance readings
+    distance2 = sensor2.raw_distance(sample_size=2, sample_wait=0.03)
 
     self.distanceValue1.setText(str(round(distance1)) + " cm") # Set labels back in Qt GUI
     self.distanceValue2.setText(str(round(distance2)) + " cm")
 
-    if distance1 < 10 or distance2 < 10:
-        emergencyStop(self)
-    else:
+    if distance1 < 35 or distance2 < 35:
+        if ledBuffer[0] == [0, 255, 0]:
+            for i in range(4):
+                stopMotor(self, i+1)
+            setLED(self, "all", 254, 0, 0)
+            MainWindow.stopGP(self)
+    elif ledBuffer[0] == [254, 0, 0]:
         setLED(self, "all", 0, 255, 0)
         currentColour = "red"
 
-def emergencyStop(self):
-    for i in range(4):
-        stopMotor(self, i+1)
-    if currentColour != "green":
-        setLED(self, "all", 255, 0, 0)
-        currentColour = "green"
+def controllerPoll(self):
+    right_y = gamepad.axis("RIGHT-Y")
+    left_x = gamepad.axis("LEFT-X")
+
+    if right_y > 0:
+        isBackward = True
+        isStopped = False
+    elif right_y < 0:
+        isBackward = False
+        isStopped = False
+    elif right_y == 0:
+        isStopped = True
+
+    y_corrected = abs(right_y) * 155
+
+    if left_x < 0:
+        l_value = abs(left_x) * y_corrected
+        r_value = 0
+    elif left_x > 0:
+        l_value = 0
+        r_value = abs(left_x) * y_corrected
+    elif left_x == 0:
+        l_value = y_corrected
+        r_value = y_corrected
+
+    if l_value != 0 and y_corrected != 0:
+        l_value = l_value + 100
+    if r_value != 0 and y_corrected != 0:
+        r_value = r_value + 100
+
+    if isStopped == True:
+        self.LBar.setValue(100)
+        self.RBar.setValue(100)
+    else:
+        self.LBar.setValue(l_value)
+        self.RBar.setValue(r_value)
+
+    if left_x > 0:
+        self.LBar.setValue(100)
+    elif left_x < 0:
+        self.RBar.setValue(100)
+
+    if isStopped == True:
+        self.directionLabel.setText("Stopped")
+        self.directionLabel.setStyleSheet("color:#000000")
+        setMotor(self, 1, 2, l_value)
+        setMotor(self, 3, 2, l_value)
+        setMotor(self, 2, 2, r_value)
+        setMotor(self, 4, 2, r_value)
+    elif isBackward == False:
+        self.directionLabel.setText("Forward") # Set text + colour
+        self.directionLabel.setStyleSheet("color:#33cc33")
+        setMotor(self, 1, 1, l_value)
+        setMotor(self, 3, 1, l_value)
+        setMotor(self, 2, 1, r_value)
+        setMotor(self, 4, 1, r_value)
+    elif isBackward == True:
+        self.directionLabel.setText("Backward") # Set text + colour
+        self.directionLabel.setStyleSheet("color:#ff0000")
+        setMotor(self, 1, 2, l_value)
+        setMotor(self, 3, 2, l_value)
+        setMotor(self, 2, 2, r_value)
+        setMotor(self, 4, 2, r_value)
 
 def beepSPKR(self, freq, duration):
     while True:
@@ -69,6 +180,8 @@ def beepSPKR(self, freq, duration):
 
 def setLED(self, ledID, rValue, gValue, bValue):
     if ledID == "all": # If setting all LEDs
+        for key in ledBuffer:
+            ledBuffer[key] = [rValue, gValue, bValue]
         while True: # Loop until all data sent
             self.logTb.append("LEDA")
             stm32.write("LEDA\r\n".encode()) # Send command
@@ -93,6 +206,7 @@ def setLED(self, ledID, rValue, gValue, bValue):
                             break # Sent successfully, break from loop.
 
     else: # If only setting one
+        ledBuffer[int(ledID)] = [rValue, gValue, bValue]
         while True:
             self.logTb.append("LEDS")
             stm32.write("LEDS\r\n".encode())
@@ -122,6 +236,7 @@ def setLED(self, ledID, rValue, gValue, bValue):
                                 break
 
 def setMotor(self, motorID, direction, speed): # Set one motor
+    motorBuffer[motorID] = [direction, speed]
     while True:
         self.logTb.append("SETM")
         stm32.write("SETM\r\n".encode())
@@ -146,6 +261,7 @@ def setMotor(self, motorID, direction, speed): # Set one motor
                         break
 
 def stopMotor(self, motorID): # Stop one motor
+    motorBuffer[motorID] = [0, 0]
     while True:
         self.logTb.append("STPM")
         stm32.write("STPM\r\n".encode())
@@ -161,17 +277,27 @@ def stopMotor(self, motorID): # Stop one motor
 
 def setSTM32Text(self, state):
     if state == True:
+        for key in ledBuffer:
+            ledBuffer[key] = [0, 255, 0]
         self.stm32Connected.setText("STM32 Connected") # Set text + colour
         self.stm32Connected.setStyleSheet("color:#33cc33")
     elif state == False:
+        for key in ledBuffer:
+            ledBuffer[key] = [255, 0, 0]
         self.stm32Connected.setText("STM32 Disconnected")
         self.stm32Connected.setStyleSheet("color:#ff0000")
-    
+
 def gpioInit(self):
     GPIO.setmode(GPIO.BCM) # Set mode to BCM numbering
-    global sensor1, sensor2
+
+    global sensor1, sensor2, camera, rawCapture
     sensor1 = sensor.Measurement(22, 12) # Init both sensors
     sensor2 = sensor.Measurement(23, 1)
+
+    camera = picamera.PiCamera()
+    camera.resolution = (640, 480)
+    camera.framerate = 30
+    rawCapture = picamera.array.PiRGBArray(camera, size=(640, 480))
 
 class MainWindow(QtWidgets.QMainWindow):
 
@@ -198,7 +324,8 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def toggleUltrasonicTimer(self):
         if self.ultrasonicTimer.isActive() == False:
-            self.ultrasonicTimer.start(500)
+            self.ultrasonicTimer.start(50)
+            setLED(self, "all", 0, 255, 0)
         else:
             self.ultrasonicTimer.stop()
 
@@ -226,7 +353,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def clearLog(self): # Clear the log
         self.logTb.clear()
-    
+
     def printVer(self): # Print STM version info
         stm32.write("VERS\r\n".encode())
         response = stm32.readline()
@@ -260,6 +387,15 @@ class MainWindow(QtWidgets.QMainWindow):
         for i in range(4):
             stopMotor(self, i+1)
 
+    def startGP(self): # Start controller polling
+        global gamepad
+        gamepad = Gamepad.PS4()
+        gamepad.startBackgroundUpdates()
+        self.controllerTimer.start(100)
+
+    def stopGP(self): # Stop controller polling
+        self.controllerTimer.stop()
+
     def setLED(self): # Set one LED
         ledID, okPressed = QtWidgets.QInputDialog.getInt(self, "LED ID", "LED ID?", 1, 1, 36, 1)
         rValue, okPressed = QtWidgets.QInputDialog.getInt(self, "Red", "Red?", 255, 0, 255, 25)
@@ -275,6 +411,24 @@ class MainWindow(QtWidgets.QMainWindow):
         if okPressed:
             setLED(self, "all", rValue, gValue, bValue)
 
+    def allLEDOff(self): # Turn off all LEDs
+        setLED(self, "all", 0, 0, 0)
+
+    def showCamera(self): # Show camera feed
+        self.cameraTimer.start(200)
+
+    def hideCamera(self): # Hide camera feed
+        self.cameraTimer.stop()
+
+    def showFrame(self): # Show frame from camera
+        with picamera.array.PiRGBArray(camera) as stream:
+            camera.capture(stream, format='bgr', use_video_port=True)
+            image = stream.array
+
+        img = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        img = QtGui.QImage(img.data, img.shape[1], img.shape[0], QtGui.QImage.Format_RGB888)
+        self.cameraPixmap.setPixmap(QtGui.QPixmap.fromImage(img))
+
     def closeApp(self):
         sys.exit()
 
@@ -286,11 +440,17 @@ class MainWindow(QtWidgets.QMainWindow):
         global stm32
         stm32 = serial.Serial('/dev/ttyAMA0', 115200, parity=serial.PARITY_EVEN) # Open serial comms with the STM32
         self.initSTM()
-        
+
         gpioInit(self)
 
         self.ultrasonicTimer = QtCore.QTimer()
         self.ultrasonicTimer.timeout.connect(lambda: ultrasonicPoll(self))
+
+        self.controllerTimer = QtCore.QTimer()
+        self.controllerTimer.timeout.connect(lambda: controllerPoll(self))
+
+        self.cameraTimer = QtCore.QTimer()
+        self.cameraTimer.timeout.connect(lambda: self.showFrame())
 
         self.enableUltrasonicPoll.clicked.connect(self.toggleUltrasonicTimer)
         self.doAThing.clicked.connect(self.buttonFunction)
@@ -301,9 +461,14 @@ class MainWindow(QtWidgets.QMainWindow):
         self.stopMtrBtn.clicked.connect(self.stopMotorBtn)
         self.allMotorBtn.clicked.connect(self.allMotor)
         self.stopAllMtrBtn.clicked.connect(self.stopAllMotorBtn)
+        self.startGPBtn.clicked.connect(self.startGP)
+        self.stopGPBtn.clicked.connect(self.stopGP)
         self.reInit.clicked.connect(self.initSTM)
         self.setLEDBtn.clicked.connect(self.setLED)
         self.allLEDBtn.clicked.connect(self.allLED)
+        self.allLEDOffBtn.clicked.connect(self.allLEDOff)
+        self.showCameraBtn.clicked.connect(self.showCamera)
+        self.hideCameraBtn.clicked.connect(self.hideCamera)
         self.actionQuit.triggered.connect(self.closeApp)
 
 def main():
@@ -312,5 +477,5 @@ def main():
     main.show()
     sys.exit(app.exec_())
 
-if __name__ == '__main__':         
+if __name__ == '__main__':
     main()

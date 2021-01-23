@@ -1,3 +1,4 @@
 RPi.GPIO
-hcsr04sensor
 pyserial
+opencv-python
+picamera
