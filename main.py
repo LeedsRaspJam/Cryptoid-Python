@@ -296,7 +296,7 @@ def gpioInit(self):
     sensor2 = sensor.Measurement(23, 1)
 
 class cameraThread(QtCore.QThread):
-    def __init__(self, pixmap):
+    def __init__(self):
         QtCore.QThread.__init__(self)
         global camera
         camera = picamera.PiCamera()
@@ -315,7 +315,7 @@ class cameraThread(QtCore.QThread):
         for frame in camera.capture_continuous(rawCapture, format="rgb", use_video_port=True):
             image = frame.array
             qImg = QtGui.QImage(image, 640, 480, QtGui.QImage.Format_RGB888)
-            pixmap.setPixmap(QtGui.QPixmap.fromImage(qImg))
+            camerapixmap.setPixmap(QtGui.QPixmap.fromImage(qImg))
 
 class MainWindow(QtWidgets.QMainWindow):
 
@@ -475,6 +475,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.cameraTimer = QtCore.QTimer()
         self.cameraTimer.timeout.connect(lambda: self.showFrame())
 
+        global self.cameraPixmap
         self.cameraQThread = cameraThread()
         self.cameraQThread.start(self.cameraPixmap)
 
