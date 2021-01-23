@@ -296,7 +296,7 @@ def gpioInit(self):
     sensor2 = sensor.Measurement(23, 1)
 
 class cameraThread(QtCore.QThread):
-    def __init__(self):
+    def __init__(self, pixmap):
         QtCore.QThread.__init__(self)
         global camera
         camera = picamera.PiCamera()
