@@ -302,7 +302,7 @@ class cameraThread(QtCore.QThread):
         camera = picamera.PiCamera()
         camera.resolution = (640, 480)
         camera.framerate = 30
-        cameraPixmap2 = pixmap
+        cameraPixmapB = pixmap
 
     def run(self):
         rawCapture = picamera.array.PiRGBArray(camera, size=(640, 480))
