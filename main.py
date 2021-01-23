@@ -390,7 +390,7 @@ class MainWindow(QtWidgets.QMainWindow):
         global gamepad
         gamepad = Gamepad.PS4()
         gamepad.startBackgroundUpdates()
-        self.controllerTimer.start(10)
+        self.controllerTimer.start(50)
 
     def stopGP(self): # Stop controller polling
         self.controllerTimer.stop()
