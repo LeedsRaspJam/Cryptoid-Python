@@ -644,7 +644,7 @@
             <item>
              <widget class="QPushButton" name="showCameraBtn">
               <property name="text">
-               <string>Show Camera</string>
+               <string>Open Camera</string>
               </property>
              </widget>
             </item>

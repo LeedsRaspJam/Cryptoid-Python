@@ -443,13 +443,13 @@ class MainWindow(QtWidgets.QMainWindow):
     
     def startRec(self): # Start recording
         camera.start_recording("/home/pi/recordings/" + str(datetime.now()) + ".h264")
-        self.stm32Connected.setText("Recording...") # Set text + colour
-        self.stm32Connected.setStyleSheet("color:#33cc33")
+        self.recText.setText("Recording...") # Set text + colour
+        self.recText.setStyleSheet("color:#33cc33")
 
     def stopRec(self): # Stop recording
         camera.stop_recording()
-        self.stm32Connected.setText("Not Recording") # Set text + colour
-        self.stm32Connected.setStyleSheet("color:#ff0000")
+        self.recText.setText("Not Recording") # Set text + colour
+        self.recText.setStyleSheet("color:#ff0000")
 
     def closeApp(self):
         sys.exit()
