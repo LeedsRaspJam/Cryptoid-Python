@@ -29,7 +29,6 @@ if os.uname()[1] == 'cryptoid':
     import serial
     import picamera
     import picamera.array
-    import cv2
     import Gamepad
 
 global motorBuffer, ledBuffer
@@ -301,7 +300,7 @@ class cameraThread(QtCore.QThread):
         global camera, cameraPixmapB
         camera = picamera.PiCamera()
         camera.resolution = (960, 720)
-        camera.framerate = 30
+        camera.framerate = 60
         cameraPixmapB = pixmap
 
     def __del__(self):
@@ -311,11 +310,11 @@ class cameraThread(QtCore.QThread):
         rawCapture = picamera.array.PiRGBArray(camera, size=(960, 720))
         frameID = 1
         for frame in camera.capture_continuous(rawCapture, format="rgb", use_video_port=True):
-            if frameID < 4:
+            if frameID < 8:
                 frameID = frameID + 1
                 frame.truncate()
                 frame.seek(0)
-            elif frameID == 4:
+            elif frameID == 8:
                 frameID = 1
                 image = frame.array
                 qImg = QtGui.QImage(image, 960, 720, QtGui.QImage.Format_RGB888)
