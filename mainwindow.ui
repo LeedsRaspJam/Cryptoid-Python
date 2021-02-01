@@ -841,116 +841,134 @@
      </spacer>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="ultrasonicLayout1">
-      <item>
-       <widget class="QLabel" name="distanceLabel1">
-        <property name="text">
-         <string>Distance - Sensor 1 (Front):</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="distanceValue1">
-        <property name="text">
-         <string>x cm</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="distanceLabel2">
-        <property name="text">
-         <string>Distance - Sensor 2 (Back):</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="distanceValue2">
-        <property name="text">
-         <string>x cm</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item>
-     <layout class="QHBoxLayout" name="ultrasonicLayout2">
-      <item>
-       <widget class="QPushButton" name="enableUltrasonicPoll">
-        <property name="text">
-         <string>Toggle Ultrasonic Polling</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item>
      <layout class="QHBoxLayout" name="horizontalLayout_3">
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-     </layout>
-    </item>
-    <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_4">
       <property name="topMargin">
        <number>0</number>
       </property>
       <item>
-       <widget class="QPushButton" name="motorBtn">
-        <property name="text">
-         <string>Set Motor</string>
+       <layout class="QVBoxLayout" name="verticalLayout_6">
+        <property name="topMargin">
+         <number>0</number>
         </property>
-       </widget>
+        <item>
+         <layout class="QHBoxLayout" name="ultrasonicLayout1">
+          <item>
+           <widget class="QLabel" name="distanceLabel1">
+            <property name="text">
+             <string>Distance - Sensor 1 (Front):</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="distanceValue1">
+            <property name="text">
+             <string>x cm</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="distanceLabel2">
+            <property name="text">
+             <string>Distance - Sensor 2 (Back):</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="distanceValue2">
+            <property name="text">
+             <string>x cm</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QPushButton" name="enableUltrasonicPoll">
+          <property name="text">
+           <string>Toggle Ultrasonic Polling</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="motorBtn">
+            <property name="text">
+             <string>Set Motor</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="allMotorBtn">
+            <property name="text">
+             <string>Set All Motors</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="stopMtrBtn">
+            <property name="text">
+             <string>Stop Motor</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="stopAllMtrBtn">
+            <property name="text">
+             <string>Stop All Motors</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QPushButton" name="setLEDBtn">
+          <property name="text">
+           <string>Set LED</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="allLEDBtn">
+          <property name="text">
+           <string>Set All LEDs</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="allLEDOffBtn">
+          <property name="text">
+           <string>Turn off All LEDs</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
       <item>
-       <widget class="QPushButton" name="allMotorBtn">
-        <property name="text">
-         <string>Set All Motors</string>
+       <widget class="QLabel" name="label">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
         </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="stopMtrBtn">
-        <property name="text">
-         <string>Stop Motor</string>
+        <property name="maximumSize">
+         <size>
+          <width>320</width>
+          <height>309</height>
+         </size>
         </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="stopAllMtrBtn">
         <property name="text">
-         <string>Stop All Motors</string>
+         <string/>
         </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_5">
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <item>
-       <widget class="QPushButton" name="setLEDBtn">
-        <property name="text">
-         <string>Set LED</string>
+        <property name="pixmap">
+         <pixmap>logo.png</pixmap>
         </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="allLEDBtn">
-        <property name="text">
-         <string>Set All LEDs</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="allLEDOffBtn">
-        <property name="text">
-         <string>Turn off All LEDs</string>
+        <property name="scaledContents">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
