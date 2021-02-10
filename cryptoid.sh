@@ -1,5 +1,20 @@
 #!/bin/bash
 
-git pull
-pip3 install -r requirements.txt
+echo                                            __                __        __
+echo                                           /  |              /  |      /  |
+echo   _______   ______   __    __   ______   _%% |_     ______  %%/   ____%% |
+echo  /       | /      \ /  |  /  | /      \ / %%   |   /      \ /  | /    %% |
+echo /%%%%%%%/ /%%%%%%  |%% |  %% |/%%%%%%  |%%%%%%/   /%%%%%%  |%% |/%%%%%%% |
+echo %% |      %% |  %%/ %% |  %% |%% |  %% |  %% | __ %% |  %% |%% |%% |  %% |
+echo %% \_____ %% |      %% \__%% |%% |__%% |  %% |/  |%% \__%% |%% |%% \__%% |
+echo %%       |%% |      %%    %% |%%    %%/   %%  %%/ %%    %%/ %% |%%    %% |
+echo  %%%%%%%/ %%/        %%%%%%% |%%%%%%%/     %%%%/   %%%%%%/  %%/  %%%%%%%/
+echo                     /  \__%% |%% |
+echo                     %%    %%/ %% |
+echo                      %%%%%%/  %%/
+echo Downloading Latest Build...
+git pull --quiet
+echo Updating dependencies...
+pip3 install ---quiet r requirements.txt
+echo Executing program...
 python3 main.py
