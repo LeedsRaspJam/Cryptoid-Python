@@ -459,9 +459,9 @@ class MainWindow(QtWidgets.QMainWindow):
         uic.loadUi('qt_mainwindow.ui', self)
 
         verFile = open("version.txt", "rt")
-        self.setWindowTitle("Cryptoid Control Utility (Build ID: " + verFile.read() + ")")
+        self.setWindowTitle("Cryptoid Control Utility (Build ID: " + verFile.read()[:-1] + ")")
         verFile.close()
-        
+
         global stm32
         stm32 = serial.Serial('/dev/ttyAMA0', 115200, parity=serial.PARITY_EVEN) # Open serial comms with the STM32
         self.initSTM()
