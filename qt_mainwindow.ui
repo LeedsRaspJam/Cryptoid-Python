@@ -825,6 +825,9 @@
      </spacer>
     </item>
     <item>
+     <widget class="QTextEdit" name="taskTextEdit"/>
+    </item>
+    <item>
      <spacer name="verticalSpacer_2">
       <property name="orientation">
        <enum>Qt::Vertical</enum>
