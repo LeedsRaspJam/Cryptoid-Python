@@ -387,7 +387,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.logTb.append(str(response2))
         self.logTb.append(str(response3))
 
-        self.loadTask(self)
+        self.loadTask()
 
     def motorSet(self): # Set one motor
         motorID, okPressed = QtWidgets.QInputDialog.getInt(self, "Motor ID", "Motor ID?", 1, 1, 4, 1)
@@ -462,7 +462,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def loadTask(self):
         global currentTaskLocation
         currentTaskLocation = "tasks/test.crtask"
-        self.runTask(self)
+        self.runTask()
 
     def closeApp(self):
         sys.exit()
