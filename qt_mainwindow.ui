@@ -877,6 +877,13 @@
          <number>0</number>
         </property>
         <item>
+         <widget class="QPushButton" name="newTaskBtn">
+          <property name="text">
+           <string>New Task</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="loadTaskBtn">
           <property name="text">
            <string>Load Task</string>
