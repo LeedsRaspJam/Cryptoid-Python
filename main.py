@@ -467,8 +467,7 @@ class MainWindow(QtWidgets.QMainWindow):
         taskFile.close() # Close the file
 
     def newTask(self): # Create new task
-        while currentTaskLocation == "":
-            currentTaskLocation = QtWidgets.QFileDialog.getSaveFileName(self, "Create New Task", "tasks", "Cryptoid Task File (*.crtask") # Get task location with file dialog
+        currentTaskLocation = QtWidgets.QFileDialog.getSaveFileName(self, "Create New Task", "tasks", "Cryptoid Task File (*.crtask") # Get task location with file dialog
 
         if currentTaskLocation[1] == 'Cryptoid Task File (*.crtask)' and currentTaskLocation[0][-7:] != '.crtask':
             currentTaskLocation = currentTaskLocation[0] + '.crtask'
@@ -500,7 +499,7 @@ class MainWindow(QtWidgets.QMainWindow):
         stm32 = serial.Serial('/dev/ttyAMA0', 115200, parity=serial.PARITY_EVEN) # Open serial comms with the STM32
         self.initSTM()
 
-        global currentTaskLocation == ""
+        global currentTaskLocation
 
         gpioInit(self)
 
