@@ -461,6 +461,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def loadTask(self): # Load task into RAM
         global currentTaskLocation
+        currentTaskLocation = QtWidgets.QFileDialog.getOpenFileName(self, "Open Task", "tasks", "Cryptoid Task Files (*.crtask)")
         currentTaskLocation = "tasks/test.crtask"
 
         taskFile = open(currentTaskLocation, "r") # Open task file as object
