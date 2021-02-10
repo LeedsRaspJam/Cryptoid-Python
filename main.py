@@ -500,7 +500,7 @@ class MainWindow(QtWidgets.QMainWindow):
         stm32 = serial.Serial('/dev/ttyAMA0', 115200, parity=serial.PARITY_EVEN) # Open serial comms with the STM32
         self.initSTM()
 
-        global currentTaskLocation
+        global currentTaskLocation == ""
 
         gpioInit(self)
 
