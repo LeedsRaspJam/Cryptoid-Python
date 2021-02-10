@@ -479,6 +479,9 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             currentTaskLocation = currentTaskLocation[0] # Just remove the second tuple object
 
+        if os.path.exists(currentTaskLocation): # If overwriting a file
+            os.remove(currentTaskLocation) # Delete the current version
+
         taskFile = open(currentTaskLocation, "w") # Open task file as object
         taskFile.write("self.logTb.append(\"Example Text\")") # Write in example text
         taskFile.close() # Close the file
