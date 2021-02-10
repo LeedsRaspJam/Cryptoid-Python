@@ -489,12 +489,15 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def deleteTask(self): # Delete task on SD
         global currentTaskLocation
-        currentTaskLocation = QtWidgets.QFileDialog.getOpenFileName(self, "Open Task", "tasks", "Cryptoid Task File (*.crtask)") # Get task location with file dialog
-        if currentTaskLocation[1] == 'Cryptoid Task File (*.crtask)' and currentTaskLocation[0][-7:] != '.crtask': # If the file is meant to be a .crtask and the extension was not added by Qt
-            currentTaskLocation = currentTaskLocation[0] + '.crtask' # Add the extension and remove the second tuple object
+        delTaskLocation = QtWidgets.QFileDialog.getOpenFileName(self, "Open Task", "tasks", "Cryptoid Task File (*.crtask)") # Get task location with file dialog
+        if delTaskLocation[1] == 'Cryptoid Task File (*.crtask)' and delTaskLocation[0][-7:] != '.crtask': # If the file is meant to be a .crtask and the extension was not added by Qt
+            delTaskLocation = delTaskLocation[0] + '.crtask' # Add the extension and remove the second tuple object
         else:
-            currentTaskLocation = currentTaskLocation[0] # Just remove the second tuple object
-        os.remove(currentTaskLocation) # Delete the file
+            delTaskLocation = delTaskLocation[0] # Just remove the second tuple object
+        os.remove(delTaskLocation) # Delete the file
+        if delTaskLocation == currentTaskLocation: # If deleting the current file
+            self.taskTextEdit.clear() # Clear the QTextEdit
+            currentTaskLocation = "" # Clear currentTaskLocation
 
     def saveTask(self): # Save task to SD
         taskFile = open(currentTaskLocation, "w") # Open task file as object
