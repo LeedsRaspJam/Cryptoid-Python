@@ -452,14 +452,14 @@ class MainWindow(QtWidgets.QMainWindow):
         self.recText.setText("Not Recording") # Set text + colour
         self.recText.setStyleSheet("color:#000000")
 
-    def runTask(self):
+    def runTask(self): # Run loaded task
         taskFile = open(currentTaskLocation, "r") # Open task file as object
         taskContents = taskFile.readlines() # Read lines from file into an array
         for line in taskContents: # For every line in that array
             exec(line) # Run it through the interpreter
         taskFile.close() # Close the file
 
-    def loadTask(self):
+    def loadTask(self): # Load task into RAM
         global currentTaskLocation
         currentTaskLocation = "tasks/test.crtask"
 
@@ -467,7 +467,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.taskTextEdit.setPlainText(taskFile.read())
         taskFile.close() # Close the file
 
-    def saveTask(self):
+    def saveTask(self): # Save task to SD
         taskFile = open(currentTaskLocation, "w") # Open task file as object
         taskFile.write(self.taskTextEdit.toPlainText())
         taskFile.close() # Close the file
