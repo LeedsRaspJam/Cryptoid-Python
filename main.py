@@ -29,7 +29,7 @@ if os.uname()[1] == 'cryptoid':
     import serial
     import picamera
     import picamera.array
-    import lib_gamepad
+    import lib_gamepad as Gamepad
 
 global motorBuffer, ledBuffer
 motorBuffer = {
