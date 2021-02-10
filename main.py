@@ -520,7 +520,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.showCameraBtn.clicked.connect(self.showCamera)
         self.startRecBtn.clicked.connect(self.startRec)
         self.stopRecBtn.clicked.connect(self.stopRec)
-        self.taskTextEdit.textChanged.triggered.connect(self.saveTask)
+        self.taskTextEdit.textChanged.connect(self.saveTask)
         self.actionQuit.triggered.connect(self.closeApp)
 
 def main():
