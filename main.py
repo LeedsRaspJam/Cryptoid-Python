@@ -464,6 +464,7 @@ class MainWindow(QtWidgets.QMainWindow):
         currentTaskLocation = "tasks/test.crtask"
 
         taskFile = open(currentTaskLocation, "r") # Open task file as object
+        self.taskTextEdit.clear() # Clear the QTextEdit
         taskContents = taskFile.readlines() # Read lines from file into an array
         for line in taskContents: # For every line in that array
             self.taskTextEdit.append(line)
