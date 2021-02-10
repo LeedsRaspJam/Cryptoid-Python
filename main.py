@@ -387,12 +387,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.logTb.append(str(response2))
         self.logTb.append(str(response3))
 
-        task = open("tasks/test.crtask", "r")
-        taskContents = task.readlines()
-        for line in taskContents:
-            exec(line)
-        task.close()
-        
+        self.loadTask(self)
+
     def motorSet(self): # Set one motor
         motorID, okPressed = QtWidgets.QInputDialog.getInt(self, "Motor ID", "Motor ID?", 1, 1, 4, 1)
         direction, okPressed = QtWidgets.QInputDialog.getInt(self, "Direction", "1 is FWD, 2 is BWD:", 1, 1, 2, 1)
@@ -455,6 +451,18 @@ class MainWindow(QtWidgets.QMainWindow):
         camera.stop_recording()
         self.recText.setText("Not Recording") # Set text + colour
         self.recText.setStyleSheet("color:#000000")
+
+    def runTask(self):
+        task = open(currentTaskLocation, "r")
+        taskContents = task.readlines()
+        for line in taskContents:
+            exec(line)
+        task.close()
+
+    def loadTask(self):
+        global currentTaskLocation
+        currentTaskLocation = "tasks/test.crtask"
+        self.runTask(self)
 
     def closeApp(self):
         sys.exit()
