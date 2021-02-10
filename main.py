@@ -470,8 +470,6 @@ class MainWindow(QtWidgets.QMainWindow):
             self.taskTextEdit.append(line)
         taskFile.close() # Close the file
 
-        self.runTask() # Call function to run task
-
     def saveTask(self):
         taskFile = open(currentTaskLocation, "w") # Open task file as object
         taskFile.write(self.taskTextEdit.toPlainText())
@@ -521,6 +519,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.showCameraBtn.clicked.connect(self.showCamera)
         self.startRecBtn.clicked.connect(self.startRec)
         self.stopRecBtn.clicked.connect(self.stopRec)
+        self.runTaskBtn.clicked.connect(self.runTask)
         self.taskTextEdit.textChanged.connect(self.saveTask)
         self.actionQuit.triggered.connect(self.closeApp)
 
