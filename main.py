@@ -474,7 +474,8 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             currentTaskLocation = currentTaskLocation[0]
 
-        taskFile = open(currentTaskLocation, "c") # Open task file as object
+        taskFile = open(currentTaskLocation, "w") # Open task file as object
+        taskFile.write("self.logTb.append(\"Example Text\"") # Write in example text
         taskFile.close() # Close the file
 
         taskFile = open(currentTaskLocation, "r") # Open task file as object
