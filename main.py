@@ -468,7 +468,12 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def newTask(self): # Create new task
         currentTaskLocation = QtWidgets.QFileDialog.getSaveFileName(self, "Create New Task", "tasks", "Cryptoid Task File (*.crtask") # Get task location with file dialog
-        print(currentTaskLocation)
+
+        if currentTaskLocation[1] == 'Cryptoid Task File (*.crtask)' and currentTaskLocation[0][-7:] != '.crtask':
+            currentTaskLocation = currentTaskLocation[0] + '.crtask'
+        else:
+            currentTaskLocation = currentTaskLocation[0]
+
         taskFile = open(currentTaskLocation, "w") # Open task file as object
         taskFile.write("self.logTb.append(\"Example Text\"") # Write in example text
         taskFile.close() # Close the file
