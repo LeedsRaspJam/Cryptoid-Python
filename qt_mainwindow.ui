@@ -891,6 +891,13 @@
          </widget>
         </item>
         <item>
+         <widget class="QPushButton" name="deleteTaskBtn">
+          <property name="text">
+           <string>Delete Task</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="runTaskBtn">
           <property name="text">
            <string>Run Task</string>
