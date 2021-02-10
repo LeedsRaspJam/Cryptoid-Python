@@ -25,11 +25,11 @@ import time
 
 if os.uname()[1] == 'cryptoid':
     import RPi.GPIO as GPIO
-    import hcsr04sensor as sensor
+    import lib_ultrasonicsensor as sensor
     import serial
     import picamera
     import picamera.array
-    import Gamepad
+    import lib_gamepad
 
 global motorBuffer, ledBuffer
 motorBuffer = {
@@ -456,7 +456,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def __init__(self, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
 
-        uic.loadUi('mainwindow.ui', self)
+        uic.loadUi('qt_mainwindow.ui', self)
 
         global stm32
         stm32 = serial.Serial('/dev/ttyAMA0', 115200, parity=serial.PARITY_EVEN) # Open serial comms with the STM32

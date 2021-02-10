@@ -545,7 +545,7 @@ class Gamepad:
 # Import gamepad mappings #
 ###########################
 scriptDir = os.path.dirname(os.path.realpath(__file__))
-controllerScript = os.path.join(scriptDir, "Controllers.py")
+controllerScript = os.path.join(scriptDir, "lib_controllerbinding.py")
 exec(open(controllerScript).read())
 
 # Generate a list of available gamepad types
