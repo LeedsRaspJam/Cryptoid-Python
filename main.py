@@ -460,17 +460,21 @@ class MainWindow(QtWidgets.QMainWindow):
         taskFile.close() # Close the file
 
     def loadTask(self): # Load task into RAM
-        global currentTaskLocation
-        currentTaskLocation = QtWidgets.QFileDialog.getOpenFileName(self, "Open Task", "tasks", "Cryptoid Task Files (*.crtask)")
-        currentTaskLocation = "tasks/test.crtask"
+        currentTaskLocation = QtWidgets.QFileDialog.getOpenFileName(self, "Open Task", "tasks", "Cryptoid Task File (*.crtask)") # Get task location with file dialog
 
         taskFile = open(currentTaskLocation, "r") # Open task file as object
-        self.taskTextEdit.setPlainText(taskFile.read())
+        self.taskTextEdit.setPlainText(taskFile.read()) # Dump file to QTextEdit
+        taskFile.close() # Close the file
+
+    def newTask(self): # Create new task
+        currentTaskLocation = QtWidgets.QFileDialog.getSaveFileName(self, "Create New Task", "tasks", "Cryptoid Task File (*.crtask") # Get task location with file dialog
+        taskFile = open(currentTaskLocation, "w") # Open task file as object
+        taskFile.write("self.logTb.append(\"Example Text\"") # Write in example text
         taskFile.close() # Close the file
 
     def saveTask(self): # Save task to SD
         taskFile = open(currentTaskLocation, "w") # Open task file as object
-        taskFile.write(self.taskTextEdit.toPlainText())
+        taskFile.write(self.taskTextEdit.toPlainText()) # Dump QTextEdit to file
         taskFile.close() # Close the file
 
     def closeApp(self):
@@ -488,6 +492,8 @@ class MainWindow(QtWidgets.QMainWindow):
         global stm32
         stm32 = serial.Serial('/dev/ttyAMA0', 115200, parity=serial.PARITY_EVEN) # Open serial comms with the STM32
         self.initSTM()
+
+        global currentTaskLocation
 
         gpioInit(self)
 
