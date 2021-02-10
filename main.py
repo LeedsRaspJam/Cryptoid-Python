@@ -387,9 +387,12 @@ class MainWindow(QtWidgets.QMainWindow):
         self.logTb.append(str(response2))
         self.logTb.append(str(response3))
 
-        import task_test
-        task_test.run(self)
-
+        task = open("tasks/test.crtask", "r")
+        taskContents = task.readlines()
+        for line in taskContents:
+            exec(line)
+        task.close()
+        
     def motorSet(self): # Set one motor
         motorID, okPressed = QtWidgets.QInputDialog.getInt(self, "Motor ID", "Motor ID?", 1, 1, 4, 1)
         direction, okPressed = QtWidgets.QInputDialog.getInt(self, "Direction", "1 is FWD, 2 is BWD:", 1, 1, 2, 1)
