@@ -474,10 +474,13 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             currentTaskLocation = currentTaskLocation[0]
 
-        taskFile = open(currentTaskLocation, "rw") # Open task file as object
-        taskFile.write("self.logTb.append(\"Example Text\"") # Write in example text
+        taskFile = open(currentTaskLocation, "c") # Open task file as object
+        taskFile.close() # Close the file
+
+        taskFile = open(currentTaskLocation, "r") # Open task file as object
         self.taskTextEdit.setPlainText(taskFile.read()) # Dump file to QTextEdit
         taskFile.close() # Close the file
+
 
     def saveTask(self): # Save task to SD
         taskFile = open(currentTaskLocation, "w") # Open task file as object
