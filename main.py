@@ -462,7 +462,11 @@ class MainWindow(QtWidgets.QMainWindow):
     def loadTask(self): # Load task into RAM
         global currentTaskLocation
         currentTaskLocation = QtWidgets.QFileDialog.getOpenFileName(self, "Open Task", "tasks", "Cryptoid Task File (*.crtask)") # Get task location with file dialog
-        
+        if currentTaskLocation[1] == 'Cryptoid Task File (*.crtask)' and currentTaskLocation[0][-7:] != '.crtask':
+            currentTaskLocation = currentTaskLocation[0] + '.crtask'
+        else:
+            currentTaskLocation = currentTaskLocation[0]
+
         taskFile = open(currentTaskLocation, "r") # Open task file as object
         self.taskTextEdit.setPlainText(taskFile.read()) # Dump file to QTextEdit
         taskFile.close() # Close the file
@@ -470,7 +474,6 @@ class MainWindow(QtWidgets.QMainWindow):
     def newTask(self): # Create new task
         global currentTaskLocation
         currentTaskLocation = QtWidgets.QFileDialog.getSaveFileName(self, "Create New Task", "tasks", "Cryptoid Task File (*.crtask)") # Get task location with file dialog
-
         if currentTaskLocation[1] == 'Cryptoid Task File (*.crtask)' and currentTaskLocation[0][-7:] != '.crtask':
             currentTaskLocation = currentTaskLocation[0] + '.crtask'
         else:
