@@ -525,6 +525,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.stopRecBtn.clicked.connect(self.stopRec)
         self.runTaskBtn.clicked.connect(self.runTask)
         self.loadTaskBtn.clicked.connect(self.loadTask)
+        self.newTaskBtn.clicked.connect(self.newTask)
         self.taskTextEdit.textChanged.connect(self.saveTask)
         self.actionQuit.triggered.connect(self.closeApp)
 
