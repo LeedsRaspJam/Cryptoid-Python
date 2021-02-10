@@ -462,10 +462,10 @@ class MainWindow(QtWidgets.QMainWindow):
     def loadTask(self): # Load task into RAM
         global currentTaskLocation
         currentTaskLocation = QtWidgets.QFileDialog.getOpenFileName(self, "Open Task", "tasks", "Cryptoid Task File (*.crtask)") # Get task location with file dialog
-        if currentTaskLocation[1] == 'Cryptoid Task File (*.crtask)' and currentTaskLocation[0][-7:] != '.crtask':
-            currentTaskLocation = currentTaskLocation[0] + '.crtask'
+        if currentTaskLocation[1] == 'Cryptoid Task File (*.crtask)' and currentTaskLocation[0][-7:] != '.crtask': # If the file is meant to be a .crtask and the extension was not added by Qt
+            currentTaskLocation = currentTaskLocation[0] + '.crtask' # Add the extension and remove the second tuple object
         else:
-            currentTaskLocation = currentTaskLocation[0]
+            currentTaskLocation = currentTaskLocation[0] # Just remove the second tuple object
 
         taskFile = open(currentTaskLocation, "r") # Open task file as object
         self.taskTextEdit.setPlainText(taskFile.read()) # Dump file to QTextEdit
@@ -474,10 +474,10 @@ class MainWindow(QtWidgets.QMainWindow):
     def newTask(self): # Create new task
         global currentTaskLocation
         currentTaskLocation = QtWidgets.QFileDialog.getSaveFileName(self, "Create New Task", "tasks", "Cryptoid Task File (*.crtask)") # Get task location with file dialog
-        if currentTaskLocation[1] == 'Cryptoid Task File (*.crtask)' and currentTaskLocation[0][-7:] != '.crtask':
-            currentTaskLocation = currentTaskLocation[0] + '.crtask'
+        if currentTaskLocation[1] == 'Cryptoid Task File (*.crtask)' and currentTaskLocation[0][-7:] != '.crtask': # If the file is meant to be a .crtask and the extension was not added by Qt
+            currentTaskLocation = currentTaskLocation[0] + '.crtask' # Add the extension and remove the second tuple object
         else:
-            currentTaskLocation = currentTaskLocation[0]
+            currentTaskLocation = currentTaskLocation[0] # Just remove the second tuple object
 
         taskFile = open(currentTaskLocation, "w") # Open task file as object
         taskFile.write("self.logTb.append(\"Example Text\")") # Write in example text
