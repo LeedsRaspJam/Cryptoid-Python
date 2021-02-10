@@ -14,16 +14,15 @@ echo '                    %%    %%/ %% |'
 echo '                     %%%%%%/  %%/'
 echo 
 
-echo Downloading Latest Build...
+echo 'Downloading Latest Build...'
 git pull --quiet
 
-echo -n Current version: 
+echo -n 'Current version: '
 git show --format="%h" --no-patch > version.txt
 cat version.txt
-echo
 
-echo Updating dependencies...
+echo 'Updating dependencies...'
 pip3 install -q -r requirements.txt
 
-echo Executing program...
+echo 'Executing program...'
 python3 main.py
