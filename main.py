@@ -453,16 +453,28 @@ class MainWindow(QtWidgets.QMainWindow):
         self.recText.setStyleSheet("color:#000000")
 
     def runTask(self):
-        task = open(currentTaskLocation, "r")
-        taskContents = task.readlines()
-        for line in taskContents:
-            exec(line)
-        task.close()
+        taskFile = open(currentTaskLocation, "r") # Open task file as object
+        taskContents = taskFile.readlines() # Read lines from file into an array
+        for line in taskContents: # For every line in that array
+            exec(line) # Run it through the interpreter
+        taskFile.close() # Close the file
 
     def loadTask(self):
         global currentTaskLocation
         currentTaskLocation = "tasks/test.crtask"
-        self.runTask()
+
+        taskFile = open(currentTaskLocation, "r") # Open task file as object
+        taskContents = taskFile.readlines() # Read lines from file into an array
+        for line in taskContents: # For every line in that array
+            self.taskTextEdit.append(line)
+        taskFile.close() # Close the file
+
+        self.runTask() # Call function to run task
+
+    def saveTask(self):
+        taskFile = open(currentTaskLocation, "w") # Open task file as object
+        taskFile.write(self.taskTextEdit.toPlainText())
+        taskFile.close() # Close the file
 
     def closeApp(self):
         sys.exit()
@@ -508,6 +520,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.showCameraBtn.clicked.connect(self.showCamera)
         self.startRecBtn.clicked.connect(self.startRec)
         self.stopRecBtn.clicked.connect(self.stopRec)
+        self.taskTextEdit.textChanged.triggered.connect(self.saveTask)
         self.actionQuit.triggered.connect(self.closeApp)
 
 def main():
