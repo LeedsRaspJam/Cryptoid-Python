@@ -469,6 +469,7 @@ class MainWindow(QtWidgets.QMainWindow):
         taskFile = open(currentTaskLocation, "r") # Open task file as object
         self.taskTextEdit.setPlainText(taskFile.read()) # Dump file to QTextEdit
         taskFile.close() # Close the file
+        self.highlighterTimer.start(100)
 
     def newTask(self): # Create new task
         global currentTaskLocation
@@ -502,7 +503,6 @@ class MainWindow(QtWidgets.QMainWindow):
             currentTaskLocation = "" # Clear currentTaskLocation
 
     def onTextUpdate(self): # Save file upon edit
-        self.highlighter()
         taskFile = open(currentTaskLocation, "w") # Open task file as object
         taskFile.write(self.taskTextEdit.toPlainText()) # Dump QTextEdit to file
         taskFile.close() # Close the file
@@ -540,6 +540,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.controllerTimer = QtCore.QTimer()
         self.controllerTimer.timeout.connect(lambda: controllerPoll(self))
+
+        self.highlighterTimer = QtCore.QTimer()
+        self.highlighterTimer.timeout.connect(lambda: highlighter(self))
 
         self.cameraQThread = cameraThread(self.cameraPixmap)
 
