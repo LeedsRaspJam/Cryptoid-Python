@@ -606,10 +606,9 @@ class MainWindow(QtWidgets.QMainWindow):
         taskFile.close() # Close the file
 
     def toggleSystemMonitor(self): # Enable/disable system monitor
-        if sysMonEn == False:
+        if monitorTimer.isActive() == False:
             monitorTimer.start(1500)
-            sysMonEn = True
-        elif sysMonEn == True:
+        elif monitorTimer.isActive() == True:
             monitorTimer.stop()
             self.oneBar.setValue(100)
             self.twoBar.setValue(100)
@@ -618,7 +617,6 @@ class MainWindow(QtWidgets.QMainWindow):
             self.cpuFreqText.setText("CPU Freq: ???? MHz")
             self.ramTextSys.setText("RAM Usage (Sys): ??? MB")
             self.ramText.setText("RAM Usage: ??? MB")
-            sysMonEn = False
 
     def updateSysInfo(self): # Update system monitoring information
         cpuInfo = psutil.cpu_percent(interval = 1, percpu=True)
@@ -643,8 +641,7 @@ class MainWindow(QtWidgets.QMainWindow):
         hl=Highlighter(self.taskTextEdit.document(), "python")
 
         appPid = os.getpid()
-        sysMonEn = False
-        global process, sysMonEn
+        global process
         process = psutil.Process(appPid)
 
         verFile = open("version.txt", "rt")
