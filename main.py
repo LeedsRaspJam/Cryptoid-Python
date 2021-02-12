@@ -605,6 +605,13 @@ class MainWindow(QtWidgets.QMainWindow):
         taskFile.write(self.taskTextEdit.toPlainText()) # Dump QTextEdit to file
         taskFile.close() # Close the file
 
+    def toggleSystemMonitor(self): # Enable/disable system monitor
+        if sysMonEn == True:
+            monitorTimer.start(1500)
+        else if sysMonEn == False:
+            monitorTimer.stop()
+        sysMonEn = ! sysMonEn
+
     def updateSysInfo(self): # Update system monitoring information
         cpuInfo = psutil.cpu_percent(interval = 1, percpu=True)
         self.oneBar.setValue(int(cpuInfo[0]))
@@ -628,8 +635,9 @@ class MainWindow(QtWidgets.QMainWindow):
         hl=Highlighter(self.taskTextEdit.document(), "python")
 
         appPid = os.getpid()
-        global process
+        global process, sysMonEn
         process = psutil.Process(appPid)
+        sysMonEn = False
 
         verFile = open("version.txt", "rt")
         self.setWindowTitle("Cryptoid Control Utility (Build ID: " + verFile.read()[:-1] + ")")
@@ -649,11 +657,11 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.monitorTimer = QtCore.QTimer()
         self.monitorTimer.timeout.connect(lambda: self.updateSysInfo())
-        self.monitorTimer.start(1000)
 
         self.cameraQThread = cameraThread(self.cameraPixmap)
 
         self.enableUltrasonicPoll.clicked.connect(self.toggleUltrasonicTimer)
+        self.enableSysMon.clicked.connect(self.toggleSystemMonitor)
         self.doAThing.clicked.connect(self.buttonFunction)
         self.clearBtn.clicked.connect(self.clearLog)
         self.resetBtn.clicked.connect(self.resetSTM)
