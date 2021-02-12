@@ -614,6 +614,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.cpuFreqText.setText("CPU Freq: " + str(int(psutil.cpu_freq().current)) + " MHz")
         self.ramTextSys.setText("RAM Usage (Sys): " + str(int(psutil.virtual_memory().used/1024/1024)) + " MB")
+        self.ramText.setText("RAM Usage: " + str(int(process.memory_info()[0]/1024/1024) + " MB")
 
     def closeApp(self):
         sys.exit()
@@ -625,6 +626,10 @@ class MainWindow(QtWidgets.QMainWindow):
         
         global taskTextEdit, hl
         hl=Highlighter(self.taskTextEdit.document(), "python")
+
+        appPid = int(sys.argv[2])
+        global process
+        process = psutil.Process(appPid)
 
         verFile = open("version.txt", "rt")
         self.setWindowTitle("Cryptoid Control Utility (Build ID: " + verFile.read()[:-1] + ")")
