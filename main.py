@@ -513,7 +513,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def closeApp(self):
         sys.exit()
     
-    def highlight(self):
+    def highlighter(self):
         highlight = lib_syntaxhighlight.PythonHighlighter(self.taskTextEdit.document())
 
     def __init__(self, *args, **kwargs):
@@ -542,7 +542,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.controllerTimer.timeout.connect(lambda: controllerPoll(self))
 
         self.testTimer = QtCore.QTimer()
-        self.testTimer.timeout.connect(lambda: highlight(self))
+        self.testTimer.timeout.connect(lambda: highlighter(self))
         self.testTimer.start(100)
 
         self.cameraQThread = cameraThread(self.cameraPixmap)
