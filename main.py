@@ -21,7 +21,7 @@ import sys
 import random
 import os
 from datetime import datetime
-import lib_syntaxhighlighter
+import lib_syntaxhighlight
 import time
 
 if os.uname()[1] == 'cryptoid':
