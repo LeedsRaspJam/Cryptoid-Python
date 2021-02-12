@@ -608,7 +608,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def toggleSystemMonitor(self): # Enable/disable system monitor
         if sysMonEn == True:
             monitorTimer.start(1500)
-        else if sysMonEn == False:
+        elif sysMonEn == False:
             monitorTimer.stop()
         sysMonEn = ! sysMonEn
 
