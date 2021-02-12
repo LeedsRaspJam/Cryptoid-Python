@@ -860,7 +860,7 @@
         <item>
          <widget class="QProgressBar" name="oneBar">
           <property name="value">
-           <number>24</number>
+           <number>100</number>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
@@ -893,7 +893,7 @@
         <item>
          <widget class="QProgressBar" name="twoBar">
           <property name="value">
-           <number>24</number>
+           <number>100</number>
           </property>
           <property name="alignment">
            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -923,7 +923,7 @@
         <item>
          <widget class="QProgressBar" name="threeBar">
           <property name="value">
-           <number>24</number>
+           <number>100</number>
           </property>
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -950,7 +950,7 @@
         <item>
          <widget class="QProgressBar" name="fourBar">
           <property name="value">
-           <number>24</number>
+           <number>100</number>
           </property>
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -977,21 +977,21 @@
         <item>
          <widget class="QLabel" name="ramText">
           <property name="text">
-           <string>RAM Usage: 720 MB</string>
+           <string>RAM Usage: ??? MB</string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QLabel" name="ramTextSys">
           <property name="text">
-           <string>RAM Usage (Sys): 720 MB </string>
+           <string>RAM Usage (Sys): ??? MB </string>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QLabel" name="cpuFreqText">
           <property name="text">
-           <string>CPU Freq: 1200 MHz</string>
+           <string>CPU Freq: ???? MHz</string>
           </property>
          </widget>
         </item>
