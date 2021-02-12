@@ -460,6 +460,8 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def initHighlighting(self): # Init task highlighting
         highlight = lib_syntaxhighlight.PythonHighlighter(self.taskTextEdit.document())
+        infile = open('main.py', 'r')
+        self.taskTextEdit.setPlainText(infile.read())
 
     def loadTask(self): # Load task into RAM
         global currentTaskLocation
