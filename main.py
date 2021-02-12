@@ -514,6 +514,7 @@ class MainWindow(QtWidgets.QMainWindow):
         sys.exit()
     
     def highlighter(self):
+        global highlight
         highlight = lib_syntaxhighlight.PythonHighlighter(self.taskTextEdit.document())
 
     def __init__(self, *args, **kwargs):
@@ -523,6 +524,7 @@ class MainWindow(QtWidgets.QMainWindow):
         highlight = lib_syntaxhighlight.PythonHighlighter(self.taskTextEdit.document())
         #infile = open('main.py', 'r')
         #self.taskTextEdit.setPlainText(infile.read())
+        global taskTextEdit
 
         verFile = open("version.txt", "rt")
         self.setWindowTitle("Cryptoid Control Utility (Build ID: " + verFile.read()[:-1] + ")")
