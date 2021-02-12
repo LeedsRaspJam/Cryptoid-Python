@@ -421,7 +421,6 @@ class cameraThread(QtCore.QThread):
                 frame.seek(0)
 
 class MainWindow(QtWidgets.QMainWindow):
-
     def buttonFunction(self):
         setLED(self, "all", 0, 0, 255)
 
