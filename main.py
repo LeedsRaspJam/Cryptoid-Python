@@ -564,6 +564,7 @@ class MainWindow(QtWidgets.QMainWindow):
         taskFile = open(currentTaskLocation, "r") # Open task file as object
         self.taskTextEdit.setPlainText(taskFile.read()) # Dump file to QTextEdit
         taskFile.close() # Close the file
+        hl=Highlighter(self.taskTextEdit.document(), "python")
 
     def newTask(self): # Create new task
         global currentTaskLocation
@@ -614,6 +615,7 @@ class MainWindow(QtWidgets.QMainWindow):
         uic.loadUi('qt_mainwindow.ui', self)
 
         global taskTextEdit
+        global hl
         hl=Highlighter(self.taskTextEdit.document(), "python")
         taskFile = open("defaultTask.crtask", "r") # Open task file as object
         self.taskTextEdit.setPlainText(taskFile.read()) # Dump file to QTextEdit
