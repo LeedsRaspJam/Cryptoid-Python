@@ -553,10 +553,6 @@ class MainWindow(QtWidgets.QMainWindow):
             exec(line) # Run it through the interpreter
         taskFile.close() # Close the file
 
-    def highlight(self): # Highlight text
-        global hl
-        hl=Highlighter(self.taskTextEdit.document(), "python")
-
     def loadTask(self): # Load task into RAM
         global currentTaskLocation
         currentTaskLocation = QtWidgets.QFileDialog.getOpenFileName(self, "Open Task", "tasks", "Cryptoid Task File (*.crtask)") # Get task location with file dialog
@@ -601,7 +597,6 @@ class MainWindow(QtWidgets.QMainWindow):
             currentTaskLocation = "" # Clear currentTaskLocation
 
     def onTextUpdate(self): # Save file upon edit
-        self.highlight() # Highlight text
         taskFile = open(currentTaskLocation, "w") # Open task file as object
         taskFile.write(self.taskTextEdit.toPlainText()) # Dump QTextEdit to file
         taskFile.close() # Close the file
@@ -661,7 +656,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.loadTaskBtn.clicked.connect(self.loadTask)
         self.newTaskBtn.clicked.connect(self.newTask)
         self.deleteTaskBtn.clicked.connect(self.deleteTask)
-        #self.taskTextEdit.textChanged.connect(self.onTextUpdate)
+        self.taskTextEdit.textChanged.connect(self.onTextUpdate)
         self.actionQuit.triggered.connect(self.closeApp)
 
 def main():
