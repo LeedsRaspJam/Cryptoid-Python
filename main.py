@@ -23,7 +23,7 @@ import os
 from datetime import datetime
 from pygments import highlight
 from pygments.lexers import PythonLexer
-from pygments.formatters import RtfFormatter
+from pygments.formatters import HTMLFormatter
 import time
 
 if os.uname()[1] == 'cryptoid':
@@ -505,7 +505,7 @@ class MainWindow(QtWidgets.QMainWindow):
             currentTaskLocation = "" # Clear currentTaskLocation
 
     def highlightText(self): # Highlight QTextEdit
-        self.taskTextEdit.setText(highlight(self.taskTextEdit.toPlainText(), PythonLexer(), RtfFormatter())) # Highlight text
+        self.taskTextEdit.setText(highlight(self.taskTextEdit.toPlainText(), PythonLexer(), HTMLFormatter())) # Highlight text
 
     def onTextUpdate(self): # Save file upon edit
         taskFile = open(currentTaskLocation, "w") # Open task file as object
