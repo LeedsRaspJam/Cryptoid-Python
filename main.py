@@ -519,7 +519,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
         uic.loadUi('qt_mainwindow.ui', self)
         self.initHighlighting()
-        
+        infile = open('main.py', 'r')
+        self.taskTextEdit.setPlainText(infile.read())
+
         verFile = open("version.txt", "rt")
         self.setWindowTitle("Cryptoid Control Utility (Build ID: " + verFile.read()[:-1] + ")")
         verFile.close()
