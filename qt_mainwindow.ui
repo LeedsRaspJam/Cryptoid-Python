@@ -722,6 +722,13 @@
              </spacer>
             </item>
             <item>
+             <widget class="QPushButton" name="pushButton">
+              <property name="text">
+               <string>PushButton</string>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="QPushButton" name="stopGPBtn">
               <property name="text">
                <string>Stop GP Polling</string>
@@ -1126,6 +1133,13 @@
     </item>
     <item>
      <layout class="QHBoxLayout" name="ultrasonicLayout2">
+      <item>
+       <widget class="QPushButton" name="enableSysMon">
+        <property name="text">
+         <string>Toggle System Monitor</string>
+        </property>
+       </widget>
+      </item>
       <item>
        <widget class="QPushButton" name="enableUltrasonicPoll">
         <property name="text">
