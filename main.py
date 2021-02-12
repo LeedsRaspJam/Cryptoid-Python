@@ -286,11 +286,13 @@ def setSTM32Text(self, state):
             ledBuffer[key] = [0, 255, 0]
         self.stm32Connected.setText("STM32 Connected") # Set text + colour
         self.stm32Connected.setStyleSheet("color:#33cc33")
+        self.cpuFreqTextB.setText("CPU Freq. (B): 72 MHz")
     elif state == False:
         for key in ledBuffer:
             ledBuffer[key] = [255, 0, 0]
         self.stm32Connected.setText("STM32 Disconnected")
         self.stm32Connected.setStyleSheet("color:#ff0000")
+        self.cpuFreqTextB.setText("CPU Freq. (B): 0 MHz")
 
 def hex2QColor(c): # Convert to QColor (for highlighting)
     r=int(c[0:2],16)
@@ -610,7 +612,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.threeBar.setValue(int(cpuInfo[2]))
         self.fourBar.setValue(int(cpuInfo[3]))
 
-
+        self.cpuFreqText.setText(psutil.cpu_freq())
 
     def closeApp(self):
         sys.exit()
@@ -642,7 +644,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.monitorTimer = QtCore.QTimer()
         self.monitorTimer.timeout.connect(lambda: self.updateSysInfo())
         self.monitorTimer.start(1000)
-        
+
         self.cameraQThread = cameraThread(self.cameraPixmap)
 
         self.enableUltrasonicPoll.clicked.connect(self.toggleUltrasonicTimer)
