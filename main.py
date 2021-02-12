@@ -527,7 +527,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.initSTM()
 
         gpioInit(self)
-        initHighlighter(self)
+        self.initHighlighter()
 
         self.ultrasonicTimer = QtCore.QTimer()
         self.ultrasonicTimer.timeout.connect(lambda: ultrasonicPoll(self))
