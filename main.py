@@ -564,7 +564,6 @@ class MainWindow(QtWidgets.QMainWindow):
         taskFile = open(currentTaskLocation, "r") # Open task file as object
         self.taskTextEdit.setPlainText(taskFile.read()) # Dump file to QTextEdit
         taskFile.close() # Close the file
-        hl=Highlighter(self.taskTextEdit.document(), "python")
 
     def newTask(self): # Create new task
         global currentTaskLocation
@@ -615,6 +614,8 @@ class MainWindow(QtWidgets.QMainWindow):
         uic.loadUi('qt_mainwindow.ui', self)
 
         global taskTextEdit
+        hl=Highlighter(self.taskTextEdit.document(), "python")
+
         verFile = open("version.txt", "rt")
         self.setWindowTitle("Cryptoid Control Utility (Build ID: " + verFile.read()[:-1] + ")")
         verFile.close()
