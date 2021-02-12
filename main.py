@@ -561,7 +561,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.loadTaskBtn.clicked.connect(self.testLoad)
         self.newTaskBtn.clicked.connect(self.newTask)
         self.deleteTaskBtn.clicked.connect(self.deleteTask)
-        self.taskTextEdit.textChanged.connect(self.onTextUpdate)
+        #self.taskTextEdit.textChanged.connect(self.onTextUpdate)
         self.actionQuit.triggered.connect(self.closeApp)
 
 def main():
