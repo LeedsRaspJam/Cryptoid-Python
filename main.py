@@ -473,7 +473,7 @@ class MainWindow(QtWidgets.QMainWindow):
         taskFile = open(currentTaskLocation, "r") # Open task file as object
         self.taskTextEdit.setPlainText(taskFile.read()) # Dump file to QTextEdit
         taskFile.close() # Close the file
-        self.highlighterTimer.start(100)
+        #self.highlighterTimer.start(100)
 
     def newTask(self): # Create new task
         global currentTaskLocation
@@ -507,6 +507,7 @@ class MainWindow(QtWidgets.QMainWindow):
             currentTaskLocation = "" # Clear currentTaskLocation
 
     def onTextUpdate(self): # Save file upon edit
+        highlighter(self)
         taskFile = open(currentTaskLocation, "w") # Open task file as object
         taskFile.write(self.taskTextEdit.toPlainText()) # Dump QTextEdit to file
         taskFile.close() # Close the file
@@ -518,12 +519,11 @@ class MainWindow(QtWidgets.QMainWindow):
     def closeApp(self):
         sys.exit()
     
-
     def __init__(self, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
 
         uic.loadUi('qt_mainwindow.ui', self)
-        
+
         global taskTextEdit
 
         verFile = open("version.txt", "rt")
@@ -542,8 +542,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.controllerTimer = QtCore.QTimer()
         self.controllerTimer.timeout.connect(lambda: controllerPoll(self))
 
-        self.highlighterTimer = QtCore.QTimer()
-        self.highlighterTimer.timeout.connect(lambda: highlighter(self))
+        #self.highlighterTimer = QtCore.QTimer()
+        #self.highlighterTimer.timeout.connect(lambda: highlighter(self))
 
         self.cameraQThread = cameraThread(self.cameraPixmap)
 
