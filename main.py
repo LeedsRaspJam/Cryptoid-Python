@@ -553,6 +553,10 @@ class MainWindow(QtWidgets.QMainWindow):
             exec(line) # Run it through the interpreter
         taskFile.close() # Close the file
 
+    def highlight(self): # Highlight text
+        global hl
+        hl=Highlighter(self.taskTextEdit.document(), "python")
+
     def loadTask(self): # Load task into RAM
         global currentTaskLocation
         currentTaskLocation = QtWidgets.QFileDialog.getOpenFileName(self, "Open Task", "tasks", "Cryptoid Task File (*.crtask)") # Get task location with file dialog
@@ -563,9 +567,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         taskFile = open(currentTaskLocation, "r") # Open task file as object
         self.taskTextEdit.setPlainText(taskFile.read()) # Dump file to QTextEdit
-        taskFile.close() # Close the file.
-        global hl
-        hl=Highlighter(self.taskTextEdit.document(), "python")
+        taskFile.close() # Close the file
 
     def newTask(self): # Create new task
         global currentTaskLocation
@@ -599,6 +601,7 @@ class MainWindow(QtWidgets.QMainWindow):
             currentTaskLocation = "" # Clear currentTaskLocation
 
     def onTextUpdate(self): # Save file upon edit
+        self.highlight() # Highlight text
         taskFile = open(currentTaskLocation, "w") # Open task file as object
         taskFile.write(self.taskTextEdit.toPlainText()) # Dump QTextEdit to file
         taskFile.close() # Close the file
@@ -614,14 +617,7 @@ class MainWindow(QtWidgets.QMainWindow):
         super(MainWindow, self).__init__(*args, **kwargs)
 
         uic.loadUi('qt_mainwindow.ui', self)
-
-        global taskTextEdit
-        global hl
-        hl=Highlighter(self.taskTextEdit.document(), "python")
-        taskFile = open("defaultTask.crtask", "r") # Open task file as object
-        self.taskTextEdit.setPlainText(taskFile.read()) # Dump file to QTextEdit
-        taskFile.close() # Close the file
-
+        
         verFile = open("version.txt", "rt")
         self.setWindowTitle("Cryptoid Control Utility (Build ID: " + verFile.read()[:-1] + ")")
         verFile.close()
