@@ -458,9 +458,6 @@ class MainWindow(QtWidgets.QMainWindow):
             exec(line) # Run it through the interpreter
         taskFile.close() # Close the file
 
-    def initHighlighting(self): # Init task highlighting
-        highlight = lib_syntaxhighlight.PythonHighlighter(self.taskTextEdit.document())
-
     def loadTask(self): # Load task into RAM
         global currentTaskLocation
         currentTaskLocation = QtWidgets.QFileDialog.getOpenFileName(self, "Open Task", "tasks", "Cryptoid Task File (*.crtask)") # Get task location with file dialog
@@ -472,7 +469,6 @@ class MainWindow(QtWidgets.QMainWindow):
         taskFile = open(currentTaskLocation, "r") # Open task file as object
         self.taskTextEdit.setPlainText(taskFile.read()) # Dump file to QTextEdit
         taskFile.close() # Close the file
-        self.initHighlighting()
 
     def newTask(self): # Create new task
         global currentTaskLocation
@@ -492,7 +488,6 @@ class MainWindow(QtWidgets.QMainWindow):
         taskFile = open(currentTaskLocation, "r") # Open task file as object
         self.taskTextEdit.setPlainText(taskFile.read()) # Dump file to QTextEdit
         taskFile.close() # Close the file
-        self.initHighlighting()
 
     def deleteTask(self): # Delete task on SD
         global currentTaskLocation
@@ -518,7 +513,7 @@ class MainWindow(QtWidgets.QMainWindow):
         super(MainWindow, self).__init__(*args, **kwargs)
 
         uic.loadUi('qt_mainwindow.ui', self)
-        self.initHighlighting()
+        highlight = lib_syntaxhighlight.PythonHighlighter(self.taskTextEdit.document())
         infile = open('main.py', 'r')
         self.taskTextEdit.setPlainText(infile.read())
 
