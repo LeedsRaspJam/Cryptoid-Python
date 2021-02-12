@@ -851,7 +851,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QProgressBar" name="progressBar_4">
+         <widget class="QProgressBar" name="oneBar">
           <property name="value">
            <number>24</number>
           </property>
@@ -884,7 +884,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QProgressBar" name="progressBar_3">
+         <widget class="QProgressBar" name="twoBar">
           <property name="value">
            <number>24</number>
           </property>
@@ -914,7 +914,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QProgressBar" name="progressBar">
+         <widget class="QProgressBar" name="threeBar">
           <property name="value">
            <number>24</number>
           </property>
@@ -941,7 +941,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QProgressBar" name="progressBar_2">
+         <widget class="QProgressBar" name="fourBar">
           <property name="value">
            <number>24</number>
           </property>

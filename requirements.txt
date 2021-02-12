@@ -3,3 +3,4 @@ pyserial
 opencv-python
 picamera
 pygments
+psutil

@@ -25,6 +25,7 @@ from pygments import highlight
 from pygments.lexers import *
 from pygments.formatter import Formatter
 import re
+import psutil
 import time
 
 if os.uname()[1] == 'cryptoid':
@@ -602,9 +603,14 @@ class MainWindow(QtWidgets.QMainWindow):
         taskFile.write(self.taskTextEdit.toPlainText()) # Dump QTextEdit to file
         taskFile.close() # Close the file
 
-    def testLoad(self):
-        infile = open('main.py', 'r')
-        self.taskTextEdit.setPlainText(infile.read())
+    def updateSysInfo(self): # Update system monitoring information
+        cpuInfo = psutil.cpu_percent(interval = 1, percpu=True)
+        self.oneBar.setValue(int(cpuInfo[0]))
+        self.twoBar.setValue(int(cpuInfo[1]))
+        self.threeBar.setValue(int(cpuInfo[2]))
+        self.fourBar.setValue(int(cpuInfo[3]))
+
+        
 
     def closeApp(self):
         sys.exit()
