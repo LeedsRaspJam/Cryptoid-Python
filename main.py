@@ -502,6 +502,7 @@ class MainWindow(QtWidgets.QMainWindow):
             currentTaskLocation = "" # Clear currentTaskLocation
 
     def onTextUpdate(self): # Save file upon edit
+        self.highlighter()
         taskFile = open(currentTaskLocation, "w") # Open task file as object
         taskFile.write(self.taskTextEdit.toPlainText()) # Dump QTextEdit to file
         taskFile.close() # Close the file
@@ -521,9 +522,7 @@ class MainWindow(QtWidgets.QMainWindow):
         super(MainWindow, self).__init__(*args, **kwargs)
 
         uic.loadUi('qt_mainwindow.ui', self)
-        highlight = lib_syntaxhighlight.PythonHighlighter(self.taskTextEdit.document())
-        #infile = open('main.py', 'r')
-        #self.taskTextEdit.setPlainText(infile.read())
+        self.highlighter()
         global taskTextEdit
 
         verFile = open("version.txt", "rt")
@@ -535,17 +534,12 @@ class MainWindow(QtWidgets.QMainWindow):
         self.initSTM()
 
         gpioInit(self)
-        self.testLoad()
 
         self.ultrasonicTimer = QtCore.QTimer()
         self.ultrasonicTimer.timeout.connect(lambda: ultrasonicPoll(self))
 
         self.controllerTimer = QtCore.QTimer()
         self.controllerTimer.timeout.connect(lambda: controllerPoll(self))
-
-        self.testTimer = QtCore.QTimer()
-        self.testTimer.timeout.connect(lambda: self.highlighter())
-        self.testTimer.start(100)
 
         self.cameraQThread = cameraThread(self.cameraPixmap)
 
@@ -568,10 +562,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.startRecBtn.clicked.connect(self.startRec)
         self.stopRecBtn.clicked.connect(self.stopRec)
         self.runTaskBtn.clicked.connect(self.runTask)
-        self.loadTaskBtn.clicked.connect(self.testLoad)
+        self.loadTaskBtn.clicked.connect(self.loadTask)
         self.newTaskBtn.clicked.connect(self.newTask)
         self.deleteTaskBtn.clicked.connect(self.deleteTask)
-        #self.taskTextEdit.textChanged.connect(self.onTextUpdate)
+        self.taskTextEdit.textChanged.connect(self.onTextUpdate)
         self.actionQuit.triggered.connect(self.closeApp)
 
 def main():
