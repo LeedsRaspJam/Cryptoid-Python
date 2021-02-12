@@ -612,7 +612,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.threeBar.setValue(int(cpuInfo[2]))
         self.fourBar.setValue(int(cpuInfo[3]))
 
-        self.cpuFreqText.setText(psutil.cpu_freq().current)
+        self.cpuFreqText.setText("CPU Freq: " + str(int(psutil.cpu_freq().current)))
 
     def closeApp(self):
         sys.exit()
