@@ -472,6 +472,7 @@ class MainWindow(QtWidgets.QMainWindow):
         taskFile = open(currentTaskLocation, "r") # Open task file as object
         self.taskTextEdit.setPlainText(taskFile.read()) # Dump file to QTextEdit
         taskFile.close() # Close the file
+        highlight = lib_syntaxhighlight.PythonHighlighter(self.taskTextEdit.document())
 
     def newTask(self): # Create new task
         global currentTaskLocation
