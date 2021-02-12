@@ -295,6 +295,10 @@ def gpioInit(self):
     sensor1 = sensor.Measurement(22, 12) # Init both sensors
     sensor2 = sensor.Measurement(23, 1)
 
+def highlighter(self):
+    global highlight
+    highlight = lib_syntaxhighlight.PythonHighlighter(self.taskTextEdit.document())
+
 class cameraThread(QtCore.QThread):
     def __init__(self, pixmap):
         QtCore.QThread.__init__(self)
@@ -514,15 +518,12 @@ class MainWindow(QtWidgets.QMainWindow):
     def closeApp(self):
         sys.exit()
     
-    def highlighter(self):
-        global highlight
-        highlight = lib_syntaxhighlight.PythonHighlighter(self.taskTextEdit.document())
 
     def __init__(self, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
 
         uic.loadUi('qt_mainwindow.ui', self)
-        self.highlighter()
+        
         global taskTextEdit
 
         verFile = open("version.txt", "rt")
@@ -542,7 +543,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.controllerTimer.timeout.connect(lambda: controllerPoll(self))
 
         self.highlighterTimer = QtCore.QTimer()
-        self.highlighterTimer.timeout.connect(lambda: self.highlighter())
+        self.highlighterTimer.timeout.connect(lambda: highlighter(self))
 
         self.cameraQThread = cameraThread(self.cameraPixmap)
 
