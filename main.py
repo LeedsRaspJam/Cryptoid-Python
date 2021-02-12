@@ -472,7 +472,7 @@ class MainWindow(QtWidgets.QMainWindow):
         taskFile = open(currentTaskLocation, "r") # Open task file as object
         self.taskTextEdit.setPlainText(taskFile.read()) # Dump file to QTextEdit
         taskFile.close() # Close the file
-        initHighlighting()
+        self.initHighlighting()
 
     def newTask(self): # Create new task
         global currentTaskLocation
@@ -492,7 +492,7 @@ class MainWindow(QtWidgets.QMainWindow):
         taskFile = open(currentTaskLocation, "r") # Open task file as object
         self.taskTextEdit.setPlainText(taskFile.read()) # Dump file to QTextEdit
         taskFile.close() # Close the file
-        initHighlighting()
+        self.initHighlighting()
 
     def deleteTask(self): # Delete task on SD
         global currentTaskLocation
