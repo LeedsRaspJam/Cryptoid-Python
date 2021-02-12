@@ -286,13 +286,13 @@ def setSTM32Text(self, state):
             ledBuffer[key] = [0, 255, 0]
         self.stm32Connected.setText("STM32 Connected") # Set text + colour
         self.stm32Connected.setStyleSheet("color:#33cc33")
-        self.cpuFreqTextB.setText("CPU Freq. (HCP): 72 MHz")
+        self.cpuFreqTextB.setText("CPU Freq (HCP): 72 MHz")
     elif state == False:
         for key in ledBuffer:
             ledBuffer[key] = [255, 0, 0]
         self.stm32Connected.setText("STM32 Disconnected")
         self.stm32Connected.setStyleSheet("color:#ff0000")
-        self.cpuFreqTextB.setText("CPU Freq. (HCP): 0 MHz")
+        self.cpuFreqTextB.setText("CPU Freq (HCP): 0 MHz")
 
 def hex2QColor(c): # Convert to QColor (for highlighting)
     r=int(c[0:2],16)
