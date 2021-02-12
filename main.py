@@ -472,7 +472,6 @@ class MainWindow(QtWidgets.QMainWindow):
         taskFile = open(currentTaskLocation, "r") # Open task file as object
         self.taskTextEdit.setPlainText(taskFile.read()) # Dump file to QTextEdit
         taskFile.close() # Close the file
-        self.highlightText()
 
     def newTask(self): # Create new task
         global currentTaskLocation
