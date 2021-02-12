@@ -627,7 +627,7 @@ class MainWindow(QtWidgets.QMainWindow):
         global taskTextEdit, hl
         hl=Highlighter(self.taskTextEdit.document(), "python")
 
-        appPid = int(sys.argv[2])
+        appPid = os.getpid()
         global process
         process = psutil.Process(appPid)
 
