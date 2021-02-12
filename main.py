@@ -512,6 +512,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def closeApp(self):
         sys.exit()
+    
+    def highlight(self):
+        highlight = lib_syntaxhighlight.PythonHighlighter(self.taskTextEdit.document())
 
     def __init__(self, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
@@ -531,12 +534,16 @@ class MainWindow(QtWidgets.QMainWindow):
 
         gpioInit(self)
         self.testLoad()
-        
+
         self.ultrasonicTimer = QtCore.QTimer()
         self.ultrasonicTimer.timeout.connect(lambda: ultrasonicPoll(self))
 
         self.controllerTimer = QtCore.QTimer()
         self.controllerTimer.timeout.connect(lambda: controllerPoll(self))
+        self.controllerTimer.start(100)
+
+        self.testTimer = QtCore.QTimer()
+        self.testTimer.timeout.connect(lambda: highlight(self))
 
         self.cameraQThread = cameraThread(self.cameraPixmap)
 
