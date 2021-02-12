@@ -614,6 +614,9 @@ class MainWindow(QtWidgets.QMainWindow):
         uic.loadUi('qt_mainwindow.ui', self)
 
         global taskTextEdit
+        taskFile = open("defaultTask.crtask", "r") # Open task file as object
+        self.taskTextEdit.setPlainText(taskFile.read()) # Dump file to QTextEdit
+        taskFile.close() # Close the file
         hl=Highlighter(self.taskTextEdit.document(), "python")
 
         verFile = open("version.txt", "rt")
