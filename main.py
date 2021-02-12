@@ -610,7 +610,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.threeBar.setValue(int(cpuInfo[2]))
         self.fourBar.setValue(int(cpuInfo[3]))
 
-        
+
 
     def closeApp(self):
         sys.exit()
@@ -639,6 +639,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.controllerTimer = QtCore.QTimer()
         self.controllerTimer.timeout.connect(lambda: controllerPoll(self))
 
+        self.monitorTimer = QtCore.QTimer()
+        self.monitorTimer.timeout.connect(lambda: self.updateSysInfo())
+        self.monitorTimer.start(1000)
+        
         self.cameraQThread = cameraThread(self.cameraPixmap)
 
         self.enableUltrasonicPoll.clicked.connect(self.toggleUltrasonicTimer)
