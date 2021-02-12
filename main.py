@@ -530,7 +530,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.initSTM()
 
         gpioInit(self)
-
+        self.testLoad()
+        
         self.ultrasonicTimer = QtCore.QTimer()
         self.ultrasonicTimer.timeout.connect(lambda: ultrasonicPoll(self))
 
