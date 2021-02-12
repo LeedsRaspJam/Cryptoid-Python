@@ -518,7 +518,8 @@ class MainWindow(QtWidgets.QMainWindow):
         super(MainWindow, self).__init__(*args, **kwargs)
 
         uic.loadUi('qt_mainwindow.ui', self)
-
+        self.initHighlighting()
+        
         verFile = open("version.txt", "rt")
         self.setWindowTitle("Cryptoid Control Utility (Build ID: " + verFile.read()[:-1] + ")")
         verFile.close()
@@ -528,7 +529,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.initSTM()
 
         gpioInit(self)
-        self.initHighlighting()
 
         self.ultrasonicTimer = QtCore.QTimer()
         self.ultrasonicTimer.timeout.connect(lambda: ultrasonicPoll(self))
