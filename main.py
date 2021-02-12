@@ -521,12 +521,12 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def setLED(self): # Set one LED
         ledID, okPressed = QtWidgets.QInputDialog.getInt(self, "LED ID", "LED ID?", 1, 1, 36, 1)
-        ledColor, okPressed = QtWidgets.QColorDialog.getColor()
+        ledColor = QtWidgets.QColorDialog.getColor()
         if okPressed:
             setLED(self, str(ledID-1), ledColor.qRed(), ledColor.qGreen(), ledcolor.qBlue())
 
     def allLED(self): # Set all LEDs
-        ledColor, okPressed = QtWidgets.QColorDialog.getColor()
+        ledColor = QtWidgets.QColorDialog.getColor()
         if okPressed:
             setLED(self, "all", ledColor.qRed(), ledColor.qGreen(), ledcolor.qBlue())
 
