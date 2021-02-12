@@ -991,7 +991,7 @@
         <item>
          <widget class="QLabel" name="cpuFreqTextB">
           <property name="text">
-           <string>CPU Freq (B): 72 MHz</string>
+           <string>CPU Freq (HCP): 72 MHz</string>
           </property>
          </widget>
         </item>
