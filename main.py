@@ -643,9 +643,9 @@ class MainWindow(QtWidgets.QMainWindow):
         hl=Highlighter(self.taskTextEdit.document(), "python")
 
         appPid = os.getpid()
+        sysMonEn = False
         global process, sysMonEn
         process = psutil.Process(appPid)
-        sysMonEn = False
 
         verFile = open("version.txt", "rt")
         self.setWindowTitle("Cryptoid Control Utility (Build ID: " + verFile.read()[:-1] + ")")
