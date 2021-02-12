@@ -610,7 +610,7 @@ class MainWindow(QtWidgets.QMainWindow):
             monitorTimer.start(1500)
         elif sysMonEn == False:
             monitorTimer.stop()
-        sysMonEn = ! sysMonEn
+        sysMonEn = !sysMonEn
 
     def updateSysInfo(self): # Update system monitoring information
         cpuInfo = psutil.cpu_percent(interval = 1, percpu=True)
