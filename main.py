@@ -460,8 +460,6 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def initHighlighting(self): # Init task highlighting
         highlight = lib_syntaxhighlight.PythonHighlighter(self.taskTextEdit.document())
-        infile = open('main.py', 'r')
-        self.taskTextEdit.setPlainText(infile.read())
 
     def loadTask(self): # Load task into RAM
         global currentTaskLocation
@@ -474,7 +472,7 @@ class MainWindow(QtWidgets.QMainWindow):
         taskFile = open(currentTaskLocation, "r") # Open task file as object
         self.taskTextEdit.setPlainText(taskFile.read()) # Dump file to QTextEdit
         taskFile.close() # Close the file
-        highlight = lib_syntaxhighlight.PythonHighlighter(self.taskTextEdit.document())
+        initHighlighting()
 
     def newTask(self): # Create new task
         global currentTaskLocation
@@ -494,6 +492,7 @@ class MainWindow(QtWidgets.QMainWindow):
         taskFile = open(currentTaskLocation, "r") # Open task file as object
         self.taskTextEdit.setPlainText(taskFile.read()) # Dump file to QTextEdit
         taskFile.close() # Close the file
+        initHighlighting()
 
     def deleteTask(self): # Delete task on SD
         global currentTaskLocation
