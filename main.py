@@ -526,7 +526,7 @@ class MainWindow(QtWidgets.QMainWindow):
             setLED(self, str(ledID-1), ledColor.red(), ledColor.green(), ledColor.blue())
 
     def allLED(self): # Set all LEDs
-        ledColor = QtWidgets.QColorDialog.getColor(QtWidgets.QColorDialog.DontUseNativeDialog)
+        ledColor = QtWidgets.QColorDialog.getColor(options=QtWidgets.QColorDialog.DontUseNativeDialog)
         setLED(self, "all", ledColor.red(), ledColor.red(), ledColor.blue())
 
     def allLEDOff(self): # Turn off all LEDs
