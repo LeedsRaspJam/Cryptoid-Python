@@ -542,7 +542,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.controllerTimer.timeout.connect(lambda: controllerPoll(self))
 
         self.highlighterTimer = QtCore.QTimer()
-        self.highlighterTimer.timeout.connect(lambda: highlighter(self))
+        self.highlighterTimer.timeout.connect(lambda: self.highlighter())
 
         self.cameraQThread = cameraThread(self.cameraPixmap)
 
