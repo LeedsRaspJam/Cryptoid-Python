@@ -614,7 +614,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.cpuFreqText.setText("CPU Freq: " + str(int(psutil.cpu_freq().current)) + " MHz")
         self.ramTextSys.setText("RAM Usage (Sys): " + str(int(psutil.virtual_memory().used/1024/1024)) + " MB")
-        self.ramText.setText("RAM Usage: " + str(int(process.memory_info()[0]/1024/1024) + " MB")
+        self.ramText.setText("RAM Usage: " + str(int(process.memory_info()[0]/1024/1024) + " MB"))
 
     def closeApp(self):
         sys.exit()
