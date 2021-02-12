@@ -540,10 +540,10 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.controllerTimer = QtCore.QTimer()
         self.controllerTimer.timeout.connect(lambda: controllerPoll(self))
-        self.controllerTimer.start(100)
 
         self.testTimer = QtCore.QTimer()
         self.testTimer.timeout.connect(lambda: highlight(self))
+        self.testTimer.start(100)
 
         self.cameraQThread = cameraThread(self.cameraPixmap)
 
