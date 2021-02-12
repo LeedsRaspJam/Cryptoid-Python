@@ -21,9 +21,7 @@ import sys
 import random
 import os
 from datetime import datetime
-from pygments import highlight
-from pygments.lexers import PythonLexer
-from pygments.formatters import HtmlFormatter
+import lib_syntaxhighlighter
 import time
 
 if os.uname()[1] == 'cryptoid':
@@ -460,6 +458,9 @@ class MainWindow(QtWidgets.QMainWindow):
             exec(line) # Run it through the interpreter
         taskFile.close() # Close the file
 
+    def initHighlighting(self): # Init task highlighting
+        highlight = lib_syntaxhighlight.PythonHighlighter(self.taskTextEdit.document())
+
     def loadTask(self): # Load task into RAM
         global currentTaskLocation
         currentTaskLocation = QtWidgets.QFileDialog.getOpenFileName(self, "Open Task", "tasks", "Cryptoid Task File (*.crtask)") # Get task location with file dialog
@@ -504,9 +505,6 @@ class MainWindow(QtWidgets.QMainWindow):
             self.taskTextEdit.clear() # Clear the QTextEdit
             currentTaskLocation = "" # Clear currentTaskLocation
 
-    def highlightText(self): # Highlight QTextEdit
-        self.taskTextEdit.setText(highlight(self.taskTextEdit.toPlainText(), PythonLexer(), HtmlFormatter())) # Highlight text
-
     def onTextUpdate(self): # Save file upon edit
         taskFile = open(currentTaskLocation, "w") # Open task file as object
         taskFile.write(self.taskTextEdit.toPlainText()) # Dump QTextEdit to file
@@ -529,6 +527,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.initSTM()
 
         gpioInit(self)
+        initHighlighter(self)
 
         self.ultrasonicTimer = QtCore.QTimer()
         self.ultrasonicTimer.timeout.connect(lambda: ultrasonicPoll(self))
