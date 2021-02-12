@@ -614,6 +614,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         uic.loadUi('qt_mainwindow.ui', self)
 
+        global taskTextEdit
         verFile = open("version.txt", "rt")
         self.setWindowTitle("Cryptoid Control Utility (Build ID: " + verFile.read()[:-1] + ")")
         verFile.close()
