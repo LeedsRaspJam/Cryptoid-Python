@@ -21,6 +21,9 @@ import sys
 import random
 import os
 from datetime import datetime
+from pygments import highlight
+from pygments.lexers import PythonLexer
+from pygments.formatters import RtfFormatter
 import time
 
 if os.uname()[1] == 'cryptoid':
@@ -500,7 +503,8 @@ class MainWindow(QtWidgets.QMainWindow):
             self.taskTextEdit.clear() # Clear the QTextEdit
             currentTaskLocation = "" # Clear currentTaskLocation
 
-    def saveTask(self): # Save task to SD
+    def onTextUpdate(self): # Update highlighting + save file upon update
+        self.taskTextEdit.setText(highlight(self.taskTextEdit.toPlainText(), PythonLexer(), RtfFormatter()) # Highlight text
         taskFile = open(currentTaskLocation, "w") # Open task file as object
         taskFile.write(self.taskTextEdit.toPlainText()) # Dump QTextEdit to file
         taskFile.close() # Close the file
@@ -553,7 +557,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.loadTaskBtn.clicked.connect(self.loadTask)
         self.newTaskBtn.clicked.connect(self.newTask)
         self.deleteTaskBtn.clicked.connect(self.deleteTask)
-        self.taskTextEdit.textChanged.connect(self.saveTask)
+        self.taskTextEdit.textChanged.connect(self.onTextUpdate)
         self.actionQuit.triggered.connect(self.closeApp)
 
 def main():

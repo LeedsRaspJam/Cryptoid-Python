@@ -2,3 +2,4 @@ RPi.GPIO
 pyserial
 opencv-python
 picamera
+pygments
