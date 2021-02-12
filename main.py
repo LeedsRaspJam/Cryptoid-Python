@@ -471,6 +471,7 @@ class MainWindow(QtWidgets.QMainWindow):
         taskFile = open(currentTaskLocation, "r") # Open task file as object
         self.taskTextEdit.setPlainText(taskFile.read()) # Dump file to QTextEdit
         taskFile.close() # Close the file
+        self.highlightText()
 
     def newTask(self): # Create new task
         global currentTaskLocation
@@ -503,9 +504,10 @@ class MainWindow(QtWidgets.QMainWindow):
             self.taskTextEdit.clear() # Clear the QTextEdit
             currentTaskLocation = "" # Clear currentTaskLocation
 
-    def onTextUpdate(self): # Update highlighting + save file upon update
-        print("setting text rtf")
+    def highlightText(self): # Highlight QTextEdit
         self.taskTextEdit.setText(highlight(self.taskTextEdit.toPlainText(), PythonLexer(), RtfFormatter())) # Highlight text
+
+    def onTextUpdate(self): # Save file upon edit
         taskFile = open(currentTaskLocation, "w") # Open task file as object
         taskFile.write(self.taskTextEdit.toPlainText()) # Dump QTextEdit to file
         taskFile.close() # Close the file
