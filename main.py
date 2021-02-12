@@ -611,6 +611,13 @@ class MainWindow(QtWidgets.QMainWindow):
             sysMonEn = True
         elif sysMonEn == True:
             monitorTimer.stop()
+            self.oneBar.setValue(100)
+            self.twoBar.setValue(100)
+            self.threeBar.setValue(100)
+            self.fourBar.setValue(100)
+            self.cpuFreqText.setText("CPU Freq: ???? MHz")
+            self.ramTextSys.setText("RAM Usage (Sys): ??? MB")
+            self.ramText.setText("RAM Usage: ??? MB")
             sysMonEn = False
 
     def updateSysInfo(self): # Update system monitoring information
