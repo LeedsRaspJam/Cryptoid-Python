@@ -291,7 +291,7 @@ def setSTM32Text(self, state):
         self.stm32Connected.setText("STM32 Disconnected")
         self.stm32Connected.setStyleSheet("color:#ff0000")
 
-def hex2QColor(c):
+def hex2QColor(c): # Convert to QColor (for highlighting)
     r=int(c[0:2],16)
     g=int(c[2:4],16)
     b=int(c[4:6],16)
@@ -303,6 +303,8 @@ def gpioInit(self):
     global sensor1, sensor2
     sensor1 = sensor.Measurement(22, 12) # Init both sensors
     sensor2 = sensor.Measurement(23, 1)
+
+# Highlighting class - Copyright (C) 2008 Christophe Kibleur <kib2@free.fr>
 
 class QFormatter(Formatter):
     
