@@ -546,7 +546,7 @@ class controllerThread(QtCore.QThread):
                     self.setMotorSilent(3, 2, l_value)
                     self.setMotorSilent(2, 2, r_value)
                     self.setMotorSilent(4, 2, r_value)
-            except(ValueError):
+            except:
                 errorMsg = QtWidgets.QErrorMessage(self)
                 errorMsg.showMessage("You need to connect a controller before polling can begin.")
                 self.controllerTimer.stop()
@@ -652,11 +652,10 @@ class MainWindow(QtWidgets.QMainWindow):
         global gamepad
         gamepad = Gamepad.PS4()
         gamepad.startBackgroundUpdates()
-        #self.controllerTimer.start(50)
         self.controllerQThread.start()
 
     def stopGP(self): # Stop controller polling
-        self.controllerTimer.stop()
+        self.controllerQThread.terminate()
 
     def setLED(self): # Set one LED
         ledID, okPressed = QtWidgets.QInputDialog.getInt(self, "LED ID", "LED ID?", 1, 1, 36, 1)
