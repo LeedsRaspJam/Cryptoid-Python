@@ -429,8 +429,6 @@ class Highlighter(QtGui.QSyntaxHighlighter):
         self.tstamp=time.time() 
 
 class cameraThread(QtCore.QThread):
-    pixmapSignal = QtCore.pyqtSignal([int])
-
     def __init__(self):
         QtCore.QThread.__init__(self)
         global camera, cameraPixmapB, rawCapture
@@ -449,7 +447,7 @@ class cameraThread(QtCore.QThread):
                 image = frame.array
                 qImg = QtGui.QImage(image, 960, 720, QtGui.QImage.Format_RGB888)
                 #self.pixmap.setPixmap(QtGui.QPixmap.fromImage(qImg))
-                self.pixmapSignal.emit(QtGui.QPixmap.fromImage(qImg))
+                MainWindow.pixmapSignal.emit(QtGui.QPixmap.fromImage(qImg))
                 self.usleep(100)
             
 class sysMonThread(QtCore.QThread):
@@ -466,6 +464,7 @@ class MainWindow(QtWidgets.QMainWindow):
     setDirectionLabelSignal = QtCore.pyqtSignal([str])
     setLControllerBarSignal = QtCore.pyqtSignal([int])
     setRControllerBarSignal = QtCore.pyqtSignal([int])
+    pixmapSignal = QtCore.pyqtSignal(['QPixmap'])
     
     def buttonFunction(self):
         setLED(self, "all", 0, 0, 255)
@@ -853,7 +852,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setDirectionLabelSignal.connect(self.setDirectionLabel)
         self.setLControllerBarSignal.connect(self.setLControllerBar)
         self.setRControllerBarSignal.connect(self.setRControllerBar)
-        cameraThread.pixmapSignal.connect(self.renderPixmap)
+        self.pixmapSignal.connect(self.renderPixmap)
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
