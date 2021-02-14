@@ -760,9 +760,10 @@ class MainWindow(QtWidgets.QMainWindow):
     
     def toggleSystemMonitor(self): # Enable/disable system monitor
         if self.monitorTimer.isActive() == False:
-            self.monitorTimer.start(2500)
+            #self.monitorTimer.start(2500)
+            self.monitorQThread.start()
         elif self.monitorTimer.isActive() == True:
-            self.monitorTimer.stop()
+            #self.monitorTimer.stop()
             self.oneBar.setValue(100)
             self.twoBar.setValue(100)
             self.threeBar.setValue(100)
@@ -817,6 +818,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.monitorTimer.timeout.connect(lambda: self.updateSysInfo())
 
         self.cameraQThread = cameraThread(self.cameraPixmap)
+        self.monitorQThread = sysMonThread(self.oneBar, self.twoBar, self.threeBar, self.fourBar, cpuFreqText, ramTextSys, ramText)
 
         self.enableUltrasonicPoll.clicked.connect(self.toggleUltrasonicTimer)
         self.enableSysMon.clicked.connect(self.toggleSystemMonitor)
