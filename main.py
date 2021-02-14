@@ -567,7 +567,7 @@ class MainWindow(QtWidgets.QMainWindow):
             currentTaskLocation = currentTaskLocation[0] + '.crtask' # Add the extension and remove the second tuple object
         else:
             currentTaskLocation = currentTaskLocation[0] # Just remove the second tuple object
-        
+
         try:
             taskFile = open(currentTaskLocation, "r") # Open task file as object
             self.taskTextEdit.setPlainText(taskFile.read()) # Dump file to QTextEdit
@@ -619,9 +619,11 @@ class MainWindow(QtWidgets.QMainWindow):
             taskFile.write(self.taskTextEdit.toPlainText()) # Dump QTextEdit to file
             taskFile.close() # Close the file
         except(FileNotFoundError): # On FnFe
-            QtWidgets.QErrorMessage.showMessage(self, "You must open a file before attempting to edit it.")
+            errorMsg = QtWidgets.QErrorMessage
+            errorMsg.showMessage(self, "You must open a file before attempting to edit it.")
         except: # On all other errors
-            QtWidgets.QErrorMessage.showMessage(self, "Error while saving file, something has gone horribly wrong.")
+            errorMsg = QtWidgets.QErrorMessage
+            errorMsg.showMessage(self, "Error while saving file, something has gone horribly wrong.")
     
     def toggleSystemMonitor(self): # Enable/disable system monitor
         if self.monitorTimer.isActive() == False:
