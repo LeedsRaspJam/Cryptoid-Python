@@ -832,7 +832,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         gpioInit(self)
 
-        self.setDirectionLabelSignal = QtCore.pyqtSignal(['QString'])
+        self.setDirectionLabelSignal = QtCore.pyqtSignal([str])
         self.setLControllerBarSignal = QtCore.pyqtSignal([int])
         self.setRControllerBarSignal = QtCore.pyqtSignal([int])
 
@@ -875,7 +875,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.actionQuit.triggered.connect(self.closeApp)
         self.setDirectionLabelSignal.connect(self.setDirectionLabel)
         self.setLControllerBarSignal.connect(self.setLControllerBar)
-        self.connect(self.setRControllerBar)
+        self.setRControllerBarSignal.connect(self.setRControllerBar)
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
