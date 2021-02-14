@@ -25,4 +25,5 @@ echo 'Updating dependencies...'
 pip3 install -q -r requirements.txt
 
 echo 'Executing program...'
+unset SESSION_MANAGER
 python3 main.py
