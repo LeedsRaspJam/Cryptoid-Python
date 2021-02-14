@@ -489,7 +489,7 @@ class sysMonThread(QtCore.QThread):
             self.usleep(500)
 
 class MainWindow(QtWidgets.QMainWindow):
-    setDirectionLabelSignal = QtCore.pyqtSignal([int])
+    setDirectionLabelSignal = QtCore.pyqtSignal([str])
     setLControllerBarSignal = QtCore.pyqtSignal([int])
     setRControllerBarSignal = QtCore.pyqtSignal([int])
     
