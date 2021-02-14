@@ -457,8 +457,8 @@ class controllerThread(QtCore.QThread):
 
     def __init__(self):
         QtCore.QThread.__init__(self)
-        global killThread
-        killThread = False
+        global killControllerThread
+        killControllerThread = False
 
     def __del__(self):
         self.wait()
@@ -466,7 +466,7 @@ class controllerThread(QtCore.QThread):
     def run(self):
         while True:
             self.controllerPoll()
-            if killThread == True:
+            if killControllerThread == True:
                 break
 
     def setMotorSilent(self, motorID, direction, speed): # Set one motor with no logging
@@ -553,7 +553,9 @@ class controllerThread(QtCore.QThread):
         except:
             errorMsg = QtWidgets.QErrorMessage(self)
             errorMsg.showMessage("You need to connect a controller before polling can begin.")
-            self.controllerTimer.stop()
+            global killControllerThread
+            killControllerThread = True
+            self.controllerQThread.terminate()
 
 #class sysMonThread(QtCore.QThread):
 #    def __init__(self):
@@ -656,13 +658,14 @@ class MainWindow(QtWidgets.QMainWindow):
         global gamepad
         gamepad = Gamepad.PS4()
         gamepad.startBackgroundUpdates()
-        global killThread
-        killThread = False
+        global killControllerThread
+        killControllerThread = False
         self.controllerQThread.start()
 
     def stopGP(self): # Stop controller polling
-        global killThread
-        killThread = True
+        global killControllerThread
+        killControllerThread = True
+        self.controllerQThread.terminate()
 
     def setLED(self): # Set one LED
         ledID, okPressed = QtWidgets.QInputDialog.getInt(self, "LED ID", "LED ID?", 1, 1, 36, 1)
