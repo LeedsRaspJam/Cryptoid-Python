@@ -435,7 +435,7 @@ class cameraThread(QtCore.QThread):
         camera = picamera.PiCamera()
         camera.resolution = (960, 720)
         camera.framerate = 60
-        cameraPixmapB = pixmap
+        self.pixmap = pixmap
         rawCapture = picamera.array.PiRGBArray(camera, size=(960, 720))
 
     def __del__(self):
@@ -447,7 +447,7 @@ class cameraThread(QtCore.QThread):
                 frame.seek(0)
                 image = frame.array
                 qImg = QtGui.QImage(image, 960, 720, QtGui.QImage.Format_RGB888)
-                cameraPixmapB.setPixmap(QtGui.QPixmap.fromImage(qImg))
+                self.pixmap.setPixmap(QtGui.QPixmap.fromImage(qImg))
                 self.usleep(100)
             
 class sysMonThread(QtCore.QThread):
@@ -459,7 +459,7 @@ class sysMonThread(QtCore.QThread):
 
     def run(self):
         pass
-    
+
 class MainWindow(QtWidgets.QMainWindow):
     setDirectionLabelSignal = QtCore.pyqtSignal([str])
     setLControllerBarSignal = QtCore.pyqtSignal([int])
