@@ -569,7 +569,6 @@ class MainWindow(QtWidgets.QMainWindow):
             currentTaskLocation = currentTaskLocation[0] # Just remove the second tuple object
 
         try:
-            hl=Highlighter(self.taskTextEdit.document(), "python")
             taskFile = open(currentTaskLocation, "r") # Open task file as object
             self.taskTextEdit.setPlainText(taskFile.read()) # Dump file to QTextEdit
             taskFile.close() # Close the file
@@ -592,7 +591,6 @@ class MainWindow(QtWidgets.QMainWindow):
             taskFile.write("self.logTb.append(\"Example Text\")") # Write in example text
             taskFile.close() # Close the file
 
-            hl=Highlighter(self.taskTextEdit.document(), "python")
             taskFile = open(currentTaskLocation, "r") # Open task file as object
             self.taskTextEdit.setPlainText(taskFile.read()) # Dump file to QTextEdit
             taskFile.close() # Close the file
@@ -663,6 +661,7 @@ class MainWindow(QtWidgets.QMainWindow):
         uic.loadUi('qt_mainwindow.ui', self)
         
         global taskTextEdit, hl
+        hl=Highlighter(self.taskTextEdit.document(), "python")
 
         appPid = os.getpid()
         global process
