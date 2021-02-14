@@ -98,7 +98,6 @@ def ultrasonicPoll(self):
             MainWindow.stopGP(self)
     elif ledBuffer[0] == [254, 0, 0]:
         setLED(self, "all", 0, 255, 0)
-        currentColour = "red"
 
 def beepSPKR(self, freq, duration):
     while True:
@@ -872,7 +871,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.controllerQThread.setDirectionLabelSignal.connect(self.setDirectionLabel)
         self.controllerQThread.setLControllerBarSignal.connect(self.setLControllerBar)
         self.controllerQThread.setRControllerBarSignal.connect(self.setRControllerBar)
-
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
