@@ -619,9 +619,9 @@ class MainWindow(QtWidgets.QMainWindow):
             taskFile.write(self.taskTextEdit.toPlainText()) # Dump QTextEdit to file
             taskFile.close() # Close the file
         except(FileNotFoundError): # On FnFe
-            okPressed = QtWidgets.QErrorMessage.showMessage("You must open a file before attempting to edit it.")
+            okPressed = QtWidgets.QErrorMessage.showMessage(self, "You must open a file before attempting to edit it.")
         except: # On all other errors
-            okPressed = QtWidgets.QErrorMessage.showMessage("Error while saving file, something has gone horribly wrong.")
+            okPressed = QtWidgets.QErrorMessage.showMessage(self, "Error while saving file, something has gone horribly wrong.")
     
     def toggleSystemMonitor(self): # Enable/disable system monitor
         if self.monitorTimer.isActive() == False:
