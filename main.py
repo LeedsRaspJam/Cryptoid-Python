@@ -537,7 +537,7 @@ class sysMonThread(QtCore.QThread):
         self.wait()
 
     def run(self):
-        while True:
+        while killThread = False:
             cpuInfo = psutil.cpu_percent(interval = 1, percpu=True)
             oneBar.setValue(int(cpuInfo[0]))
             twoBar.setValue(int(cpuInfo[1]))
@@ -761,9 +761,11 @@ class MainWindow(QtWidgets.QMainWindow):
     
     def toggleSystemMonitor(self): # Enable/disable system monitor
         if self.monitorQThread.isRunning() == False:
+            killThread = False
             self.monitorQThread.start()
         elif self.monitorQThread.isRunning() == True:
-            self.monitorQThread.terminate()
+            killThread = True
+            self.monitorQThread.quit()
             self.oneBar.setValue(100)
             self.twoBar.setValue(100)
             self.threeBar.setValue(100)
