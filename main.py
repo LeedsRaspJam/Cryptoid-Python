@@ -132,11 +132,11 @@ def controllerPoll(self):
             r_value = r_value + 100
 
         if isStopped == True:
-            self.LBar.setValue(100)
-            self.RBar.setValue(100)
+            setLControllerBarSignal.emit(100)
+            setRControllerBarSignal.emit(100)
         else:
-            self.LBar.setValue(l_value)
-            self.RBar.setValue(r_value)
+            setLControllerBarSignal.emit(l_value)
+            setRControllerBarSignal.emit(r_value)
 
         if left_x > 0:
             self.LBar.setValue(100)
@@ -144,22 +144,19 @@ def controllerPoll(self):
             self.RBar.setValue(100)
 
         if isStopped == True:
-            self.directionLabel.setText("Stopped")
-            self.directionLabel.setStyleSheet("color:#000000")
+            setDirectionLabelSignal.emit("Stopped")
             setMotor(self, 1, 2, l_value)
             setMotor(self, 3, 2, l_value)
             setMotor(self, 2, 2, r_value)
             setMotor(self, 4, 2, r_value)
         elif isBackward == False:
-            self.directionLabel.setText("Forward") # Set text + colour
-            self.directionLabel.setStyleSheet("color:#33cc33")
+            setDirectionLabelSignal.emit("Forward")
             setMotor(self, 1, 1, l_value)
             setMotor(self, 3, 1, l_value)
             setMotor(self, 2, 1, r_value)
             setMotor(self, 4, 1, r_value)
         elif isBackward == True:
-            self.directionLabel.setText("Backward") # Set text + colour
-            self.directionLabel.setStyleSheet("color:#ff0000")
+            setDirectionLabelSignal.emit("Backward")
             setMotor(self, 1, 2, l_value)
             setMotor(self, 3, 2, l_value)
             setMotor(self, 2, 2, r_value)
@@ -789,6 +786,23 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ramTextSys.setText("RAM Usage (Sys): " + str(int(psutil.virtual_memory().used/1024/1024)) + " MB")
         self.ramText.setText("RAM Usage: " + str(int(process.memory_info()[0]/1024/1024)) + " MB")
 
+    def setDirectionLabel(self, direction):
+        if direction == "Stopped":
+            self.directionLabel.setText("Stopped")
+            self.directionLabel.setStyleSheet("color:#000000")
+        elif direction == "Forward":
+            self.directionLabel.setText("Forward") # Set text + colour
+            self.directionLabel.setStyleSheet("color:#33cc33")
+        elif direction == "Backward":
+            self.directionLabel.setText("Backward") # Set text + colour
+            self.directionLabel.setStyleSheet("color:#ff0000")
+
+    def setLControllerBar(self, lVal):
+        self.LBar.setValue(lVal)
+
+    def setRControllerBar(self, rVal):
+        self.rBar.setValue(rVal)
+
     def closeApp(self):
         sys.exit()
     
@@ -826,6 +840,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self.cameraQThread = cameraThread(self.cameraPixmap)
         self.monitorQThread = sysMonThread(self.oneBar, self.twoBar, self.threeBar, self.fourBar, self.cpuFreqText, self.ramTextSys, self.ramText)
 
+        global setDirectionLabelSignal, setLControllerBarSignal, setRControllerBarSignal
+        setDirectionLabelSignal = QtCore.pyqtSignal(['QString'])
+        setLControllerBarSignal = QtCore.pyqtSignal([int])
+        setRControllerBarSignal = QtCore.pyqtSignal([int])
+
         self.enableUltrasonicPoll.clicked.connect(self.toggleUltrasonicTimer)
         self.enableSysMon.clicked.connect(self.toggleSystemMonitor)
         self.doAThing.clicked.connect(self.buttonFunction)
@@ -851,6 +870,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.deleteTaskBtn.clicked.connect(self.deleteTask)
         self.taskTextEdit.textChanged.connect(self.onTextUpdate)
         self.actionQuit.triggered.connect(self.closeApp)
+        self.setDirectionLabelSignal.connect(self.setDirectionLabel)
+        self.setLControllerBarSignal.connect(self.setLControllerBar)
+        self.setRControllerBarSignal.connect(self.setRControllerBar)
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
