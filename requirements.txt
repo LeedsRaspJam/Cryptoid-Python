@@ -1,6 +1,6 @@
 RPi.GPIO
 pyserial
-opencv-python
 picamera
 pygments
 psutil
+PyQt5
