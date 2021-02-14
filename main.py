@@ -546,7 +546,12 @@ class MainWindow(QtWidgets.QMainWindow):
         self.recText.setStyleSheet("color:#ff0000")
 
     def stopRec(self): # Stop recording
-        camera.stop_recording()
+        try:
+            camera.stop_recording()
+        except:
+            errorMsg = QtWidgets.QErrorMessage(self)
+            errorMsg.showMessage("Not currently recording.")
+
         self.recText.setText("Not Recording") # Set text + colour
         self.recText.setStyleSheet("color:#000000")
 
