@@ -517,6 +517,11 @@ class cameraThread(QtCore.QThread):
                 self.usleep(100)
             
 class sysMonThread(QtCore.QThread):
+        global setDirectionLabelSignal, setLControllerBarSignal, setRControllerBarSignal
+        setDirectionLabelSignal = QtCore.pyqtSignal(['QString'])
+        setLControllerBarSignal = QtCore.pyqtSignal([int])
+        setRControllerBarSignal = QtCore.pyqtSignal([int])
+
     def __init__(self, oneBarP, twoBarP, threeBarP, fourBarP, cpuFreqTextP, ramTextSysP, ramTextP):
         QtCore.QThread.__init__(self)
         global oneBar, twoBar, threeBar, fourBar, cpuFreqText, ramTextSys, ramText, killThread
@@ -839,11 +844,6 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.cameraQThread = cameraThread(self.cameraPixmap)
         self.monitorQThread = sysMonThread(self.oneBar, self.twoBar, self.threeBar, self.fourBar, self.cpuFreqText, self.ramTextSys, self.ramText)
-
-        global setDirectionLabelSignal, setLControllerBarSignal, setRControllerBarSignal
-        setDirectionLabelSignal = QtCore.pyqtSignal(['QString'])
-        setLControllerBarSignal = QtCore.pyqtSignal([int])
-        setRControllerBarSignal = QtCore.pyqtSignal([int])
 
         self.enableUltrasonicPoll.clicked.connect(self.toggleUltrasonicTimer)
         self.enableSysMon.clicked.connect(self.toggleSystemMonitor)
