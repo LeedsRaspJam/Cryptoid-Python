@@ -810,8 +810,8 @@ class MainWindow(QtWidgets.QMainWindow):
             errorMsg.showMessage("You need to connect a controller before polling can begin.")
             self.controllerTimer.stop()
 
-    def __init__(self, *args, **kwargs):
-        super(MainWindow, self).__init__(*args, **kwargs)
+    def __init__(self, parent=None):
+        super(MainWindow, self).__init__(parent)
 
         uic.loadUi('qt_mainwindow.ui', self)
         
