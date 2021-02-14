@@ -832,7 +832,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         gpioInit(self)
 
-        self.setDirectionLabelSignal = QtCore.pyqtSignal([str])
+        self.setDirectionLabelSignal = QtCore.pyqtSignal([int])
         self.setLControllerBarSignal = QtCore.pyqtSignal([int])
         self.setRControllerBarSignal = QtCore.pyqtSignal([int])
 
