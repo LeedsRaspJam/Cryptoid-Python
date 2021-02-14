@@ -457,12 +457,17 @@ class controllerThread(QtCore.QThread):
 
     def __init__(self):
         QtCore.QThread.__init__(self)
+        global killThread
+        killThread == False
 
     def __del__(self):
         self.wait()
 
     def run(self):
-        self.controllerPoll()
+        while True:
+            self.controllerPoll()
+            if killThread == True:
+                break
 
     def setMotorSilent(self, motorID, direction, speed): # Set one motor with no logging
         motorBuffer[motorID] = [direction, speed]
@@ -485,71 +490,70 @@ class controllerThread(QtCore.QThread):
                             break
 
     def controllerPoll(self):
-        while True:
-            try:
-                right_y = gamepad.axis("RIGHT-Y")
-                left_x = gamepad.axis("LEFT-X")
+        try:
+            right_y = gamepad.axis("RIGHT-Y")
+            left_x = gamepad.axis("LEFT-X")
 
-                if right_y > 0:
-                    isBackward = True
-                    isStopped = False
-                elif right_y < 0:
-                    isBackward = False
-                    isStopped = False
-                elif right_y == 0:
-                    isStopped = True
+            if right_y > 0:
+                isBackward = True
+                isStopped = False
+            elif right_y < 0:
+                isBackward = False
+                isStopped = False
+            elif right_y == 0:
+                isStopped = True
 
-                y_corrected = abs(right_y) * 155
+            y_corrected = abs(right_y) * 155
 
-                if left_x < 0:
-                    l_value = abs(left_x) * y_corrected
-                    r_value = 0
-                elif left_x > 0:
-                    l_value = 0
-                    r_value = abs(left_x) * y_corrected
-                elif left_x == 0:
-                    l_value = y_corrected
-                    r_value = y_corrected
+            if left_x < 0:
+                l_value = abs(left_x) * y_corrected
+                r_value = 0
+            elif left_x > 0:
+                l_value = 0
+                r_value = abs(left_x) * y_corrected
+            elif left_x == 0:
+                l_value = y_corrected
+                r_value = y_corrected
 
-                if l_value != 0 and y_corrected != 0:
-                    l_value = l_value + 100
-                if r_value != 0 and y_corrected != 0:
-                    r_value = r_value + 100
+            if l_value != 0 and y_corrected != 0:
+                l_value = l_value + 100
+            if r_value != 0 and y_corrected != 0:
+                r_value = r_value + 100
 
-                if isStopped == True:
-                    self.setLControllerBarSignal.emit(100)
-                    self.setRControllerBarSignal.emit(100)
-                else:
-                    self.setLControllerBarSignal.emit(l_value)
-                    self.setRControllerBarSignal.emit(r_value)
+            if isStopped == True:
+                self.setLControllerBarSignal.emit(100)
+                self.setRControllerBarSignal.emit(100)
+            else:
+                self.setLControllerBarSignal.emit(l_value)
+                self.setRControllerBarSignal.emit(r_value)
 
-                if left_x > 0:
-                    self.LBar.setValue(100)
-                elif left_x < 0:
-                    self.RBar.setValue(100)
+            if left_x > 0:
+                self.LBar.setValue(100)
+            elif left_x < 0:
+                self.RBar.setValue(100)
 
-                if isStopped == True:
-                    self.setDirectionLabelSignal.emit("Stopped")
-                    self.setMotorSilent(1, 2, l_value)
-                    self.setMotorSilent(3, 2, l_value)
-                    self.setMotorSilent(2, 2, r_value)
-                    self.setMotorSilent(4, 2, r_value)
-                elif isBackward == False:
-                    self.setDirectionLabelSignal.emit("Forward")
-                    self.setMotorSilent(1, 1, l_value)
-                    self.setMotorSilent(3, 1, l_value)
-                    self.setMotorSilent(2, 1, r_value)
-                    self.setMotorSilent(4, 1, r_value)
-                elif isBackward == True:
-                    self.setDirectionLabelSignal.emit("Backward")
-                    self.setMotorSilent(1, 2, l_value)
-                    self.setMotorSilent(3, 2, l_value)
-                    self.setMotorSilent(2, 2, r_value)
-                    self.setMotorSilent(4, 2, r_value)
-            except:
-                errorMsg = QtWidgets.QErrorMessage(self)
-                errorMsg.showMessage("You need to connect a controller before polling can begin.")
-                self.controllerTimer.stop()
+            if isStopped == True:
+                self.setDirectionLabelSignal.emit("Stopped")
+                self.setMotorSilent(1, 2, l_value)
+                self.setMotorSilent(3, 2, l_value)
+                self.setMotorSilent(2, 2, r_value)
+                self.setMotorSilent(4, 2, r_value)
+            elif isBackward == False:
+                self.setDirectionLabelSignal.emit("Forward")
+                self.setMotorSilent(1, 1, l_value)
+                self.setMotorSilent(3, 1, l_value)
+                self.setMotorSilent(2, 1, r_value)
+                self.setMotorSilent(4, 1, r_value)
+            elif isBackward == True:
+                self.setDirectionLabelSignal.emit("Backward")
+                self.setMotorSilent(1, 2, l_value)
+                self.setMotorSilent(3, 2, l_value)
+                self.setMotorSilent(2, 2, r_value)
+                self.setMotorSilent(4, 2, r_value)
+        except:
+            errorMsg = QtWidgets.QErrorMessage(self)
+            errorMsg.showMessage("You need to connect a controller before polling can begin.")
+            self.controllerTimer.stop()
 
 #class sysMonThread(QtCore.QThread):
 #    def __init__(self):
@@ -652,10 +656,13 @@ class MainWindow(QtWidgets.QMainWindow):
         global gamepad
         gamepad = Gamepad.PS4()
         gamepad.startBackgroundUpdates()
+        global killThread
+        killThread = False
         self.controllerQThread.start()
 
     def stopGP(self): # Stop controller polling
-        self.controllerQThread.terminate()
+        global killThread
+        killThread = True
 
     def setLED(self): # Set one LED
         ledID, okPressed = QtWidgets.QInputDialog.getInt(self, "LED ID", "LED ID?", 1, 1, 36, 1)
