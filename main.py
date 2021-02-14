@@ -429,7 +429,7 @@ class Highlighter(QtGui.QSyntaxHighlighter):
         self.tstamp=time.time() 
 
 class cameraThread(QtCore.QThread):
-    pixmapSignal = QtCore.pyqtsignal(['QPixmap'])
+    pixmapSignal = QtCore.pyqtSignal(['QPixmap'])
 
     def __init__(self):
         QtCore.QThread.__init__(self)
@@ -790,7 +790,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def renderPixmap(self, pixIn):
         self.cameraPixmap.setPixmap(pixIn)
-        
+
     def __init__(self, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
 
