@@ -429,13 +429,14 @@ class Highlighter(QtGui.QSyntaxHighlighter):
         self.tstamp=time.time() 
 
 class cameraThread(QtCore.QThread):
-    def __init__(self, pixmap):
+    pixmapSignal = QtCore.pyqtsignal(['QPixmap'])
+
+    def __init__(self):
         QtCore.QThread.__init__(self)
         global camera, cameraPixmapB, rawCapture
         camera = picamera.PiCamera()
         camera.resolution = (960, 720)
         camera.framerate = 60
-        self.pixmap = pixmap
         rawCapture = picamera.array.PiRGBArray(camera, size=(960, 720))
 
     def __del__(self):
@@ -447,7 +448,8 @@ class cameraThread(QtCore.QThread):
                 frame.seek(0)
                 image = frame.array
                 qImg = QtGui.QImage(image, 960, 720, QtGui.QImage.Format_RGB888)
-                self.pixmap.setPixmap(QtGui.QPixmap.fromImage(qImg))
+                #self.pixmap.setPixmap(QtGui.QPixmap.fromImage(qImg))
+                self.pixmapSignal.emit(QtGui.QPixmap.fromImage(qImg))
                 self.usleep(100)
             
 class sysMonThread(QtCore.QThread):
@@ -786,6 +788,9 @@ class MainWindow(QtWidgets.QMainWindow):
             errorMsg.showMessage("You need to connect a controller before polling can begin.")
             self.controllerTimer.stop()
 
+    def renderPixmap(self, pixIn):
+        self.cameraPixmap.setPixmap(pixIn)
+        
     def __init__(self, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
 
@@ -817,7 +822,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.monitorTimer = QtCore.QTimer()
         self.monitorTimer.timeout.connect(lambda: self.updateSysInfo())
 
-        self.cameraQThread = cameraThread(self.cameraPixmap)
+        self.cameraQThread = cameraThread()
         self.monitorQThread = sysMonThread()
 
         self.enableUltrasonicPoll.clicked.connect(self.toggleUltrasonicTimer)
@@ -848,6 +853,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setDirectionLabelSignal.connect(self.setDirectionLabel)
         self.setLControllerBarSignal.connect(self.setLControllerBar)
         self.setRControllerBarSignal.connect(self.setRControllerBar)
+        cameraThread.pixmapSignal.connect(self.renderPixmap)
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
