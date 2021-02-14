@@ -840,7 +840,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ultrasonicTimer.timeout.connect(lambda: ultrasonicPoll(self))
 
         self.controllerTimer = QtCore.QTimer()
-        self.controllerTimer.timeout.connect(lambda: controllerPoll(self))
+        self.controllerTimer.timeout.connect(lambda: self.controllerPoll)
 
         self.monitorTimer = QtCore.QTimer()
         self.monitorTimer.timeout.connect(lambda: self.updateSysInfo())
