@@ -343,7 +343,7 @@ def setServo180(self, id, angle): # Set 180 degree servo
                 if response.decode() == "OK\r\n":
                     break
 
-def setServo360(self, id, initialAngle, time, stopAngle): # Set 360 degree servo
+def setServo360(self, id, initialAngle, delayTime, stopAngle): # Set 360 degree servo
     while True: # Set to initial angle
         self.logTb.append("SRVO")
         stm32.write("SRVO\r\n".encode())
@@ -362,8 +362,8 @@ def setServo360(self, id, initialAngle, time, stopAngle): # Set 360 degree servo
                 if response.decode() == "OK\r\n":
                     break
 
-    time.sleep(time) # Wait for the specified time
-    
+    time.sleep(delayTime) # Wait for the specified time
+
     while True: # Set to stop angle
         self.logTb.append("SRVO")
         stm32.write("SRVO\r\n".encode())
