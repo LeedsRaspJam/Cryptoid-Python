@@ -270,6 +270,45 @@ def setMotor(self, motorID, direction, speed): # Set one motor
                     if response.decode() == "OK\r\n":
                         break
 
+def setExtPins(self, type1, type2, type3, type4, type5, type6): # Set STM external pins
+    while True:
+        self.logTb.append("EXTS")
+        stm32.write("EXTS\r\n".encode())
+        response = stm32.readline()
+        self.logTb.append(str(response))
+        if response.decode() == "OK\r\n":
+            stm32.write(type1.encode())
+            stm32.write("\r\n".encode())
+            response = stm32.readline()
+            self.logTb.append(str(response))
+            if response.decode() == "OK\r\n":
+                stm32.write(type2.encode())
+                stm32.write("\r\n".encode())
+                response = stm32.readline()
+                self.logTb.append(str(response))
+                if response.decode() == "OK\r\n":
+                    stm32.write(type3.encode())
+                    stm32.write("\r\n".encode())
+                    response = stm32.readline()
+                    self.logTb.append(str(response))
+                    if response.decode() == "OK\r\n":
+                        stm32.write(type4.encode())
+                        stm32.write("\r\n".encode())
+                        response = stm32.readline()
+                        self.logTb.append(str(response))
+                        if response.decode() == "OK\r\n":
+                            stm32.write(type5.encode())
+                            stm32.write("\r\n".encode())
+                            response = stm32.readline()
+                            self.logTb.append(str(response))
+                            if response.decode() == "OK\r\n":
+                                stm32.write(type6.encode())
+                                stm32.write("\r\n".encode())
+                                response = stm32.readline()
+                                self.logTb.append(str(response))
+                                if response.decode() == "OK\r\n":
+                                    break
+
 def stopMotor(self, motorID): # Stop one motor
     motorBuffer[motorID] = [0, 0]
     while True:
