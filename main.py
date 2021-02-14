@@ -538,14 +538,14 @@ class sysMonThread(QtCore.QThread):
     def run(self):
         while True:
             cpuInfo = psutil.cpu_percent(interval = 1, percpu=True)
-            self.oneBar.setValue(int(cpuInfo[0]))
-            self.twoBar.setValue(int(cpuInfo[1]))
-            self.threeBar.setValue(int(cpuInfo[2]))
-            self.fourBar.setValue(int(cpuInfo[3]))
+            oneBar.setValue(int(cpuInfo[0]))
+            twoBar.setValue(int(cpuInfo[1]))
+            threeBar.setValue(int(cpuInfo[2]))
+            fourBar.setValue(int(cpuInfo[3]))
 
-            self.cpuFreqText.setText("CPU Freq: " + str(int(psutil.cpu_freq().current)) + " MHz")
-            self.ramTextSys.setText("RAM Usage (Sys): " + str(int(psutil.virtual_memory().used/1024/1024)) + " MB")
-            self.ramText.setText("RAM Usage: " + str(int(process.memory_info()[0]/1024/1024)) + " MB")
+            cpuFreqText.setText("CPU Freq: " + str(int(psutil.cpu_freq().current)) + " MHz")
+            ramTextSys.setText("RAM Usage (Sys): " + str(int(psutil.virtual_memory().used/1024/1024)) + " MB")
+            ramText.setText("RAM Usage: " + str(int(process.memory_info()[0]/1024/1024)) + " MB")
             self.usleep(250)
 
 class MainWindow(QtWidgets.QMainWindow):
