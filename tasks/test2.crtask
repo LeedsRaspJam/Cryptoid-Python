@@ -1,0 +1,3 @@
+print("test")
+self.logTb.append("test2")
+bork()

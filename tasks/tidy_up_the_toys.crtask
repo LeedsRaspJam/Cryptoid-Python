@@ -1,0 +1,6 @@
+self.logTb.append("Begin Tidy Up the Toys task")
+beepSPKR(self, 1500, 750)
+
+setExtPins(self, "SRVO", "SRVO", "OUTP", "OUTP", "OUTP", "OUTP")
+setServo180(self, 1, 180)
+setServo360(self, 2, 0, 2, 91)

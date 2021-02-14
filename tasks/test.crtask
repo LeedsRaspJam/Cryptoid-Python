@@ -1,2 +1,5 @@
-setLED(self, "all", 255, 255, 255)
+setLED(self, "all", 0, 0, 255)
+beepSPKR(self, 2500, 3500)
+self.logTb.append("Test from task.")
+self.logTb.append("Test the second.")
 print("test")
