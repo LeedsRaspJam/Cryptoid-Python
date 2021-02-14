@@ -621,6 +621,7 @@ class MainWindow(QtWidgets.QMainWindow):
         except(FileNotFoundError, NameError): # On FnFe
             errorMsg = QtWidgets.QErrorMessage()
             errorMsg.showMessage("You must open a file before attempting to edit it.")
+            self.taskTextEdit.clear()
         except: # On all other errors
             errorMsg = QtWidgets.QErrorMessage()
             errorMsg.showMessage("Error while saving file, something has gone horribly wrong.")
