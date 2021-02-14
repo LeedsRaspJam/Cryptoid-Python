@@ -1,4 +1,14 @@
-Copyright (c) 2020 LRJ. All Rights Reserved.
+## hcsr04sensor (lib_ultrasonicsensor.py)
+Library by Al Audet (https://github.com/alaudet/hcsr04sensor) - MIT License  
+Modifications by Matthew Charlston - MIT License
+
+## PiBorg Gamepad Library (lib_controllerbinding.py, lib_gamepad.py)
+Library by Freeburn Robotics (https://github.com/piborg/Gamepad) - MIT License  
+Modifications by Matthew Charlston - MIT License
+
+## All Other Code
+
+Copyright (c) 2020, 2021 LRJ. All Rights Reserved.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
