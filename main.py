@@ -555,7 +555,6 @@ class controllerThread(QtCore.QThread):
             errorMsg.showMessage("You need to connect a controller before polling can begin.")
             global killControllerThread
             killControllerThread = True
-            self.controllerQThread.terminate()
 
 #class sysMonThread(QtCore.QThread):
 #    def __init__(self):
@@ -665,7 +664,6 @@ class MainWindow(QtWidgets.QMainWindow):
     def stopGP(self): # Stop controller polling
         global killControllerThread
         killControllerThread = True
-        self.controllerQThread.terminate()
 
     def setLED(self): # Set one LED
         ledID, okPressed = QtWidgets.QInputDialog.getInt(self, "LED ID", "LED ID?", 1, 1, 36, 1)
