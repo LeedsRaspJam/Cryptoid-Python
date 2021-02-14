@@ -100,72 +100,6 @@ def ultrasonicPoll(self):
         setLED(self, "all", 0, 255, 0)
         currentColour = "red"
 
-def controllerPoll(self):
-    try:
-        right_y = gamepad.axis("RIGHT-Y")
-        left_x = gamepad.axis("LEFT-X")
-
-        if right_y > 0:
-            isBackward = True
-            isStopped = False
-        elif right_y < 0:
-            isBackward = False
-            isStopped = False
-        elif right_y == 0:
-            isStopped = True
-
-        y_corrected = abs(right_y) * 155
-
-        if left_x < 0:
-            l_value = abs(left_x) * y_corrected
-            r_value = 0
-        elif left_x > 0:
-            l_value = 0
-            r_value = abs(left_x) * y_corrected
-        elif left_x == 0:
-            l_value = y_corrected
-            r_value = y_corrected
-
-        if l_value != 0 and y_corrected != 0:
-            l_value = l_value + 100
-        if r_value != 0 and y_corrected != 0:
-            r_value = r_value + 100
-
-        if isStopped == True:
-            setLControllerBarSignal.emit(100)
-            setRControllerBarSignal.emit(100)
-        else:
-            setLControllerBarSignal.emit(l_value)
-            setRControllerBarSignal.emit(r_value)
-
-        if left_x > 0:
-            self.LBar.setValue(100)
-        elif left_x < 0:
-            self.RBar.setValue(100)
-
-        if isStopped == True:
-            setDirectionLabelSignal.emit("Stopped")
-            setMotor(self, 1, 2, l_value)
-            setMotor(self, 3, 2, l_value)
-            setMotor(self, 2, 2, r_value)
-            setMotor(self, 4, 2, r_value)
-        elif isBackward == False:
-            setDirectionLabelSignal.emit("Forward")
-            setMotor(self, 1, 1, l_value)
-            setMotor(self, 3, 1, l_value)
-            setMotor(self, 2, 1, r_value)
-            setMotor(self, 4, 1, r_value)
-        elif isBackward == True:
-            setDirectionLabelSignal.emit("Backward")
-            setMotor(self, 1, 2, l_value)
-            setMotor(self, 3, 2, l_value)
-            setMotor(self, 2, 2, r_value)
-            setMotor(self, 4, 2, r_value)
-    except(ValueError):
-        errorMsg = QtWidgets.QErrorMessage(self)
-        errorMsg.showMessage("You need to connect a controller before polling can begin.")
-        self.controllerTimer.stop()
-
 def beepSPKR(self, freq, duration):
     while True:
         self.logTb.append("SPKR")
@@ -517,7 +451,6 @@ class cameraThread(QtCore.QThread):
                 self.usleep(100)
             
 class sysMonThread(QtCore.QThread):
-    global setDirectionLabelSignal, setLControllerBarSignal, setRControllerBarSignal
     setDirectionLabelSignal = QtCore.pyqtSignal(['QString'])
     setLControllerBarSignal = QtCore.pyqtSignal([int])
     setRControllerBarSignal = QtCore.pyqtSignal([int])
@@ -810,7 +743,72 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def closeApp(self):
         sys.exit()
-    
+
+    def controllerPoll(self):
+    try:
+        right_y = gamepad.axis("RIGHT-Y")
+        left_x = gamepad.axis("LEFT-X")
+
+        if right_y > 0:
+            isBackward = True
+            isStopped = False
+        elif right_y < 0:
+            isBackward = False
+            isStopped = False
+        elif right_y == 0:
+            isStopped = True
+
+        y_corrected = abs(right_y) * 155
+
+        if left_x < 0:
+            l_value = abs(left_x) * y_corrected
+            r_value = 0
+        elif left_x > 0:
+            l_value = 0
+            r_value = abs(left_x) * y_corrected
+        elif left_x == 0:
+            l_value = y_corrected
+            r_value = y_corrected
+
+        if l_value != 0 and y_corrected != 0:
+            l_value = l_value + 100
+        if r_value != 0 and y_corrected != 0:
+            r_value = r_value + 100
+
+        if isStopped == True:
+            self.setLControllerBarSignal.emit(100)
+            self.setRControllerBarSignal.emit(100)
+        else:
+            self.setLControllerBarSignal.emit(l_value)
+            self.setRControllerBarSignal.emit(r_value)
+
+        if left_x > 0:
+            self.LBar.setValue(100)
+        elif left_x < 0:
+            self.RBar.setValue(100)
+
+        if isStopped == True:
+            self.setDirectionLabelSignal.emit("Stopped")
+            setMotor(self, 1, 2, l_value)
+            setMotor(self, 3, 2, l_value)
+            setMotor(self, 2, 2, r_value)
+            setMotor(self, 4, 2, r_value)
+        elif isBackward == False:
+            self.setDirectionLabelSignal.emit("Forward")
+            setMotor(self, 1, 1, l_value)
+            setMotor(self, 3, 1, l_value)
+            setMotor(self, 2, 1, r_value)
+            setMotor(self, 4, 1, r_value)
+        elif isBackward == True:
+            self.setDirectionLabelSignal.emit("Backward")
+            setMotor(self, 1, 2, l_value)
+            setMotor(self, 3, 2, l_value)
+            setMotor(self, 2, 2, r_value)
+            setMotor(self, 4, 2, r_value)
+    except(ValueError):
+        errorMsg = QtWidgets.QErrorMessage(self)
+        errorMsg.showMessage("You need to connect a controller before polling can begin.")
+        self.controllerTimer.stop()
     def __init__(self, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
 
@@ -832,6 +830,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.initSTM()
 
         gpioInit(self)
+
+        setDirectionLabelSignal = QtCore.pyqtSignal(['QString'])
+        setLControllerBarSignal = QtCore.pyqtSignal([int])
+        setRControllerBarSignal = QtCore.pyqtSignal([int])
 
         self.ultrasonicTimer = QtCore.QTimer()
         self.ultrasonicTimer.timeout.connect(lambda: ultrasonicPoll(self))
@@ -870,9 +872,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.deleteTaskBtn.clicked.connect(self.deleteTask)
         self.taskTextEdit.textChanged.connect(self.onTextUpdate)
         self.actionQuit.triggered.connect(self.closeApp)
-        setDirectionLabelSignal.connect(self.setDirectionLabel)
-        setLControllerBarSignal.connect(self.setLControllerBar)
-        setRControllerBarSignal.connect(self.setRControllerBar)
+        self.setDirectionLabelSignal.connect(self.setDirectionLabel)
+        self.setLControllerBarSignal.connect(self.setLControllerBar)
+        self.connect(self.setRControllerBar)
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
