@@ -511,19 +511,13 @@ class cameraThread(QtCore.QThread):
 
     def run(self):
         rawCapture = picamera.array.PiRGBArray(camera, size=(960, 720))
-        frameID = 1
         for frame in camera.capture_continuous(rawCapture, format="rgb", use_video_port=True):
-            if frameID < 8:
-                frameID = frameID + 1
-                frame.truncate()
-                frame.seek(0)
-            elif frameID == 8:
-                frameID = 1
                 image = frame.array
                 qImg = QtGui.QImage(image, 960, 720, QtGui.QImage.Format_RGB888)
                 cameraPixmapB.setPixmap(QtGui.QPixmap.fromImage(qImg))
                 frame.truncate()
                 frame.seek(0)
+                self.usleep(100)
 
 class MainWindow(QtWidgets.QMainWindow):
     def buttonFunction(self):
