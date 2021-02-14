@@ -537,7 +537,7 @@ class sysMonThread(QtCore.QThread):
         self.wait()
 
     def run(self):
-        while killThread == False:
+        while True:
             cpuInfo = psutil.cpu_percent(interval = 1, percpu=True)
             oneBar.setValue(int(cpuInfo[0]))
             twoBar.setValue(int(cpuInfo[1]))
@@ -547,6 +547,10 @@ class sysMonThread(QtCore.QThread):
             cpuFreqText.setText("CPU Freq: " + str(int(psutil.cpu_freq().current)) + " MHz")
             ramTextSys.setText("RAM Usage (Sys): " + str(int(psutil.virtual_memory().used/1024/1024)) + " MB")
             ramText.setText("RAM Usage: " + str(int(process.memory_info()[0]/1024/1024)) + " MB")
+
+            if killThread == True:
+                break
+
             self.usleep(500)
 
 class MainWindow(QtWidgets.QMainWindow):
