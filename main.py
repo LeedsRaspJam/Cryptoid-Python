@@ -572,6 +572,7 @@ class MainWindow(QtWidgets.QMainWindow):
             taskFile = open(currentTaskLocation, "r") # Open task file as object
             self.taskTextEdit.setPlainText(taskFile.read()) # Dump file to QTextEdit
             taskFile.close() # Close the file
+            self.taskTextEdit.setEditable(True)
         except(FileNotFoundError):
             pass # Do nothing, user cancelled the operation
 
@@ -594,6 +595,7 @@ class MainWindow(QtWidgets.QMainWindow):
             taskFile = open(currentTaskLocation, "r") # Open task file as object
             self.taskTextEdit.setPlainText(taskFile.read()) # Dump file to QTextEdit
             taskFile.close() # Close the file
+            self.taskTextEdit.setEditable(True)
         except(FileNotFoundError):
             pass # Do nothing, user cancelled the operation
 
@@ -618,11 +620,8 @@ class MainWindow(QtWidgets.QMainWindow):
             taskFile = open(currentTaskLocation, "w") # Open task file as object
             taskFile.write(self.taskTextEdit.toPlainText()) # Dump QTextEdit to file
             taskFile.close() # Close the file
-        except(FileNotFoundError, NameError): # On FnFe
-            errorMsg = QtWidgets.QErrorMessage()
-            errorMsg.showMessage("You must open a file before attempting to edit it.")
             self.taskTextEdit.clear()
-        except: # On all other errors
+        except:
             errorMsg = QtWidgets.QErrorMessage()
             errorMsg.showMessage("Error while saving file, something has gone horribly wrong.")
     
@@ -660,6 +659,7 @@ class MainWindow(QtWidgets.QMainWindow):
         
         global taskTextEdit, hl
         hl=Highlighter(self.taskTextEdit.document(), "python")
+        self.taskTextEdit.setEditable(False)
 
         appPid = os.getpid()
         global process
