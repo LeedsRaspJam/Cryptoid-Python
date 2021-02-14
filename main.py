@@ -556,16 +556,6 @@ class controllerThread(QtCore.QThread):
             global killControllerThread
             killControllerThread = True
 
-#class sysMonThread(QtCore.QThread):
-#    def __init__(self):
- #       QtCore.QThread.__init__(self)
-#
-  #  def __del__(self):
- #       self.wait()
-#
-  #  def run(self):
-  #      pass
-    
 class MainWindow(QtWidgets.QMainWindow):    
     def buttonFunction(self):
         setLED(self, "all", 0, 0, 255)
@@ -852,7 +842,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.monitorTimer.timeout.connect(lambda: self.updateSysInfo())
 
         self.cameraQThread = cameraThread(self.cameraPixmap)
-        #self.monitorQThread = sysMonThread()
         self.controllerQThread = controllerThread()
 
         self.enableUltrasonicPoll.clicked.connect(self.toggleUltrasonicTimer)
