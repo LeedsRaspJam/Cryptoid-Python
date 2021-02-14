@@ -557,7 +557,7 @@ class MainWindow(QtWidgets.QMainWindow):
                     self.logTb.append(errorStr)
                     break
             taskFile.close() # Close the file
-        except(NameError):
+        except(NameError, FileNotFoundError):
             pass # Do nothing, no file loaded
 
     def loadTask(self): # Load task into RAM
