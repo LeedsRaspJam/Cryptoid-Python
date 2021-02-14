@@ -570,7 +570,6 @@ class MainWindow(QtWidgets.QMainWindow):
 
         try:
             taskFile = open(currentTaskLocation, "r") # Open task file as object
-            self.taskTextEdit.setEnabled(True)
             self.taskTextEdit.setPlainText(taskFile.read()) # Dump file to QTextEdit
             taskFile.close() # Close the file
         except(FileNotFoundError):
@@ -592,7 +591,6 @@ class MainWindow(QtWidgets.QMainWindow):
             taskFile.write("self.logTb.append(\"Example Text\")") # Write in example text
             taskFile.close() # Close the file
 
-            self.taskTextEdit.setEnabled(True)
             taskFile = open(currentTaskLocation, "r") # Open task file as object
             self.taskTextEdit.setPlainText(taskFile.read()) # Dump file to QTextEdit
             taskFile.close() # Close the file
@@ -620,9 +618,12 @@ class MainWindow(QtWidgets.QMainWindow):
             taskFile = open(currentTaskLocation, "w") # Open task file as object
             taskFile.write(self.taskTextEdit.toPlainText()) # Dump QTextEdit to file
             taskFile.close() # Close the file
+        except(FileNotFoundError, NameError): # On FnFe
+            errorMsg = QtWidgets.QErrorMessage(self)
+            errorMsg.showMessage("You must open a file before attempting to edit it.")
             self.taskTextEdit.clear()
-        except:
-            errorMsg = QtWidgets.QErrorMessage()
+        except: # On all other errors
+            errorMsg = QtWidgets.QErrorMessage(self)
             errorMsg.showMessage("Error while saving file, something has gone horribly wrong.")
     
     def toggleSystemMonitor(self): # Enable/disable system monitor
@@ -659,7 +660,6 @@ class MainWindow(QtWidgets.QMainWindow):
         
         global taskTextEdit, hl
         hl=Highlighter(self.taskTextEdit.document(), "python")
-        self.taskTextEdit.setEnabled(False)
 
         appPid = os.getpid()
         global process
