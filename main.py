@@ -451,43 +451,15 @@ class cameraThread(QtCore.QThread):
                 self.usleep(100)
             
 class sysMonThread(QtCore.QThread):
-    setDirectionLabelSignal = QtCore.pyqtSignal(['QString'])
-    setLControllerBarSignal = QtCore.pyqtSignal([int])
-    setRControllerBarSignal = QtCore.pyqtSignal([int])
-
-    def __init__(self, oneBarP, twoBarP, threeBarP, fourBarP, cpuFreqTextP, ramTextSysP, ramTextP):
+    def __init__(self):
         QtCore.QThread.__init__(self)
-        global oneBar, twoBar, threeBar, fourBar, cpuFreqText, ramTextSys, ramText, killThread
-
-        killThread = False
-        oneBar = oneBarP
-        twoBar = twoBarP
-        threeBar = threeBarP
-        fourBar = fourBarP
-        cpuFreqText = cpuFreqTextP
-        ramTextSys = ramTextSysP
-        ramText = ramTextP
 
     def __del__(self):
         self.wait()
 
     def run(self):
-        while True:
-            cpuInfo = psutil.cpu_percent(interval = 1, percpu=True)
-            oneBar.setValue(int(cpuInfo[0]))
-            twoBar.setValue(int(cpuInfo[1]))
-            threeBar.setValue(int(cpuInfo[2]))
-            fourBar.setValue(int(cpuInfo[3]))
-
-            cpuFreqText.setText("CPU Freq: " + str(int(psutil.cpu_freq().current)) + " MHz")
-            ramTextSys.setText("RAM Usage (Sys): " + str(int(psutil.virtual_memory().used/1024/1024)) + " MB")
-            ramText.setText("RAM Usage: " + str(int(process.memory_info()[0]/1024/1024)) + " MB")
-
-            if killThread == True:
-                break
-
-            self.usleep(500)
-
+        pass
+    
 class MainWindow(QtWidgets.QMainWindow):
     setDirectionLabelSignal = QtCore.pyqtSignal([str])
     setLControllerBarSignal = QtCore.pyqtSignal([int])
@@ -846,7 +818,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.monitorTimer.timeout.connect(lambda: self.updateSysInfo())
 
         self.cameraQThread = cameraThread(self.cameraPixmap)
-        self.monitorQThread = sysMonThread(self.oneBar, self.twoBar, self.threeBar, self.fourBar, self.cpuFreqText, self.ramTextSys, self.ramText)
+        self.monitorQThread = sysMonThread()
 
         self.enableUltrasonicPoll.clicked.connect(self.toggleUltrasonicTimer)
         self.enableSysMon.clicked.connect(self.toggleSystemMonitor)
