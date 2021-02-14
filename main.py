@@ -500,23 +500,23 @@ class Highlighter(QtGui.QSyntaxHighlighter):
 class cameraThread(QtCore.QThread):
     def __init__(self, pixmap):
         QtCore.QThread.__init__(self)
-        global camera, cameraPixmapB
+        global camera, cameraPixmapB, rawCapture
         camera = picamera.PiCamera()
         camera.resolution = (960, 720)
         camera.framerate = 60
         cameraPixmapB = pixmap
+        rawCapture = picamera.array.PiRGBArray(camera, size=(960, 720))
 
     def __del__(self):
         self.wait()
 
     def run(self):
-        rawCapture = picamera.array.PiRGBArray(camera, size=(960, 720))
         for frame in camera.capture_continuous(rawCapture, format="rgb", use_video_port=True):
+                frame.truncate()
+                frame.seek(0)
                 image = frame.array
                 qImg = QtGui.QImage(image, 960, 720, QtGui.QImage.Format_RGB888)
                 cameraPixmapB.setPixmap(QtGui.QPixmap.fromImage(qImg))
-                frame.truncate()
-                frame.seek(0)
                 self.usleep(100)
             
 class sysMonThread(QtCore.QThread):
@@ -534,11 +534,10 @@ class sysMonThread(QtCore.QThread):
         ramText = ramTextP
 
     def __del__(self):
-        killThread = True
         self.wait()
 
     def run(self):
-        while killThread == False:
+        while True:
             cpuInfo = psutil.cpu_percent(interval = 1, percpu=True)
             oneBar.setValue(int(cpuInfo[0]))
             twoBar.setValue(int(cpuInfo[1]))
@@ -764,7 +763,7 @@ class MainWindow(QtWidgets.QMainWindow):
         if self.monitorQThread.isRunning() == False:
             self.monitorQThread.start()
         elif self.monitorQThread.isRunning() == True:
-            self.monitorQThread.quit()
+            self.monitorQThread.terminate()
             self.oneBar.setValue(100)
             self.twoBar.setValue(100)
             self.threeBar.setValue(100)
