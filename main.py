@@ -517,10 +517,10 @@ class cameraThread(QtCore.QThread):
                 self.usleep(100)
             
 class sysMonThread(QtCore.QThread):
-        global setDirectionLabelSignal, setLControllerBarSignal, setRControllerBarSignal
-        setDirectionLabelSignal = QtCore.pyqtSignal(['QString'])
-        setLControllerBarSignal = QtCore.pyqtSignal([int])
-        setRControllerBarSignal = QtCore.pyqtSignal([int])
+    global setDirectionLabelSignal, setLControllerBarSignal, setRControllerBarSignal
+    setDirectionLabelSignal = QtCore.pyqtSignal(['QString'])
+    setLControllerBarSignal = QtCore.pyqtSignal([int])
+    setRControllerBarSignal = QtCore.pyqtSignal([int])
 
     def __init__(self, oneBarP, twoBarP, threeBarP, fourBarP, cpuFreqTextP, ramTextSysP, ramTextP):
         QtCore.QThread.__init__(self)
