@@ -743,7 +743,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.LBar.setValue(lVal)
 
     def setRControllerBar(self, rVal):
-        self.rBar.setValue(rVal)
+        self.RBar.setValue(rVal)
 
     def closeApp(self):
         sys.exit()
