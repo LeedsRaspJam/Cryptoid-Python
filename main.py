@@ -870,9 +870,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.deleteTaskBtn.clicked.connect(self.deleteTask)
         self.taskTextEdit.textChanged.connect(self.onTextUpdate)
         self.actionQuit.triggered.connect(self.closeApp)
-        setDirectionLabelSignal.connect(self.setDirectionLabel)
-        setLControllerBarSignal.connect(self.setLControllerBar)
-        setRControllerBarSignal.connect(self.setRControllerBar)
+        setDirectionLabelSignal.triggered.connect(self.setDirectionLabel)
+        setLControllerBarSignal.triggered.connect(self.setLControllerBar)
+        setRControllerBarSignal.triggered.connect(self.setRControllerBar)
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
