@@ -457,8 +457,6 @@ class controllerThread(QtCore.QThread):
 
     def __init__(self):
         QtCore.QThread.__init__(self)
-        self.controllerTimer = QtCore.QTimer()
-        self.controllerTimer.timeout.connect(lambda: self.controllerPoll())
 
     def __del__(self):
         self.wait()
@@ -531,22 +529,22 @@ class controllerThread(QtCore.QThread):
 
             if isStopped == True:
                 self.setDirectionLabelSignal.emit("Stopped")
-                setMotor(self, 1, 2, l_value)
-                setMotor(self, 3, 2, l_value)
-                setMotor(self, 2, 2, r_value)
-                setMotor(self, 4, 2, r_value)
+                self.setMotorSilent(self, 1, 2, l_value)
+                self.setMotorSilent(self, 3, 2, l_value)
+                self.setMotorSilent(self, 2, 2, r_value)
+                self.setMotorSilent(self, 4, 2, r_value)
             elif isBackward == False:
                 self.setDirectionLabelSignal.emit("Forward")
-                setMotor(self, 1, 1, l_value)
-                setMotor(self, 3, 1, l_value)
-                setMotor(self, 2, 1, r_value)
-                setMotor(self, 4, 1, r_value)
+                self.setMotorSilent(self, 1, 1, l_value)
+                self.setMotorSilent(self, 3, 1, l_value)
+                self.setMotorSilent(self, 2, 1, r_value)
+                self.setMotorSilent(self, 4, 1, r_value)
             elif isBackward == True:
                 self.setDirectionLabelSignal.emit("Backward")
-                setMotor(self, 1, 2, l_value)
-                setMotor(self, 3, 2, l_value)
-                setMotor(self, 2, 2, r_value)
-                setMotor(self, 4, 2, r_value)
+                self.setMotorSilent(self, 1, 2, l_value)
+                self.setMotorSilent(self, 3, 2, l_value)
+                self.setMotorSilent(self, 2, 2, r_value)
+                self.setMotorSilent(self, 4, 2, r_value)
         except(ValueError):
             errorMsg = QtWidgets.QErrorMessage(self)
             errorMsg.showMessage("You need to connect a controller before polling can begin.")
