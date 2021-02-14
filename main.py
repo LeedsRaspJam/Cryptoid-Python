@@ -572,7 +572,7 @@ class MainWindow(QtWidgets.QMainWindow):
             taskFile = open(currentTaskLocation, "r") # Open task file as object
             self.taskTextEdit.setPlainText(taskFile.read()) # Dump file to QTextEdit
             taskFile.close() # Close the file
-            self.taskTextEdit.setEditable(True)
+            self.taskTextEdit.setEnabled(True)
         except(FileNotFoundError):
             pass # Do nothing, user cancelled the operation
 
@@ -595,7 +595,7 @@ class MainWindow(QtWidgets.QMainWindow):
             taskFile = open(currentTaskLocation, "r") # Open task file as object
             self.taskTextEdit.setPlainText(taskFile.read()) # Dump file to QTextEdit
             taskFile.close() # Close the file
-            self.taskTextEdit.setEditable(True)
+            self.taskTextEdit.setEnabled(True)
         except(FileNotFoundError):
             pass # Do nothing, user cancelled the operation
 
@@ -659,7 +659,7 @@ class MainWindow(QtWidgets.QMainWindow):
         
         global taskTextEdit, hl
         hl=Highlighter(self.taskTextEdit.document(), "python")
-        self.taskTextEdit.setEditable(False)
+        self.taskTextEdit.setEnabled(False)
 
         appPid = os.getpid()
         global process
