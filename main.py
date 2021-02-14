@@ -520,15 +520,25 @@ class cameraThread(QtCore.QThread):
                 self.usleep(100)
             
 class sysMonThread(QtCore.QThread):
-    def __init__(self):
+    def __init__(self, oneBarP, twoBarP, threeBarP, fourBarP, cpuFreqTextP, ramTextSysP, ramTextP):
         QtCore.QThread.__init__(self)
-        global oneBar, twoBar, threeBar, fourBar, cpuFreqText, ramTextSys, ramText
+        global oneBar, twoBar, threeBar, fourBar, cpuFreqText, ramTextSys, ramText, killThread
+
+        killThread = False
+        oneBar = oneBarP
+        twoBar = twoBarP
+        threeBar = threeBarP
+        fourBar = fourBarP
+        cpuFreqText = cpuFreqTextP
+        ramTextSys = ramTextSysP
+        ramText = ramTextP
 
     def __del__(self):
+        killThread = True
         self.wait()
 
-    def run(self, oneBarP, twoBarP, threeBarP, fourBarP, cpuFreqTextP, ramTextSysP, ramTextP):
-        while True:
+    def run(self):
+        while killThread == False:
             cpuInfo = psutil.cpu_percent(interval = 1, percpu=True)
             oneBar.setValue(int(cpuInfo[0]))
             twoBar.setValue(int(cpuInfo[1]))
@@ -538,7 +548,7 @@ class sysMonThread(QtCore.QThread):
             cpuFreqText.setText("CPU Freq: " + str(int(psutil.cpu_freq().current)) + " MHz")
             ramTextSys.setText("RAM Usage (Sys): " + str(int(psutil.virtual_memory().used/1024/1024)) + " MB")
             ramText.setText("RAM Usage: " + str(int(process.memory_info()[0]/1024/1024)) + " MB")
-            self.usleep(250)
+            self.usleep(500)
 
 class MainWindow(QtWidgets.QMainWindow):
     def buttonFunction(self):
@@ -751,11 +761,10 @@ class MainWindow(QtWidgets.QMainWindow):
             errorMsg.showMessage("Error while saving file, something has gone horribly wrong.")
     
     def toggleSystemMonitor(self): # Enable/disable system monitor
-        if self.monitorTimer.isActive() == False:
-            #self.monitorTimer.start(2500)
-            self.monitorQThread.start(self.oneBar, self.twoBar, self.threeBar, self.fourBar, self.cpuFreqText, self.ramTextSys, self.ramText)
-        elif self.monitorTimer.isActive() == True:
-            #self.monitorTimer.stop()
+        if self.monitorQThread.isRunning() == False:
+            self.monitorQThread.start()
+        elif self.monitorQThread.isRunning() == True:
+            self.monitorQThread.quit()
             self.oneBar.setValue(100)
             self.twoBar.setValue(100)
             self.threeBar.setValue(100)
@@ -810,7 +819,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.monitorTimer.timeout.connect(lambda: self.updateSysInfo())
 
         self.cameraQThread = cameraThread(self.cameraPixmap)
-        self.monitorQThread = sysMonThread()
+        self.monitorQThread = sysMonThread(self.oneBar, self.twoBar, self.threeBar, self.fourBar, self.cpuFreqText, self.ramTextSys, self.ramText)
 
         self.enableUltrasonicPoll.clicked.connect(self.toggleUltrasonicTimer)
         self.enableSysMon.clicked.connect(self.toggleSystemMonitor)
