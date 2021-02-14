@@ -167,6 +167,7 @@ def controllerPoll(self):
     except(ValueError):
         errorMsg = QtWidgets.QErrorMessage(self)
         errorMsg.showMessage("You need to connect a controller before polling can begin.")
+        self.controllerTimer.stop()
 
 def beepSPKR(self, freq, duration):
     while True:
