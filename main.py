@@ -846,6 +846,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.cameraQThread = cameraThread(self.cameraPixmap)
         #self.monitorQThread = sysMonThread()
+        self.controllerQThread = controllerThread()
 
         self.enableUltrasonicPoll.clicked.connect(self.toggleUltrasonicTimer)
         self.enableSysMon.clicked.connect(self.toggleSystemMonitor)
@@ -872,9 +873,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.deleteTaskBtn.clicked.connect(self.deleteTask)
         self.taskTextEdit.textChanged.connect(self.onTextUpdate)
         self.actionQuit.triggered.connect(self.closeApp)
-        controllerThread.setDirectionLabelSignal.connect(self.setDirectionLabel)
-        controllerThread.setLControllerBarSignal.connect(self.setLControllerBar)
-        controllerThread.setRControllerBarSignal.connect(self.setRControllerBar)
+        self.controllerQThread.setDirectionLabelSignal.connect(self.setDirectionLabel)
+        self.controllerQThread.setLControllerBarSignal.connect(self.setLControllerBar)
+        self.controllerQThread.setRControllerBarSignal.connect(self.setRControllerBar)
+
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
