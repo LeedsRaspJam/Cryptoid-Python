@@ -546,11 +546,19 @@ class MainWindow(QtWidgets.QMainWindow):
         self.recText.setStyleSheet("color:#000000")
 
     def runTask(self): # Run loaded task
-        taskFile = open(currentTaskLocation, "r") # Open task file as object
-        taskContents = taskFile.readlines() # Read lines from file into an array
-        for line in taskContents: # For every line in that array
-            exec(line) # Run it through the interpreter
-        taskFile.close() # Close the file
+        try:
+            taskFile = open(currentTaskLocation, "r") # Open task file as object
+            taskContents = taskFile.readlines() # Read lines from file into an array
+            for line in taskContents: # For every line in that array
+                try:
+                    exec(line) # Run it through the interpreter
+                except Exception as errorStr:
+                    self.logTb.append("Error in task: halting execution!")
+                    self.logTb.append(errorStr)
+                    break
+            taskFile.close() # Close the file
+        except(NameError):
+            pass # Do nothing, no file loaded
 
     def loadTask(self): # Load task into RAM
         global currentTaskLocation
@@ -559,10 +567,13 @@ class MainWindow(QtWidgets.QMainWindow):
             currentTaskLocation = currentTaskLocation[0] + '.crtask' # Add the extension and remove the second tuple object
         else:
             currentTaskLocation = currentTaskLocation[0] # Just remove the second tuple object
-
-        taskFile = open(currentTaskLocation, "r") # Open task file as object
-        self.taskTextEdit.setPlainText(taskFile.read()) # Dump file to QTextEdit
-        taskFile.close() # Close the file
+        
+        try:
+            taskFile = open(currentTaskLocation, "r") # Open task file as object
+            self.taskTextEdit.setPlainText(taskFile.read()) # Dump file to QTextEdit
+            taskFile.close() # Close the file
+        except(FileNotFoundError):
+            pass # Do nothing, user cancelled the operation
 
     def newTask(self): # Create new task
         global currentTaskLocation
@@ -575,13 +586,16 @@ class MainWindow(QtWidgets.QMainWindow):
         if os.path.exists(currentTaskLocation): # If overwriting a file
             os.remove(currentTaskLocation) # Delete the current version
 
-        taskFile = open(currentTaskLocation, "w") # Open task file as object
-        taskFile.write("self.logTb.append(\"Example Text\")") # Write in example text
-        taskFile.close() # Close the file
+        try:
+            taskFile = open(currentTaskLocation, "w") # Open task file as object
+            taskFile.write("self.logTb.append(\"Example Text\")") # Write in example text
+            taskFile.close() # Close the file
 
-        taskFile = open(currentTaskLocation, "r") # Open task file as object
-        self.taskTextEdit.setPlainText(taskFile.read()) # Dump file to QTextEdit
-        taskFile.close() # Close the file
+            taskFile = open(currentTaskLocation, "r") # Open task file as object
+            self.taskTextEdit.setPlainText(taskFile.read()) # Dump file to QTextEdit
+            taskFile.close() # Close the file
+        except(FileNotFoundError):
+            pass # Do nothing, user cancelled the operation
 
     def deleteTask(self): # Delete task on SD
         global currentTaskLocation
@@ -590,10 +604,14 @@ class MainWindow(QtWidgets.QMainWindow):
             delTaskLocation = delTaskLocation[0] + '.crtask' # Add the extension and remove the second tuple object
         else:
             delTaskLocation = delTaskLocation[0] # Just remove the second tuple object
-        os.remove(delTaskLocation) # Delete the file
-        if delTaskLocation == currentTaskLocation: # If deleting the current file
-            self.taskTextEdit.clear() # Clear the QTextEdit
-            currentTaskLocation = "" # Clear currentTaskLocation
+        
+        try:
+            os.remove(delTaskLocation) # Delete the file
+            if delTaskLocation == currentTaskLocation: # If deleting the current file
+                self.taskTextEdit.clear() # Clear the QTextEdit
+                currentTaskLocation = "" # Clear currentTaskLocation
+        except(FileNotFoundError):
+            pass # Do nothing, user cancelled the operation
 
     def onTextUpdate(self): # Save file upon edit
         taskFile = open(currentTaskLocation, "w") # Open task file as object
