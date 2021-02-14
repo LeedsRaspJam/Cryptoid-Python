@@ -570,9 +570,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
         try:
             taskFile = open(currentTaskLocation, "r") # Open task file as object
+            self.taskTextEdit.setEnabled(True)
             self.taskTextEdit.setPlainText(taskFile.read()) # Dump file to QTextEdit
             taskFile.close() # Close the file
-            self.taskTextEdit.setEnabled(True)
         except(FileNotFoundError):
             pass # Do nothing, user cancelled the operation
 
@@ -592,10 +592,10 @@ class MainWindow(QtWidgets.QMainWindow):
             taskFile.write("self.logTb.append(\"Example Text\")") # Write in example text
             taskFile.close() # Close the file
 
+            self.taskTextEdit.setEnabled(True)
             taskFile = open(currentTaskLocation, "r") # Open task file as object
             self.taskTextEdit.setPlainText(taskFile.read()) # Dump file to QTextEdit
             taskFile.close() # Close the file
-            self.taskTextEdit.setEnabled(True)
         except(FileNotFoundError):
             pass # Do nothing, user cancelled the operation
 
