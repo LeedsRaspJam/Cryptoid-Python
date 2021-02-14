@@ -809,7 +809,7 @@ class MainWindow(QtWidgets.QMainWindow):
             errorMsg = QtWidgets.QErrorMessage(self)
             errorMsg.showMessage("You need to connect a controller before polling can begin.")
             self.controllerTimer.stop()
-            
+
     def __init__(self, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
 
@@ -832,9 +832,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
         gpioInit(self)
 
-        setDirectionLabelSignal = QtCore.pyqtSignal(['QString'])
-        setLControllerBarSignal = QtCore.pyqtSignal([int])
-        setRControllerBarSignal = QtCore.pyqtSignal([int])
+        self.setDirectionLabelSignal = QtCore.pyqtSignal(['QString'])
+        self.setLControllerBarSignal = QtCore.pyqtSignal([int])
+        self.setRControllerBarSignal = QtCore.pyqtSignal([int])
 
         self.ultrasonicTimer = QtCore.QTimer()
         self.ultrasonicTimer.timeout.connect(lambda: ultrasonicPoll(self))
