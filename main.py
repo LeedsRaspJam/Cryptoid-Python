@@ -451,7 +451,7 @@ class cameraThread(QtCore.QThread):
                 qImg = QtGui.QImage(image, 960, 720, QtGui.QImage.Format_RGB888)
                 #self.pixmap.setPixmap(QtGui.QPixmap.fromImage(qImg))
                 cameraPixmapB = QtGui.QPixmap.fromImage(qImg)
-                self.pixmapSignal.emit()
+                self.pixmapSignal.emit(self)
                 self.usleep(100)
             
 class sysMonThread(QtCore.QThread):
