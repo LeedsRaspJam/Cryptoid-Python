@@ -550,7 +550,7 @@ class controllerThread(QtCore.QThread):
                 self.setMotorSilent(2, 2, r_value)
                 self.setMotorSilent(4, 2, r_value)
         except:
-            errorMsg = QtWidgets.QErrorMessage(self)
+            errorMsg = QtWidgets.QErrorMessage()
             errorMsg.showMessage("You need to connect a controller before polling can begin.")
             global killControllerThread
             killControllerThread = True
