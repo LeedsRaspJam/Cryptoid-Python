@@ -537,7 +537,7 @@ class sysMonThread(QtCore.QThread):
         self.wait()
 
     def run(self):
-        while killThread = False:
+        while killThread == False:
             cpuInfo = psutil.cpu_percent(interval = 1, percpu=True)
             oneBar.setValue(int(cpuInfo[0]))
             twoBar.setValue(int(cpuInfo[1]))
