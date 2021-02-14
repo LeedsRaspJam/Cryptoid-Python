@@ -792,7 +792,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def renderPixmap():
         global cameraPixmapB
-        MainWindow.cameraPixmap.setPixmap(cameraPixmapB)
+        main.cameraPixmap.setPixmap(cameraPixmapB)
 
     def __init__(self, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
