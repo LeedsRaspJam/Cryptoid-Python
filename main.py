@@ -450,15 +450,15 @@ class cameraThread(QtCore.QThread):
                 cameraPixmapB.setPixmap(QtGui.QPixmap.fromImage(qImg))
                 self.usleep(100)
             
-class sysMonThread(QtCore.QThread):
-    def __init__(self):
-        QtCore.QThread.__init__(self)
-
-    def __del__(self):
-        self.wait()
-
-    def run(self):
-        pass
+#class sysMonThread(QtCore.QThread):
+#    def __init__(self):
+ #       QtCore.QThread.__init__(self)
+#
+  #  def __del__(self):
+ #       self.wait()
+#
+  #  def run(self):
+  #      pass
     
 class MainWindow(QtWidgets.QMainWindow):
     setDirectionLabelSignal = QtCore.pyqtSignal([str])
@@ -818,7 +818,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.monitorTimer.timeout.connect(lambda: self.updateSysInfo())
 
         self.cameraQThread = cameraThread(self.cameraPixmap)
-        self.monitorQThread = sysMonThread()
+        #self.monitorQThread = sysMonThread()
 
         self.enableUltrasonicPoll.clicked.connect(self.toggleUltrasonicTimer)
         self.enableSysMon.clicked.connect(self.toggleSystemMonitor)
