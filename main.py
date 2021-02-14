@@ -450,7 +450,8 @@ class cameraThread(QtCore.QThread):
                 image = frame.array
                 qImg = QtGui.QImage(image, 960, 720, QtGui.QImage.Format_RGB888)
                 #self.pixmap.setPixmap(QtGui.QPixmap.fromImage(qImg))
-                self.pixmapSignal.emit(self, QtGui.QPixmap.fromImage(qImg))
+                cameraPixmapB = QtGui.QPixmap.fromImage(qImg)
+                self.pixmapSignal.emit()
                 self.usleep(100)
             
 class sysMonThread(QtCore.QThread):
@@ -789,8 +790,9 @@ class MainWindow(QtWidgets.QMainWindow):
             errorMsg.showMessage("You need to connect a controller before polling can begin.")
             self.controllerTimer.stop()
 
-    def renderPixmap(self, pixIn):
-        self.cameraPixmap.setPixmap(pixIn)
+    def renderPixmap(self):
+        global cameraPixmapB
+        self.cameraPixmap.setPixmap(cameraPixmapB)
 
     def __init__(self, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
