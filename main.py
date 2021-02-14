@@ -458,7 +458,7 @@ class controllerThread(QtCore.QThread):
     def __init__(self):
         QtCore.QThread.__init__(self)
         global killThread
-        killThread == False
+        killThread = False
 
     def __del__(self):
         self.wait()
