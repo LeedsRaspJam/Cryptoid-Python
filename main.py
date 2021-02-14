@@ -518,6 +518,35 @@ class cameraThread(QtCore.QThread):
                 frame.truncate()
                 frame.seek(0)
                 self.usleep(100)
+            
+class sysMonThread(QtCore.QThread):
+    def __init__(self, oneBarP, twoBarP, threeBarP, fourBarP, cpuFreqTextP, ramTextSysP, ramTextP):
+        QtCore.QThread.__init__(self)
+        global oneBar, twoBar, threeBar, fourBar, cpuFreqText, ramTextSys, ramText
+
+        oneBar = oneBarP
+        twoBar = twoBarP
+        threeBar = threeBarP
+        fourBar = fourBarP
+        cpuFreqText = cpuFreqTextP
+        ramTextSys = ramTextSysP
+        ramText = ramTextP
+
+    def __del__(self):
+        self.wait()
+
+    def run(self):
+        while True:
+            cpuInfo = psutil.cpu_percent(interval = 1, percpu=True)
+            self.oneBar.setValue(int(cpuInfo[0]))
+            self.twoBar.setValue(int(cpuInfo[1]))
+            self.threeBar.setValue(int(cpuInfo[2]))
+            self.fourBar.setValue(int(cpuInfo[3]))
+
+            self.cpuFreqText.setText("CPU Freq: " + str(int(psutil.cpu_freq().current)) + " MHz")
+            self.ramTextSys.setText("RAM Usage (Sys): " + str(int(psutil.virtual_memory().used/1024/1024)) + " MB")
+            self.ramText.setText("RAM Usage: " + str(int(process.memory_info()[0]/1024/1024)) + " MB")
+            self.usleep(250)
 
 class MainWindow(QtWidgets.QMainWindow):
     def buttonFunction(self):
