@@ -429,16 +429,14 @@ class Highlighter(QtGui.QSyntaxHighlighter):
         self.tstamp=time.time() 
 
 class cameraThread(QtCore.QThread):
-    pixmapSignal = QtCore.pyqtSignal()
-
-    def __init__(self):
+    def __init__(self, pixmap):
         QtCore.QThread.__init__(self)
         global camera, cameraPixmapB, rawCapture
         camera = picamera.PiCamera()
         camera.resolution = (960, 720)
         camera.framerate = 60
+        cameraPixmapB = pixmap
         rawCapture = picamera.array.PiRGBArray(camera, size=(960, 720))
-        self.pixmapSignal.connect(MainWindow.renderPixmap)
 
     def __del__(self):
         self.wait()
@@ -449,9 +447,7 @@ class cameraThread(QtCore.QThread):
                 frame.seek(0)
                 image = frame.array
                 qImg = QtGui.QImage(image, 960, 720, QtGui.QImage.Format_RGB888)
-                #self.pixmap.setPixmap(QtGui.QPixmap.fromImage(qImg))
-                cameraPixmapB = QtGui.QPixmap.fromImage(qImg)
-                self.pixmapSignal.emit()
+                cameraPixmapB.setPixmap(QtGui.QPixmap.fromImage(qImg))
                 self.usleep(100)
             
 class sysMonThread(QtCore.QThread):
@@ -463,7 +459,7 @@ class sysMonThread(QtCore.QThread):
 
     def run(self):
         pass
-
+    
 class MainWindow(QtWidgets.QMainWindow):
     setDirectionLabelSignal = QtCore.pyqtSignal([str])
     setLControllerBarSignal = QtCore.pyqtSignal([int])
@@ -790,10 +786,6 @@ class MainWindow(QtWidgets.QMainWindow):
             errorMsg.showMessage("You need to connect a controller before polling can begin.")
             self.controllerTimer.stop()
 
-    def renderPixmap():
-        global cameraPixmapB
-        main.cameraPixmap.setPixmap(cameraPixmapB)
-
     def __init__(self, *args, **kwargs):
         super(MainWindow, self).__init__(*args, **kwargs)
 
@@ -825,7 +817,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.monitorTimer = QtCore.QTimer()
         self.monitorTimer.timeout.connect(lambda: self.updateSysInfo())
 
-        self.cameraQThread = cameraThread()
+        self.cameraQThread = cameraThread(self.cameraPixmap)
         self.monitorQThread = sysMonThread()
 
         self.enableUltrasonicPoll.clicked.connect(self.toggleUltrasonicTimer)
