@@ -614,10 +614,15 @@ class MainWindow(QtWidgets.QMainWindow):
             pass # Do nothing, user cancelled the operation
 
     def onTextUpdate(self): # Save file upon edit
-        taskFile = open(currentTaskLocation, "w") # Open task file as object
-        taskFile.write(self.taskTextEdit.toPlainText()) # Dump QTextEdit to file
-        taskFile.close() # Close the file
-
+        try:
+            taskFile = open(currentTaskLocation, "w") # Open task file as object
+            taskFile.write(self.taskTextEdit.toPlainText()) # Dump QTextEdit to file
+            taskFile.close() # Close the file
+        except(FileNotFoundError): # On FnFe
+            okPressed = QtWidgets.QErrorMessage.showMessage("You must open a file before attempting to edit it.")
+        except: # On all other errors
+            okPressed = QtWidgets.QErrorMessage.showMessage("Error while saving file, something has gone horribly wrong.")
+    
     def toggleSystemMonitor(self): # Enable/disable system monitor
         if self.monitorTimer.isActive() == False:
             self.monitorTimer.start(1500)
