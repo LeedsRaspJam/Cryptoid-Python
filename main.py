@@ -270,6 +270,21 @@ def setMotor(self, motorID, direction, speed): # Set one motor
                     if response.decode() == "OK\r\n":
                         break
 
+def stopMotor(self, motorID): # Stop one motor
+    motorBuffer[motorID] = [0, 0]
+    while True:
+        self.logTb.append("STPM")
+        stm32.write("STPM\r\n".encode())
+        response = stm32.readline()
+        self.logTb.append(str(response))
+        if response.decode() == "OK\r\n":
+            stm32.write(str(motorID).encode())
+            stm32.write("\r\n".encode())
+            response = stm32.readline()
+            self.logTb.append(str(response))
+            if response.decode() == "OK\r\n":
+                break
+
 def setExtPins(self, type1, type2, type3, type4, type5, type6): # Set STM external pins
     while True:
         self.logTb.append("EXTS")
@@ -309,20 +324,63 @@ def setExtPins(self, type1, type2, type3, type4, type5, type6): # Set STM extern
                                 if response.decode() == "OK\r\n":
                                     break
 
-def stopMotor(self, motorID): # Stop one motor
-    motorBuffer[motorID] = [0, 0]
+def setServo180(self, id, angle): # Set 180 degree servo
     while True:
-        self.logTb.append("STPM")
-        stm32.write("STPM\r\n".encode())
+        self.logTb.append("SRVO")
+        stm32.write("SRVO\r\n".encode())
         response = stm32.readline()
         self.logTb.append(str(response))
         if response.decode() == "OK\r\n":
-            stm32.write(str(motorID).encode())
+            stm32.write(str(id).encode())
             stm32.write("\r\n".encode())
             response = stm32.readline()
             self.logTb.append(str(response))
             if response.decode() == "OK\r\n":
-                break
+                stm32.write(str(angle).encode())
+                stm32.write("\r\n".encode())
+                response = stm32.readline()
+                self.logTb.append(str(response))
+                if response.decode() == "OK\r\n":
+                    break
+
+def setServo360(self, id, initialAngle, time, stopAngle): # Set 360 degree servo
+    while True: # Set to initial angle
+        self.logTb.append("SRVO")
+        stm32.write("SRVO\r\n".encode())
+        response = stm32.readline()
+        self.logTb.append(str(response))
+        if response.decode() == "OK\r\n":
+            stm32.write(str(id).encode())
+            stm32.write("\r\n".encode())
+            response = stm32.readline()
+            self.logTb.append(str(response))
+            if response.decode() == "OK\r\n":
+                stm32.write(str(initialAngle).encode())
+                stm32.write("\r\n".encode())
+                response = stm32.readline()
+                self.logTb.append(str(response))
+                if response.decode() == "OK\r\n":
+                    break
+
+    time.sleep(time) # Wait for the specified time
+    
+    while True: # Set to stop angle
+        self.logTb.append("SRVO")
+        stm32.write("SRVO\r\n".encode())
+        response = stm32.readline()
+        self.logTb.append(str(response))
+        if response.decode() == "OK\r\n":
+            stm32.write(str(id).encode())
+            stm32.write("\r\n".encode())
+            response = stm32.readline()
+            self.logTb.append(str(response))
+            if response.decode() == "OK\r\n":
+                stm32.write(str(stopAngle).encode())
+                stm32.write("\r\n".encode())
+                response = stm32.readline()
+                self.logTb.append(str(response))
+                if response.decode() == "OK\r\n":
+                    break
 
 def setSTM32Text(self, state):
     if state == True:
