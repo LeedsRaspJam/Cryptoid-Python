@@ -818,7 +818,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.monitorTimer.timeout.connect(lambda: self.updateSysInfo())
 
         self.cameraQThread = cameraThread(self.cameraPixmap)
-        self.monitorQThread = sysMonThread(self.oneBar, self.twoBar, self.threeBar, self.fourBar, cpuFreqText, ramTextSys, ramText)
+        self.monitorQThread = sysMonThread(self.oneBar, self.twoBar, self.threeBar, self.fourBar, self.cpuFreqText, self.ramTextSys, self.ramText)
 
         self.enableUltrasonicPoll.clicked.connect(self.toggleUltrasonicTimer)
         self.enableSysMon.clicked.connect(self.toggleSystemMonitor)
