@@ -552,9 +552,9 @@ class MainWindow(QtWidgets.QMainWindow):
             for line in taskContents: # For every line in that array
                 try:
                     exec(line) # Run it through the interpreter
-                except Exception as errorStr:
+                except Exception as errorMsg:
                     self.logTb.append("Error in task: halting execution!")
-                    self.logTb.append(errorStr)
+                    self.logTb.append(str(errorMsg))
                     break
             taskFile.close() # Close the file
         except(NameError, FileNotFoundError):
