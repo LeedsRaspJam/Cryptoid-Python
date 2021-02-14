@@ -737,7 +737,7 @@ class MainWindow(QtWidgets.QMainWindow):
     
     def toggleSystemMonitor(self): # Enable/disable system monitor
         if self.monitorTimer.isActive() == False:
-            self.monitorTimer.start(1500)
+            self.monitorTimer.start(100)
         elif self.monitorTimer.isActive() == True:
             self.monitorTimer.stop()
             self.oneBar.setValue(100)
