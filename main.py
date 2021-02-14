@@ -675,12 +675,10 @@ class MainWindow(QtWidgets.QMainWindow):
             errorMsg.showMessage("Error while saving file, something has gone horribly wrong.")
     
     def toggleSystemMonitor(self): # Enable/disable system monitor
-        global killThread
-        if self.monitorQThread.isRunning() == False:
-            killThread = False
-            self.monitorQThread.start()
-        elif self.monitorQThread.isRunning() == True:
-            killThread = True
+        if self.monitorTimer.isActive() == False:
+            self.monitorTimer.start(2000)
+        elif self.monitorTimer.isActive() == True:
+            self.monitorTimer.stop()
             self.oneBar.setValue(100)
             self.twoBar.setValue(100)
             self.threeBar.setValue(100)
