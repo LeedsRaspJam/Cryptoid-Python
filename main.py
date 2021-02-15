@@ -796,10 +796,10 @@ class MainWindow(QtWidgets.QMainWindow):
     
     def toggleSystemMonitor(self): # Enable/disable system monitor
         global killMonitorThread
-        if self.monitorTimer.isActive() == False:
+        if self.monitorQThread.isRunning() == False:
             killMonitorThread = False
             self.monitorQThread.start()
-        elif self.monitorTimer.isActive() == True:
+        elif self.monitorQThread.isRunning() == True:
             killMonitorThread = True
             self.oneBar.setValue(100)
             self.twoBar.setValue(100)
@@ -808,17 +808,6 @@ class MainWindow(QtWidgets.QMainWindow):
             self.cpuFreqText.setText("CPU Freq: ???? MHz")
             self.ramTextSys.setText("RAM Usage (Sys): ??? MB")
             self.ramText.setText("RAM Usage: ??? MB")
-
-    def updateSysInfo(self): # Update system monitoring information
-        cpuInfo = psutil.cpu_percent(interval = 1, percpu=True)
-        self.oneBar.setValue(int(cpuInfo[0]))
-        self.twoBar.setValue(int(cpuInfo[1]))
-        self.threeBar.setValue(int(cpuInfo[2]))
-        self.fourBar.setValue(int(cpuInfo[3]))
-
-        self.cpuFreqText.setText("CPU Freq: " + str(int(psutil.cpu_freq().current)) + " MHz")
-        self.ramTextSys.setText("RAM Usage (Sys): " + str(int(psutil.virtual_memory().used/1024/1024)) + " MB")
-        self.ramText.setText("RAM Usage: " + str(int(process.memory_info()[0]/1024/1024)) + " MB")
 
     def setDirectionLabel(self, direction):
         if direction == "Stopped":
