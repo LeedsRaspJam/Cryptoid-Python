@@ -802,7 +802,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.monitorQThread.start()
         elif self.monitorQThread.isRunning() == True:
             killMonitorThread = True
-            time.sleep(1)
+            time.sleep(2)
             self.oneBar.setValue(100)
             self.twoBar.setValue(100)
             self.threeBar.setValue(100)
