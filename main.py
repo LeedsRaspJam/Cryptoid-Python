@@ -484,7 +484,7 @@ class controllerThread(QtCore.QThread):
     setDirectionLabelSignal = QtCore.pyqtSignal([str])
     setLControllerBarSignal = QtCore.pyqtSignal([int])
     setRControllerBarSignal = QtCore.pyqtSignal([int])
-    setMotorSilentSignal = QtCore.pyqtSignal([int],[int],[int])
+    setMotorSilentSignal = QtCore.pyqtSignal([int, int, int])
 
     def __init__(self):
         QtCore.QThread.__init__(self)
