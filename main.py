@@ -437,9 +437,6 @@ class cameraThread(QtCore.QThread):
         cameraPixmapB = pixmap
         rawCapture = picamera.array.PiRGBArray(camera, size=(960, 720))
 
-    def __del__(self):
-        self.wait()
-
     def run(self):
         for frame in camera.capture_continuous(rawCapture, format="rgb", use_video_port=True):
                 frame.truncate()
@@ -458,9 +455,6 @@ class controllerThread(QtCore.QThread):
         QtCore.QThread.__init__(self)
         global killControllerThread
         killControllerThread = False
-
-    def __del__(self):
-        self.wait()
 
     def run(self):
         while True:
