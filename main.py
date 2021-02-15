@@ -444,7 +444,7 @@ class cameraThread(QtCore.QThread):
                 image = frame.array
                 qImg = QtGui.QImage(image, 960, 720, QtGui.QImage.Format_RGB888)
                 cameraPixmapB.setPixmap(QtGui.QPixmap.fromImage(qImg))
-                self.usleep(200)
+                self.usleep(100)
 
 class monitorThread(QtCore.QThread):
     setOneBarSignal = QtCore.pyqtSignal([int])
@@ -484,8 +484,7 @@ class controllerThread(QtCore.QThread):
     setDirectionLabelSignal = QtCore.pyqtSignal([str])
     setLControllerBarSignal = QtCore.pyqtSignal([int])
     setRControllerBarSignal = QtCore.pyqtSignal([int])
-    setMotorSilentSignal = QtCore.pyqtSignal([int, int, int])
-
+    
     def __init__(self):
         QtCore.QThread.__init__(self)
         global killControllerThread
@@ -496,7 +495,27 @@ class controllerThread(QtCore.QThread):
             self.controllerPoll()
             if killControllerThread == True:
                 break
-            self.usleep(120)
+            self.usleep(50)
+
+    def setMotorSilent(self, motorID, direction, speed): # Set one motor with no logging
+        motorBuffer[motorID] = [direction, speed]
+        while True:
+            stm32.write("SETM\r\n".encode())
+            response = stm32.readline()
+            if response.decode() == "OK\r\n":
+                stm32.write(str(motorID).encode())
+                stm32.write("\r\n".encode())
+                response = stm32.readline()
+                if response.decode() == "OK\r\n":
+                    stm32.write(str(direction).encode())
+                    stm32.write("\r\n".encode())
+                    response = stm32.readline()
+                    if response.decode() == "OK\r\n":
+                        stm32.write(str(speed).encode())
+                        stm32.write("\r\n".encode())
+                        response = stm32.readline()
+                        if response.decode() == "OK\r\n":
+                            break
 
     def controllerPoll(self):
         try:
@@ -543,52 +562,29 @@ class controllerThread(QtCore.QThread):
 
             if isStopped == True:
                 self.setDirectionLabelSignal.emit("Stopped")
-                self.setMotorSilentSignal.emit(1, 2, l_value)
-                self.setMotorSilentSignal.emit(3, 2, l_value)
-                self.setMotorSilentSignal.emit(2, 2, r_value)
-                self.setMotorSilentSignal.emit(4, 2, r_value)
+                self.setMotorSilent(1, 2, l_value)
+                self.setMotorSilent(3, 2, l_value)
+                self.setMotorSilent(2, 2, r_value)
+                self.setMotorSilent(4, 2, r_value)
             elif isBackward == False:
                 self.setDirectionLabelSignal.emit("Forward")
-                self.setMotorSilentSignal.emit(1, 1, l_value)
-                self.setMotorSilentSignal.emit(3, 1, l_value)
-                self.setMotorSilentSignal.emit(2, 1, r_value)
-                self.setMotorSilentSignal.emit(4, 1, r_value)
+                self.setMotorSilent(1, 1, l_value)
+                self.setMotorSilent(3, 1, l_value)
+                self.setMotorSilent(2, 1, r_value)
+                self.setMotorSilent(4, 1, r_value)
             elif isBackward == True:
                 self.setDirectionLabelSignal.emit("Backward")
-                self.setMotorSilentSignal.emit(1, 2, l_value)
-                self.setMotorSilentSignal.emit(3, 2, l_value)
-                self.setMotorSilentSignal.emit(2, 2, r_value)
-                self.setMotorSilentSignal.emit(4, 2, r_value)
-
-        except(ValueError):
+                self.setMotorSilent(1, 2, l_value)
+                self.setMotorSilent(3, 2, l_value)
+                self.setMotorSilent(2, 2, r_value)
+                self.setMotorSilent(4, 2, r_value)
+        except():
             errorMsg = QtWidgets.QErrorMessage()
             errorMsg.showMessage("You need to connect a controller before polling can begin.")
             global killControllerThread
             killControllerThread = True
 
-class MainWindow(QtWidgets.QMainWindow):
-    def setMotorSilent(motorID, direction, speed): # Set one motor with no logging
-        print("called")
-        print(speed)
-        motorBuffer[motorID] = [direction, speed]
-        while True:
-            stm32.write("SETM\r\n".encode())
-            response = stm32.readline()
-            if response.decode() == "OK\r\n":
-                stm32.write(str(motorID).encode())
-                stm32.write("\r\n".encode())
-                response = stm32.readline()
-                if response.decode() == "OK\r\n":
-                    stm32.write(str(direction).encode())
-                    stm32.write("\r\n".encode())
-                    response = stm32.readline()
-                    if response.decode() == "OK\r\n":
-                        stm32.write(str(speed).encode())
-                        stm32.write("\r\n".encode())
-                        response = stm32.readline()
-                        if response.decode() == "OK\r\n":
-                            break
-    
+class MainWindow(QtWidgets.QMainWindow):    
     def buttonFunction(self):
         setLED(self, "all", 0, 0, 255)
 
@@ -917,7 +913,6 @@ class MainWindow(QtWidgets.QMainWindow):
         self.controllerQThread.setDirectionLabelSignal.connect(self.setDirectionLabel)
         self.controllerQThread.setLControllerBarSignal.connect(self.setLControllerBar)
         self.controllerQThread.setRControllerBarSignal.connect(self.setRControllerBar)
-        self.controllerQThread.setMotorSilentSignal.connect(self.setMotorSilent)
 
         self.monitorQThread.setOneBarSignal.connect(self.setOneBar)
         self.monitorQThread.setTwoBarSignal.connect(self.setTwoBar)
