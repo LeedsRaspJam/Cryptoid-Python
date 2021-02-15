@@ -476,7 +476,7 @@ class monitorThread(QtCore.QThread):
             if killMonitorThread == True:
                 break
 
-            self.usleep(2500)
+            self.usleep(1000)
 
 class controllerThread(QtCore.QThread):
     setDirectionLabelSignal = QtCore.pyqtSignal([str])
@@ -493,6 +493,7 @@ class controllerThread(QtCore.QThread):
             self.controllerPoll()
             if killControllerThread == True:
                 break
+            self.usleep(50)
 
     def setMotorSilent(self, motorID, direction, speed): # Set one motor with no logging
         motorBuffer[motorID] = [direction, speed]
@@ -801,6 +802,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.monitorQThread.start()
         elif self.monitorQThread.isRunning() == True:
             killMonitorThread = True
+            time.sleep(1)
             self.oneBar.setValue(100)
             self.twoBar.setValue(100)
             self.threeBar.setValue(100)
