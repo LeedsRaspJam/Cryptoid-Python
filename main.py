@@ -567,6 +567,8 @@ class controllerThread(QtCore.QThread):
 
 class MainWindow(QtWidgets.QMainWindow):
     def setMotorSilent(self, motorID, direction, speed): # Set one motor with no logging
+        print("called")
+        print(speed)
         motorBuffer[motorID] = [direction, speed]
         while True:
             stm32.write("SETM\r\n".encode())
