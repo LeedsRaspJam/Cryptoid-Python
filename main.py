@@ -609,6 +609,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def toggleUltrasonicTimer(self):
         if self.ultrasonicTimer.isActive() == False:
             if self.controllerQThread.isRunning() == True:
+                print("Controller thread is running, killing it")
                 global killControllerThread
                 killControllerThread = True
             self.ultrasonicTimer.start(50)
