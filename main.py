@@ -446,6 +446,38 @@ class cameraThread(QtCore.QThread):
                 cameraPixmapB.setPixmap(QtGui.QPixmap.fromImage(qImg))
                 self.usleep(100)
 
+class monitorThread(QtCore.QThread):
+    setOneBarSignal = QtCore.pyqtSignal([int])
+    setTwoBarSignal = QtCore.pyqtSignal([int])
+    setThreeBarSignal = QtCore.pyqtSignal([int])
+    setFourBarSignal = QtCore.pyqtSignal([int])
+
+    setCpuFreqTextSignal = QtCore.pyqtSignal([str])
+    setRamTextSignal = QtCore.pyqtSignal([str])
+    setRamTextSysSignal = QtCore.pyqtSignal([str])
+
+    def __init__(self, pixmap):
+        QtCore.QThread.__init__(self)
+        global killMonitorThread
+        killMonitorThread = False
+
+    def run(self):
+        while True:
+            cpuInfo = psutil.cpu_percent(interval = 1, percpu=True)
+            self.setOneBarSignal.emit(int(cpuInfo[0]))
+            self.setTwoBarSignal.emit(int(cpuInfo[1]))
+            self.setThreeBarSignal.emit(int(cpuInfo[2]))
+            self.setFourBarSignal.emit(int(cpuInfo[3]))
+
+            self.setCpuFreqTextSignal.emit("CPU Freq: " + str(int(psutil.cpu_freq().current)) + " MHz")
+            self.setRamTextSysSignal.emit("RAM Usage (Sys): " + str(int(psutil.virtual_memory().used/1024/1024)) + " MB")
+            self.setRamTextSignal.emit("RAM Usage: " + str(int(process.memory_info()[0]/1024/1024)) + " MB")
+
+            if killMonitorThread == True:
+                break
+
+            self.usleep(2500)
+
 class controllerThread(QtCore.QThread):
     setDirectionLabelSignal = QtCore.pyqtSignal([str])
     setLControllerBarSignal = QtCore.pyqtSignal([int])
@@ -764,9 +796,13 @@ class MainWindow(QtWidgets.QMainWindow):
     
     def toggleSystemMonitor(self): # Enable/disable system monitor
         if self.monitorTimer.isActive() == False:
-            self.monitorTimer.start(2000)
+            global killMonitorThread
+            killMonitorThread = False
+            self.monitorQThread.start()
         elif self.monitorTimer.isActive() == True:
-            self.monitorTimer.stop()
+            global killMonitorThread
+            killMonitorThread = True
+
             self.oneBar.setValue(100)
             self.twoBar.setValue(100)
             self.threeBar.setValue(100)
@@ -803,6 +839,27 @@ class MainWindow(QtWidgets.QMainWindow):
     def setRControllerBar(self, rVal):
         self.RBar.setValue(rVal)
 
+    def setOneBar(self, oVal):
+        self.oneBar.setValue(oVal)
+
+    def setTwoBar(self, tVal):
+        self.twoBar.setValue(tVal)
+    
+    def setThreeBar(self, tVal):
+        self.threeBar.setValue(tVal)
+
+    def setFourBar(self, fVal):
+        self.fourBar.setValue(fVal)
+
+    def setCpuFreqText(self, text):
+        self.cpuFreqText.setText(text)
+    
+    def setRamText(self, text):
+        self.ramText.setText(text)
+
+    def setRamTextSys(self, text):
+        self.ramTextSys.setText(text)
+    
     def closeApp(self):
         sys.exit()
 
@@ -831,9 +888,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ultrasonicTimer = QtCore.QTimer()
         self.ultrasonicTimer.timeout.connect(lambda: ultrasonicPoll(self))
 
-        self.monitorTimer = QtCore.QTimer()
-        self.monitorTimer.timeout.connect(lambda: self.updateSysInfo())
-
+        self.monitorQThread = monitorThread()
         self.cameraQThread = cameraThread(self.cameraPixmap)
         self.controllerQThread = controllerThread()
 
@@ -862,9 +917,18 @@ class MainWindow(QtWidgets.QMainWindow):
         self.deleteTaskBtn.clicked.connect(self.deleteTask)
         self.taskTextEdit.textChanged.connect(self.onTextUpdate)
         self.actionQuit.triggered.connect(self.closeApp)
+
         self.controllerQThread.setDirectionLabelSignal.connect(self.setDirectionLabel)
         self.controllerQThread.setLControllerBarSignal.connect(self.setLControllerBar)
         self.controllerQThread.setRControllerBarSignal.connect(self.setRControllerBar)
+
+        self.monitorQThread.setOneBarSignal.connect(self.setOneBar)
+        self.monitorQThread.setTwoBarSignal.connect(self.setTwoBar)
+        self.monitorQThread.setThreeBarSignal.connect(self.setThreeBar)
+        self.monitorQThread.setFourBarSignal.connect(self.setFourBar)
+        self.monitorQThread.setCpuFreqTextSignal.connect(self.setCpuFreqText)
+        self.monitorQThread.setRamTextSignal.connect(self.setRamText)
+        self.monitorQThread.setRamTextSysSignal.connect(self.setRamTextSys)
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
