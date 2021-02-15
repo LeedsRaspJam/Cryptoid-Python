@@ -608,6 +608,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def toggleUltrasonicTimer(self):
         if self.ultrasonicTimer.isActive() == False:
+            if self.controllerQThread.isRunning() == True:
+                global killControllerThread
+                killControllerThread = True
             self.ultrasonicTimer.start(50)
             setLED(self, "all", 0, 255, 0)
         else:
