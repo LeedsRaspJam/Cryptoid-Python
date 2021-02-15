@@ -444,7 +444,7 @@ class cameraThread(QtCore.QThread):
                 image = frame.array
                 qImg = QtGui.QImage(image, 960, 720, QtGui.QImage.Format_RGB888)
                 cameraPixmapB.setPixmap(QtGui.QPixmap.fromImage(qImg))
-                self.usleep(100)
+                self.usleep(200)
 
 class monitorThread(QtCore.QThread):
     setOneBarSignal = QtCore.pyqtSignal([int])
@@ -496,7 +496,7 @@ class controllerThread(QtCore.QThread):
             self.controllerPoll()
             if killControllerThread == True:
                 break
-            self.usleep(50)
+            self.usleep(120)
 
     def controllerPoll(self):
         try:
@@ -559,14 +559,15 @@ class controllerThread(QtCore.QThread):
                 self.setMotorSilentSignal.emit(3, 2, l_value)
                 self.setMotorSilentSignal.emit(2, 2, r_value)
                 self.setMotorSilentSignal.emit(4, 2, r_value)
-        except():
+
+        except(ValueError):
             errorMsg = QtWidgets.QErrorMessage()
             errorMsg.showMessage("You need to connect a controller before polling can begin.")
             global killControllerThread
             killControllerThread = True
 
 class MainWindow(QtWidgets.QMainWindow):
-    def setMotorSilent(self, motorID, direction, speed): # Set one motor with no logging
+    def setMotorSilent(motorID, direction, speed): # Set one motor with no logging
         print("called")
         print(speed)
         motorBuffer[motorID] = [direction, speed]
