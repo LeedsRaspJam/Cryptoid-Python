@@ -455,6 +455,7 @@ class monitorThread(QtCore.QThread):
     setCpuFreqTextSignal = QtCore.pyqtSignal([str])
     setRamTextSignal = QtCore.pyqtSignal([str])
     setRamTextSysSignal = QtCore.pyqtSignal([str])
+    resetSysMonTextSignal = QtCore.pyqtSignal()
 
     def __init__(self):
         QtCore.QThread.__init__(self)
@@ -474,6 +475,7 @@ class monitorThread(QtCore.QThread):
             self.setRamTextSignal.emit("RAM Usage: " + str(int(process.memory_info()[0]/1024/1024)) + " MB")
 
             if killMonitorThread == True:
+                self.resetSysMonTextSignal.emit()
                 break
 
             self.usleep(1000)
@@ -802,14 +804,15 @@ class MainWindow(QtWidgets.QMainWindow):
             self.monitorQThread.start()
         elif self.monitorQThread.isRunning() == True:
             killMonitorThread = True
-            time.sleep(2)
-            self.oneBar.setValue(100)
-            self.twoBar.setValue(100)
-            self.threeBar.setValue(100)
-            self.fourBar.setValue(100)
-            self.cpuFreqText.setText("CPU Freq: ???? MHz")
-            self.ramTextSys.setText("RAM Usage (Sys): ??? MB")
-            self.ramText.setText("RAM Usage: ??? MB")
+
+    def resetSysMonText(self):
+        self.oneBar.setValue(100)
+        self.twoBar.setValue(100)
+        self.threeBar.setValue(100)
+        self.fourBar.setValue(100)
+        self.cpuFreqText.setText("CPU Freq: ???? MHz")
+        self.ramTextSys.setText("RAM Usage (Sys): ??? MB")
+        self.ramText.setText("RAM Usage: ??? MB")
 
     def setDirectionLabel(self, direction):
         if direction == "Stopped":
@@ -918,6 +921,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.monitorQThread.setCpuFreqTextSignal.connect(self.setCpuFreqText)
         self.monitorQThread.setRamTextSignal.connect(self.setRamText)
         self.monitorQThread.setRamTextSysSignal.connect(self.setRamTextSys)
+        self.monitorQThread.resetSysMonTextSignal.connect(self.resetSysMonText)
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
