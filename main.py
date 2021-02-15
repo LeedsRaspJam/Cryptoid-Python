@@ -488,8 +488,9 @@ class controllerThread(QtCore.QThread):
 
     def __init__(self):
         QtCore.QThread.__init__(self)
-        global killControllerThread
+        global killControllerThread, killedByUS
         killControllerThread = False
+        killedByUS = False
 
     def run(self):
         while True:
@@ -613,8 +614,9 @@ class MainWindow(QtWidgets.QMainWindow):
         if self.ultrasonicTimer.isActive() == False:
             if self.controllerQThread.isRunning() == True:
                 print("Controller thread is running, killing it")
-                global killControllerThread
+                global killControllerThread, killedByUS
                 killControllerThread = True
+                killedByUS = True
             else:
                 self.ultrasonicTimer.start(50)
                 setLED(self, "all", 0, 255, 0)
@@ -623,8 +625,11 @@ class MainWindow(QtWidgets.QMainWindow):
             setLED(self, "all", 0, 255, 0)
 
     def beginUSPolling(self): # Begin US Polling (used when terminating controller thread)
-        self.ultrasonicTimer.start(50)
-        setLED(self, "all", 0, 255, 0)
+        global killedByUS
+        if killedByUS == True:
+            self.ultrasonicTimer.start(50)
+            setLED(self, "all", 0, 255, 0)
+            killedByUS = False
 
     def initSTM(self): # Send INIT command
         global currentColour
