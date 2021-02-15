@@ -444,7 +444,7 @@ class cameraThread(QtCore.QThread):
                 image = frame.array
                 qImg = QtGui.QImage(image, 960, 720, QtGui.QImage.Format_RGB888)
                 cameraPixmapB.setPixmap(QtGui.QPixmap.fromImage(qImg))
-                self.usleep(100)
+                self.usleep(200)
 
 class monitorThread(QtCore.QThread):
     setOneBarSignal = QtCore.pyqtSignal([int])
@@ -478,7 +478,7 @@ class monitorThread(QtCore.QThread):
                 self.resetSysMonTextSignal.emit()
                 break
 
-            self.usleep(1000)
+            self.usleep(2000)
 
 class controllerThread(QtCore.QThread):
     setDirectionLabelSignal = QtCore.pyqtSignal([str])
@@ -495,7 +495,7 @@ class controllerThread(QtCore.QThread):
             self.controllerPoll()
             if killControllerThread == True:
                 break
-            self.usleep(120)
+            self.usleep(125)
 
     def setMotorSilent(self, motorID, direction, speed): # Set one motor with no logging
         motorBuffer[motorID] = [direction, speed]
