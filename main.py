@@ -554,9 +554,9 @@ class controllerThread(QtCore.QThread):
                 self.setRControllerBarSignal.emit(r_value)
 
             if left_x > 0:
-                self.LBar.setValue(100)
+                self.setLControllerBarSignal.emit(100)
             elif left_x < 0:
-                self.RBar.setValue(100)
+                self.setRControllerBarSignal.emit(100)
 
             if isStopped == True:
                 self.setDirectionLabelSignal.emit("Stopped")
@@ -576,7 +576,7 @@ class controllerThread(QtCore.QThread):
                 self.setMotorSilent(3, 2, l_value)
                 self.setMotorSilent(2, 2, r_value)
                 self.setMotorSilent(4, 2, r_value)
-        except(ValueError):
+        except():
             errorMsg = QtWidgets.QErrorMessage()
             errorMsg.showMessage("You need to connect a controller before polling can begin.")
             global killControllerThread
