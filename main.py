@@ -484,7 +484,8 @@ class controllerThread(QtCore.QThread):
     setDirectionLabelSignal = QtCore.pyqtSignal([str])
     setLControllerBarSignal = QtCore.pyqtSignal([int])
     setRControllerBarSignal = QtCore.pyqtSignal([int])
-    
+    beginUSPollingSignal = QtCore.pyqtSignal()
+
     def __init__(self):
         QtCore.QThread.__init__(self)
         global killControllerThread
@@ -494,7 +495,9 @@ class controllerThread(QtCore.QThread):
         while True:
             self.controllerPoll()
             if killControllerThread == True:
+                self.beginUSPollingSignal.emit()
                 break
+
             self.usleep(125)
 
     def setMotorSilent(self, motorID, direction, speed): # Set one motor with no logging
@@ -612,10 +615,15 @@ class MainWindow(QtWidgets.QMainWindow):
                 print("Controller thread is running, killing it")
                 global killControllerThread
                 killControllerThread = True
-            self.ultrasonicTimer.start(50)
-            setLED(self, "all", 0, 255, 0)
+            else:
+                self.ultrasonicTimer.start(50)
+                setLED(self, "all", 0, 255, 0)
         else:
             self.ultrasonicTimer.stop()
+
+    def beginUSPolling(self): # Begin US Polling (used when terminating controller thread)
+        self.ultrasonicTimer.start(50)
+        self.setLED("all", 0, 255, 0)
 
     def initSTM(self): # Send INIT command
         global currentColour
@@ -917,6 +925,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.controllerQThread.setDirectionLabelSignal.connect(self.setDirectionLabel)
         self.controllerQThread.setLControllerBarSignal.connect(self.setLControllerBar)
         self.controllerQThread.setRControllerBarSignal.connect(self.setRControllerBar)
+        self.controllerQThread.beginUSPollingSignal.connect(self.beginUSPolling)
 
         self.monitorQThread.setOneBarSignal.connect(self.setOneBar)
         self.monitorQThread.setTwoBarSignal.connect(self.setTwoBar)
