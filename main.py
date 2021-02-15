@@ -495,7 +495,7 @@ class controllerThread(QtCore.QThread):
             self.controllerPoll()
             if killControllerThread == True:
                 break
-            self.usleep(50)
+            self.usleep(120)
 
     def setMotorSilent(self, motorID, direction, speed): # Set one motor with no logging
         motorBuffer[motorID] = [direction, speed]
