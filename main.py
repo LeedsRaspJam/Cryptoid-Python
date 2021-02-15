@@ -484,6 +484,7 @@ class controllerThread(QtCore.QThread):
     setDirectionLabelSignal = QtCore.pyqtSignal([str])
     setLControllerBarSignal = QtCore.pyqtSignal([int])
     setRControllerBarSignal = QtCore.pyqtSignal([int])
+    setMotorSilentSignal = QtCore.pyqtSignal([int],[int],[int])
 
     def __init__(self):
         QtCore.QThread.__init__(self)
@@ -496,26 +497,6 @@ class controllerThread(QtCore.QThread):
             if killControllerThread == True:
                 break
             self.usleep(50)
-
-    def setMotorSilent(self, motorID, direction, speed): # Set one motor with no logging
-        motorBuffer[motorID] = [direction, speed]
-        while True:
-            stm32.write("SETM\r\n".encode())
-            response = stm32.readline()
-            if response.decode() == "OK\r\n":
-                stm32.write(str(motorID).encode())
-                stm32.write("\r\n".encode())
-                response = stm32.readline()
-                if response.decode() == "OK\r\n":
-                    stm32.write(str(direction).encode())
-                    stm32.write("\r\n".encode())
-                    response = stm32.readline()
-                    if response.decode() == "OK\r\n":
-                        stm32.write(str(speed).encode())
-                        stm32.write("\r\n".encode())
-                        response = stm32.readline()
-                        if response.decode() == "OK\r\n":
-                            break
 
     def controllerPoll(self):
         try:
@@ -584,7 +565,27 @@ class controllerThread(QtCore.QThread):
             global killControllerThread
             killControllerThread = True
 
-class MainWindow(QtWidgets.QMainWindow):    
+class MainWindow(QtWidgets.QMainWindow):
+    def setMotorSilent(self, motorID, direction, speed): # Set one motor with no logging
+        motorBuffer[motorID] = [direction, speed]
+        while True:
+            stm32.write("SETM\r\n".encode())
+            response = stm32.readline()
+            if response.decode() == "OK\r\n":
+                stm32.write(str(motorID).encode())
+                stm32.write("\r\n".encode())
+                response = stm32.readline()
+                if response.decode() == "OK\r\n":
+                    stm32.write(str(direction).encode())
+                    stm32.write("\r\n".encode())
+                    response = stm32.readline()
+                    if response.decode() == "OK\r\n":
+                        stm32.write(str(speed).encode())
+                        stm32.write("\r\n".encode())
+                        response = stm32.readline()
+                        if response.decode() == "OK\r\n":
+                            break
+    
     def buttonFunction(self):
         setLED(self, "all", 0, 0, 255)
 
@@ -913,6 +914,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.controllerQThread.setDirectionLabelSignal.connect(self.setDirectionLabel)
         self.controllerQThread.setLControllerBarSignal.connect(self.setLControllerBar)
         self.controllerQThread.setRControllerBarSignal.connect(self.setRControllerBar)
+        self.controllerQThread.setMotorSilentSignal.connect(self.setMotorSilent)
 
         self.monitorQThread.setOneBarSignal.connect(self.setOneBar)
         self.monitorQThread.setTwoBarSignal.connect(self.setTwoBar)
