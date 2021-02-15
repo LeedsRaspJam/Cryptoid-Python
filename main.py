@@ -623,7 +623,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def beginUSPolling(self): # Begin US Polling (used when terminating controller thread)
         self.ultrasonicTimer.start(50)
-        self.setLED("all", 0, 255, 0)
+        setLED(self, "all", 0, 255, 0)
 
     def initSTM(self): # Send INIT command
         global currentColour
