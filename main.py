@@ -456,7 +456,7 @@ class monitorThread(QtCore.QThread):
     setRamTextSignal = QtCore.pyqtSignal([str])
     setRamTextSysSignal = QtCore.pyqtSignal([str])
 
-    def __init__(self, pixmap):
+    def __init__(self):
         QtCore.QThread.__init__(self)
         global killMonitorThread
         killMonitorThread = False
