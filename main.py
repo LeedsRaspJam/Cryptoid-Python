@@ -882,10 +882,10 @@ class MainWindow(QtWidgets.QMainWindow):
         gamepadMT.disconnect()
 
     def ifXPressed(self):
-        print("x pressed")
+        self.logTb.append("Function Called")
         while True:
-            if gamepadMT.isPressed('CROSS'):
-                print("x depressed")
+            if gamepadMT.isPressed('CROSS') == False:
+                self.logTb.append("No longer pressed")
                 break
 
     def closeApp(self):
