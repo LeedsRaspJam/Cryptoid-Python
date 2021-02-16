@@ -871,6 +871,23 @@ class MainWindow(QtWidgets.QMainWindow):
     def setRamTextSys(self, text):
         self.ramTextSys.setText(text)
     
+    def initController(self): # Init controller on main thread
+        global gamepadMT
+        gamepadMT = Gampad.PS4()
+        gamepadMT.startBackgroundUpdates()
+        gamepadMT.addButtonPressedHandler('CROSS', self.isXPressed())
+
+    def killController(self): # Kill controller on main thread
+        global gamepadMT
+        gamepadMT.disconnect()
+
+    def ifXPressed(self):
+        print("x pressed")
+        while True:
+            if gamepadMT.isPressed('CROSS'):
+                print("x depressed")
+                break
+
     def closeApp(self):
         sys.exit()
 
