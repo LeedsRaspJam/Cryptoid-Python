@@ -873,7 +873,7 @@ class MainWindow(QtWidgets.QMainWindow):
     
     def initController(self): # Init controller on main thread
         global gamepadMT
-        gamepadMT = Gampad.PS4()
+        gamepadMT = Gamepad.PS4()
         gamepadMT.startBackgroundUpdates()
         gamepadMT.addButtonPressedHandler('CROSS', self.isXPressed())
 
