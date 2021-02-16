@@ -862,6 +862,13 @@
          </widget>
         </item>
         <item>
+         <widget class="QPushButton" name="grabberStopBtn">
+          <property name="text">
+           <string>Grabber Stop</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="toggleGrabBtn">
           <property name="text">
            <string>Grab/Ungrab</string>
