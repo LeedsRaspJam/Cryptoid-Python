@@ -175,9 +175,6 @@ def setLED(self, ledID, rValue, gValue, bValue):
                             if response.decode() == "OK\r\n":
                                 break
 
-def ifXPressed():
-    print("Function Called")
-
 def setMotor(self, motorID, direction, speed): # Set one motor
     motorBuffer[motorID] = [direction, speed]
     while True:
@@ -874,16 +871,15 @@ class MainWindow(QtWidgets.QMainWindow):
     def setRamTextSys(self, text):
         self.ramTextSys.setText(text)
 
-    def initController(self): # Init controller on main thread
-        global gamepadMT
-        gamepadMT = Gamepad.PS4()
-        gamepadMT.startBackgroundUpdates()
-        gamepadMT.addButtonPressedHandler('CIRCLE', ifXPressed())
-
-    def killController(self): # Kill controller on main thread
-        global gamepadMT
-        gamepadMT.disconnect()
-
+    def grabberUp(self):
+        self.logTb.append("Start Servo Up")
+        
+    def grabberDown(self):
+        self.logTb.append("Start Servo Down")
+    
+    def grabberStop(self):
+        self.logTb.append("Stop Servo")
+    
     def closeApp(self):
         sys.exit()
 
@@ -941,7 +937,10 @@ class MainWindow(QtWidgets.QMainWindow):
         self.deleteTaskBtn.clicked.connect(self.deleteTask)
         self.taskTextEdit.textChanged.connect(self.onTextUpdate)
         self.actionQuit.triggered.connect(self.closeApp)
-        self.initMTControllerBtn.clicked.connect(self.initController)
+        self.grabberUpBtn.clicked.connect(self.grabberUp)
+        self.grabberDownBtn.clicked.connect(self.grabberDown)
+        self.grabberStopBtn.clicked.connect(self.grabberStop)
+        self.toggleGrabBtn.clicked.connect(self.toggleGrab)
 
         self.controllerQThread.setDirectionLabelSignal.connect(self.setDirectionLabel)
         self.controllerQThread.setLControllerBarSignal.connect(self.setLControllerBar)
