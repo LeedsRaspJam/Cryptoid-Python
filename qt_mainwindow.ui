@@ -848,16 +848,16 @@
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_16">
         <item>
-         <widget class="QPushButton" name="grabberUpBtn">
+         <widget class="QPushButton" name="toggleGrabBtn">
           <property name="text">
-           <string>Grabber Up</string>
+           <string>Grab/Ungrab</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="grabberDownBtn">
+         <widget class="QPushButton" name="grabberUpBtn">
           <property name="text">
-           <string>Grabber Down</string>
+           <string>Grabber Up</string>
           </property>
          </widget>
         </item>
@@ -869,9 +869,9 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="toggleGrabBtn">
+         <widget class="QPushButton" name="grabberDownBtn">
           <property name="text">
-           <string>Grab/Ungrab</string>
+           <string>Grabber Down</string>
           </property>
          </widget>
         </item>
