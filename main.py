@@ -500,6 +500,7 @@ class controllerThread(QtCore.QThread):
             self.controllerPoll()
             if killControllerThread == True:
                 self.beginUSPollingSignal.emit()
+                gamepad.disconnect()
                 break
 
             self.usleep(125)
