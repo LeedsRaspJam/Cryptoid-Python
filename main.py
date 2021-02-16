@@ -875,7 +875,7 @@ class MainWindow(QtWidgets.QMainWindow):
         global gamepadMT
         gamepadMT = Gamepad.PS4()
         gamepadMT.startBackgroundUpdates()
-        gamepadMT.addButtonPressedHandler('CROSS', self.ifXPressed())
+        gamepadMT.addButtonPressedHandler('CIRCLE', self.ifXPressed())
 
     def killController(self): # Kill controller on main thread
         global gamepadMT
