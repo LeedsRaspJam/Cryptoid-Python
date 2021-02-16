@@ -905,6 +905,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.logTb.append("Stop Servo")
         setServo360A(self, 1, 92)
     
+    def initExt(self):
+        setExtPins(self, "SRVO", "SRVO", "OUTP", "OUTP", "OUTP", "OUTP")
+        
     def closeApp(self):
         sys.exit()
 
@@ -966,6 +969,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.grabberDownBtn.clicked.connect(self.grabberDown)
         self.grabberStopBtn.clicked.connect(self.grabberStop)
         self.toggleGrabBtn.clicked.connect(self.toggleGrab)
+        self.initExtBtn.clicked.connect(self.initExt)
 
         self.controllerQThread.setDirectionLabelSignal.connect(self.setDirectionLabel)
         self.controllerQThread.setLControllerBarSignal.connect(self.setLControllerBar)
