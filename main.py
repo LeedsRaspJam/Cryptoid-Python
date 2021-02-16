@@ -895,8 +895,10 @@ class MainWindow(QtWidgets.QMainWindow):
         global grabberState
         if grabberState == True:
             setServo180(self, 1, 35)
+            grabberState = False
         elif grabberState == False:
             setServo180(self, 1, 180)
+            grabberState = True
 
     def grabberUp(self):
         self.logTb.append("Start Servo Up")
