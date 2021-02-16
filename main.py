@@ -871,6 +871,9 @@ class MainWindow(QtWidgets.QMainWindow):
     def setRamTextSys(self, text):
         self.ramTextSys.setText(text)
 
+    def toggleGrab(self):
+        self.logTb.append("Toggle Grabber")
+        
     def grabberUp(self):
         self.logTb.append("Start Servo Up")
         
