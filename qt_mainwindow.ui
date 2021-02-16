@@ -848,6 +848,13 @@
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_16">
         <item>
+         <widget class="QPushButton" name="initExtBtn">
+          <property name="text">
+           <string>Init Ext. Pins</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="toggleGrabBtn">
           <property name="text">
            <string>Grab/Ungrab</string>
