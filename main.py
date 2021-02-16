@@ -462,7 +462,8 @@ class cameraThread(QtCore.QThread):
                 frame.seek(0)
                 image = frame.array
                 qImg = QtGui.QImage(image, 960, 720, QtGui.QImage.Format_RGB888)
-                cameraPixmapB.setPixmap(QtGui.QPixmap.fromImage(qImg))
+                qImgScaled = qImg.scaled(320, 240, aspectRatioMode=QtCore.Qt.IgnoreAspectRatio, transformMode=QtCore.Qt.FastTransformation)
+                cameraPixmapB.setPixmap(QtGui.QPixmap.fromImage(qImgScaled))
                 self.usleep(200)
 
 class monitorThread(QtCore.QThread):
