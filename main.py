@@ -894,7 +894,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.logTb.append("Toggle Grabber")
         global grabberState
         if grabberState == True:
-            setServo180(self, 1, 35)
+            setServo180(self, 1, 45)
             grabberState = False
         elif grabberState == False:
             setServo180(self, 1, 180)
@@ -915,7 +915,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def initExt(self):
         setExtPins(self, "SRVO", "SRVO", "OUTP", "OUTP", "OUTP", "OUTP")
         global grabberState
-        setServo180(self, 1, 35)
+        setServo180(self, 1, 45)
         grabberState = False
 
     def closeApp(self):
