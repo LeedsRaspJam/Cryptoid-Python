@@ -632,10 +632,12 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def motorSet(self): # Set one motor
         motorID, okPressed = QtWidgets.QInputDialog.getInt(self, "Motor ID", "Motor ID?", 1, 1, 4, 1)
-        direction, okPressed = QtWidgets.QInputDialog.getInt(self, "Direction", "1 is FWD, 2 is BWD:", 1, 1, 2, 1)
-        speed, okPressed = QtWidgets.QInputDialog.getInt(self, "Speed", "Speed?", 255, 1, 255, 25)
         if okPressed:
-            setMotor(self, motorID, direction, speed)
+            direction, okPressed = QtWidgets.QInputDialog.getInt(self, "Direction", "1 is FWD, 2 is BWD:", 1, 1, 2, 1)
+            if okPressed:
+                speed, okPressed = QtWidgets.QInputDialog.getInt(self, "Speed", "Speed?", 255, 1, 255, 25)
+                if okPressed:
+                    setMotor(self, motorID, direction, speed)
 
     def stopMotorBtn(self): # Stop one motor
         motorID, okPressed = QtWidgets.QInputDialog.getInt(self, "Motor ID", "Motor ID?", 1, 1, 4, 1)
@@ -644,10 +646,11 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def allMotor(self): # Set all motors
         direction, okPressed = QtWidgets.QInputDialog.getInt(self, "Direction", "1 is FWD, 2 is BWD:", 1, 1, 2, 1)
-        speed, okPressed = QtWidgets.QInputDialog.getInt(self, "Speed", "Speed?", 255, 1, 255, 25)
         if okPressed:
-            for i in range(4):
-                setMotor(self, i+1, direction, speed)
+            speed, okPressed = QtWidgets.QInputDialog.getInt(self, "Speed", "Speed?", 255, 1, 255, 25)
+            if okPressed:
+                for i in range(4):
+                    setMotor(self, i+1, direction, speed)
 
     def stopAllMotorBtn(self): # Stop all motors
         for i in range(4):
@@ -666,14 +669,16 @@ class MainWindow(QtWidgets.QMainWindow):
         killControllerThread = True
 
     def setLED(self): # Set one LED
-    ledID, okPressed = QtWidgets.QInputDialog.getInt(self, "LED ID", "LED ID?", 1, 1, 36, 1)
-    if okPressed:
-        ledColor = QtWidgets.QColorDialog.getColor(options = QtWidgets.QColorDialog.DontUseNativeDialog)
-        setLED(self, str(ledID-1), ledColor.red(), ledColor.green(), ledColor.blue())
+        ledID, okPressed = QtWidgets.QInputDialog.getInt(self, "LED ID", "LED ID?", 1, 1, 36, 1)
+        if okPressed:
+            ledColor, okPressed = QtWidgets.QColorDialog.getColor(options = QtWidgets.QColorDialog.DontUseNativeDialog)
+            if okPressed:
+                setLED(self, str(ledID-1), ledColor.red(), ledColor.green(), ledColor.blue())
 
     def allLED(self): # Set all LEDs
-        ledColor = QtWidgets.QColorDialog.getColor(options = QtWidgets.QColorDialog.DontUseNativeDialog)
-        setLED(self, "all", ledColor.red(), ledColor.green(), ledColor.blue())
+        ledColor, okPressed = QtWidgets.QColorDialog.getColor(options = QtWidgets.QColorDialog.DontUseNativeDialog)
+        if okPressed:
+            setLED(self, "all", ledColor.red(), ledColor.green(), ledColor.blue())
 
     def allLEDOff(self): # Turn off all LEDs
         setLED(self, "all", 0, 0, 0)
