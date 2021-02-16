@@ -892,22 +892,23 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def toggleGrab(self):
         self.logTb.append("Toggle Grabber")
+        setServo180(self, 1, 35)
 
     def grabberUp(self):
         self.logTb.append("Start Servo Up")
-        setServo360A(self, 1, 0)
+        setServo360A(self, 2, 0)
         
     def grabberDown(self):
         self.logTb.append("Start Servo Down")
-        setServo360A(self, 1, 180)
+        setServo360A(self, 2, 180)
     
     def grabberStop(self):
         self.logTb.append("Stop Servo")
-        setServo360A(self, 1, 92)
+        setServo360A(self, 2, 92)
     
     def initExt(self):
         setExtPins(self, "SRVO", "SRVO", "OUTP", "OUTP", "OUTP", "OUTP")
-        
+
     def closeApp(self):
         sys.exit()
 
