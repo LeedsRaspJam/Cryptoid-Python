@@ -728,13 +728,13 @@ class MainWindow(QtWidgets.QMainWindow):
     def setLED(self): # Set one LED
         ledID, okPressed = QtWidgets.QInputDialog.getInt(self, "LED ID", "LED ID?", 1, 1, 36, 1)
         if okPressed:
-            ledColor, okPressed = QtWidgets.QColorDialog.getColor(options = QtWidgets.QColorDialog.DontUseNativeDialog)
-            if okPressed:
+            ledColor = QtWidgets.QColorDialog.getColor(options = QtWidgets.QColorDialog.DontUseNativeDialog)
+            if ledColor.isValid():
                 setLED(self, str(ledID-1), ledColor.red(), ledColor.green(), ledColor.blue())
 
     def allLED(self): # Set all LEDs
-        ledColor, okPressed = QtWidgets.QColorDialog.getColor(options = QtWidgets.QColorDialog.DontUseNativeDialog)
-        if okPressed:
+        ledColor = QtWidgets.QColorDialog.getColor(options = QtWidgets.QColorDialog.DontUseNativeDialog)
+        if ledColor.isValid():
             setLED(self, "all", ledColor.red(), ledColor.green(), ledColor.blue())
 
     def allLEDOff(self): # Turn off all LEDs
