@@ -887,6 +887,8 @@ class MainWindow(QtWidgets.QMainWindow):
             if gamepadMT.isPressed('CROSS') == False:
                 self.logTb.append("No longer pressed")
                 break
+            else:
+                pass
 
     def closeApp(self):
         sys.exit()
