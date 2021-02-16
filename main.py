@@ -312,6 +312,25 @@ def setServo360(self, id, initialAngle, delayTime, stopAngle): # Set 360 degree 
                 if response.decode() == "OK\r\n":
                     break
 
+def setServo360A(self, id, angle): # Set 360 degree servo without delay time
+    while True: # Set to chosen angle
+            self.logTb.append("SRVO")
+            stm32.write("SRVO\r\n".encode())
+            response = stm32.readline()
+            self.logTb.append(str(response))
+            if response.decode() == "OK\r\n":
+                stm32.write(str(id).encode())
+                stm32.write("\r\n".encode())
+                response = stm32.readline()
+                self.logTb.append(str(response))
+                if response.decode() == "OK\r\n":
+                    stm32.write(str(angle).encode())
+                    stm32.write("\r\n".encode())
+                    response = stm32.readline()
+                    self.logTb.append(str(response))
+                    if response.decode() == "OK\r\n":
+                        break
+
 def setSTM32Text(self, state):
     if state == True:
         for key in ledBuffer:
@@ -873,15 +892,18 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def toggleGrab(self):
         self.logTb.append("Toggle Grabber")
-        
+
     def grabberUp(self):
         self.logTb.append("Start Servo Up")
+        setServo360A(self, 1, 0)
         
     def grabberDown(self):
         self.logTb.append("Start Servo Down")
+        setServo360A(self, 1, 180)
     
     def grabberStop(self):
         self.logTb.append("Stop Servo")
+        setServo360A(self, 1, 92)
     
     def closeApp(self):
         sys.exit()
