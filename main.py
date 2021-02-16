@@ -488,13 +488,14 @@ class controllerThread(QtCore.QThread):
 
     def __init__(self):
         QtCore.QThread.__init__(self)
-        gamepad = Gamepad.PS4()
-        gamepad.startBackgroundUpdates()
         global killControllerThread, killedByUS
         killControllerThread = False
         killedByUS = False
 
     def run(self):
+        global gamepad
+        gamepad = Gamepad.PS4()
+        gamepad.startBackgroundUpdates()
         while True:
             self.controllerPoll()
             if killControllerThread == True:
