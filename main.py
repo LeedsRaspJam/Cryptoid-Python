@@ -175,6 +175,9 @@ def setLED(self, ledID, rValue, gValue, bValue):
                             if response.decode() == "OK\r\n":
                                 break
 
+def ifXPressed():
+    print("Function Called")
+
 def setMotor(self, motorID, direction, speed): # Set one motor
     motorBuffer[motorID] = [direction, speed]
     while True:
@@ -870,19 +873,16 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def setRamTextSys(self, text):
         self.ramTextSys.setText(text)
-    
+
     def initController(self): # Init controller on main thread
         global gamepadMT
         gamepadMT = Gamepad.PS4()
         gamepadMT.startBackgroundUpdates()
-        gamepadMT.addButtonPressedHandler('CIRCLE', self.ifXPressed())
+        gamepadMT.addButtonPressedHandler('CIRCLE', ifXPressed())
 
     def killController(self): # Kill controller on main thread
         global gamepadMT
         gamepadMT.disconnect()
-
-    def ifXPressed(self):
-        self.logTb.append("Function Called")
 
     def closeApp(self):
         sys.exit()
