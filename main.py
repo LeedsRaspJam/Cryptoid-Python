@@ -801,7 +801,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def setLFBox(self, sensorVal): # Set LF checkboxes
         checkboxes = (self.LF1, self.LF2, self.LF3, self.LF4, self.LF5, self.LF6, self.LF7)
-        for i in range(1, 6):
+        for i in range(0, 7):
             if sensorVal[i] == 1:
                 checkboxes[i].setChecked(True)
             else:
