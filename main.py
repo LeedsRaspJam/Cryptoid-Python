@@ -646,7 +646,7 @@ class lineFollowThread(QtCore.QThread):
             currentSensor = 1
             print("Poll:")
             for i in sensorVal:
-                print("Sensor " + currentSensor + ": " + i)
+                print("Sensor " + str(currentSensor) + ": " + str(i))
                 currentSensor = currentSensor + 1
             if killLineFollowThread == True:
                 break
