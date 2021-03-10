@@ -630,10 +630,7 @@ class controllerThread(QtCore.QThread):
             killControllerThread = True
 
 class lineFollowThread(QtCore.QThread):
-    setDirectionLabelSignal = QtCore.pyqtSignal([str])
-    setLControllerBarSignal = QtCore.pyqtSignal([int])
-    setRControllerBarSignal = QtCore.pyqtSignal([int])
-    beginUSPollingSignal = QtCore.pyqtSignal()
+    LFSignal = QtCore.pyqtSignal([list])
 
     def __init__(self):
         QtCore.QThread.__init__(self)
@@ -643,11 +640,7 @@ class lineFollowThread(QtCore.QThread):
     def run(self):
         while True:
             sensorVal = self.pollSensor()
-            currentSensor = 1
-            print("Poll:")
-            for i in sensorVal:
-                print("Sensor " + str(currentSensor) + ": " + str(i))
-                currentSensor = currentSensor + 1
+            self.LFSignal.emit(sensorVal)
             if killLineFollowThread == True:
                 break
 
@@ -797,14 +790,22 @@ class MainWindow(QtWidgets.QMainWindow):
         global killControllerThread
         killControllerThread = True
 
-    def startLF(self): # Start controller polling
+    def startLF(self): # Start LF polling
         global killLineFollowThread
         killLineFollowThread = False
         self.lineFollowQThread.start()
 
-    def stopLF(self): # Stop controller polling
+    def stopLF(self): # Stop LF polling
         global killLineFollowThread
         killLineFollowThread = True
+
+    def setLFBox(self, sensorVal): # Set LF checkboxes
+        checkboxes = (self.LF1, self.LF2, self.LF3, self.LF4, self.LF5, self.LF6, self.LF7)
+        for i in range(0, 6):
+            if sensorVal[i] == 1:
+                checkboxes[i].setChecked(True)
+            else:
+                checkboxes[i].setChecked(False)
 
     def setLED(self): # Set one LED
         ledID, okPressed = QtWidgets.QInputDialog.getInt(self, "LED ID", "LED ID?", 1, 1, 36, 1)
@@ -1075,6 +1076,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.controllerQThread.setLControllerBarSignal.connect(self.setLControllerBar)
         self.controllerQThread.setRControllerBarSignal.connect(self.setRControllerBar)
         self.controllerQThread.beginUSPollingSignal.connect(self.beginUSPolling)
+
+        self.lineFollowQThread.LFSignal.connect(self.setLFBox)
 
         self.monitorQThread.setOneBarSignal.connect(self.setOneBar)
         self.monitorQThread.setTwoBarSignal.connect(self.setTwoBar)
