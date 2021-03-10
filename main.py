@@ -354,6 +354,23 @@ def hex2QColor(c): # Convert to QColor (for highlighting)
 def gpioInit(self):
     GPIO.setmode(GPIO.BCM) # Set mode to BCM numbering
 
+    global IRS1, IRS2, IRS3, IRS4, IRS5, IRS6, IRS7
+    IRS1 = 13
+    IRS2 = 6
+    IRS3 = 5
+    IRS4 = 24
+    IRS5 = 19
+    IRS6 = 21
+    IRS7 = 23
+
+    GPIO.setup(IRS1, GPIO.IN) # IR Sensor 1 - TFT_LCD
+    GPIO.setup(IRS2, GPIO.IN) # IR Sensor 2 - TFT_DC
+    GPIO.setup(IRS3, GPIO.IN) # IR Sensor 3 - TFT_RST
+    GPIO.setup(IRS4, GPIO.IN) # IR Sensor 4 - TFT_CS
+    GPIO.setup(IRS5, GPIO.IN) # IR Sensor 5 - TFT_MOSI
+    GPIO.setup(IRS6, GPIO.IN) # IR Sensor 6 - TFT_MISO
+    GPIO.setup(IRS7, GPIO.IN) # IR Sensor 7 - TFT_SCLK
+
     global sensor1, sensor2
     sensor1 = sensor.Measurement(22, 12) # Init both sensors
     sensor2 = sensor.Measurement(23, 1)
@@ -611,6 +628,60 @@ class controllerThread(QtCore.QThread):
             errorMsg.showMessage("You need to connect a controller before polling can begin.")
             global killControllerThread
             killControllerThread = True
+
+class lineFollowThread(QtCore.QThread):
+    setDirectionLabelSignal = QtCore.pyqtSignal([str])
+    setLControllerBarSignal = QtCore.pyqtSignal([int])
+    setRControllerBarSignal = QtCore.pyqtSignal([int])
+    beginUSPollingSignal = QtCore.pyqtSignal()
+
+    def __init__(self):
+        QtCore.QThread.__init__(self)
+        global killLineFollowThread
+        killLineFollowThread = False
+
+    def run(self):
+        while True:
+            sensorVal = self.pollSensor()
+            currentSensor = 1
+            for i in sensorVal:
+                print("Sensor " + str(currentSensor) + ": " + str(i))
+                currentSensor = currentSensor + 1
+            if killLineFollowThread == True:
+                break
+
+            self.usleep(1000)
+
+    def setMotorSilent(self, motorID, direction, speed): # Set one motor with no logging
+        motorBuffer[motorID] = [direction, speed]
+        while True:
+            stm32.write("SETM\r\n".encode())
+            response = stm32.readline()
+            if response.decode() == "OK\r\n":
+                stm32.write(str(motorID).encode())
+                stm32.write("\r\n".encode())
+                response = stm32.readline()
+                if response.decode() == "OK\r\n":
+                    stm32.write(str(direction).encode())
+                    stm32.write("\r\n".encode())
+                    response = stm32.readline()
+                    if response.decode() == "OK\r\n":
+                        stm32.write(str(speed).encode())
+                        stm32.write("\r\n".encode())
+                        response = stm32.readline()
+                        if response.decode() == "OK\r\n":
+                            break
+
+    def pollSensor(self): # Set one motor with no logging
+        output = {}
+        output.append(GPIO.input(IRS1))
+        output.append(GPIO.input(IRS2))
+        output.append(GPIO.input(IRS3))
+        output.append(GPIO.input(IRS4))
+        output.append(GPIO.input(IRS5))
+        output.append(GPIO.input(IRS6))
+        output.append(GPIO.input(IRS7))
+        return output
 
 class MainWindow(QtWidgets.QMainWindow):    
     def buttonFunction(self):
