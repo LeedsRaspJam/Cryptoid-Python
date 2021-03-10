@@ -643,7 +643,6 @@ class lineFollowThread(QtCore.QThread):
     def run(self):
         while True:
             sensorVal = self.pollSensor()
-            print(sensorVal)
             if killLineFollowThread == True:
                 break
 
@@ -670,7 +669,15 @@ class lineFollowThread(QtCore.QThread):
                             break
 
     def pollSensor(self): # Set one motor with no logging
-        output = {GPIO.input(IRS1), GPIO.input(IRS2), GPIO.input(IRS3), GPIO.input(IRS4), GPIO.input(IRS5), GPIO.input(IRS6), GPIO.input(IRS7)}
+        output = set()
+        output.add(GPIO.input(IRS1))
+        output.add(GPIO.input(IRS2))
+        output.add(GPIO.input(IRS3))
+        output.add(GPIO.input(IRS4))
+        output.add(GPIO.input(IRS5))
+        output.add(GPIO.input(IRS6))
+        output.add(GPIO.input(IRS7))
+        print(output)
         return output
 
 class MainWindow(QtWidgets.QMainWindow):    
