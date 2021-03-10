@@ -363,13 +363,13 @@ def gpioInit(self):
     IRS6 = 21
     IRS7 = 23
 
-    GPIO.setup(IRS1, GPIO.IN) # IR Sensor 1 - TFT_LCD
-    GPIO.setup(IRS2, GPIO.IN) # IR Sensor 2 - TFT_DC
-    GPIO.setup(IRS3, GPIO.IN) # IR Sensor 3 - TFT_RST
-    GPIO.setup(IRS4, GPIO.IN) # IR Sensor 4 - TFT_CS
-    GPIO.setup(IRS5, GPIO.IN) # IR Sensor 5 - TFT_MOSI
-    GPIO.setup(IRS6, GPIO.IN) # IR Sensor 6 - TFT_MISO
-    GPIO.setup(IRS7, GPIO.IN) # IR Sensor 7 - TFT_SCLK
+    GPIO.setup(IRS1, GPIO.IN, pull_up_down=GPIO.PUD_UP) # IR Sensor 1 - TFT_LCD
+    GPIO.setup(IRS2, GPIO.IN, pull_up_down=GPIO.PUD_UP) # IR Sensor 2 - TFT_DC
+    GPIO.setup(IRS3, GPIO.IN, pull_up_down=GPIO.PUD_UP) # IR Sensor 3 - TFT_RST
+    GPIO.setup(IRS4, GPIO.IN, pull_up_down=GPIO.PUD_UP) # IR Sensor 4 - TFT_CS
+    GPIO.setup(IRS5, GPIO.IN, pull_up_down=GPIO.PUD_UP) # IR Sensor 5 - TFT_MOSI
+    GPIO.setup(IRS6, GPIO.IN, pull_up_down=GPIO.PUD_UP) # IR Sensor 6 - TFT_MISO
+    GPIO.setup(IRS7, GPIO.IN, pull_up_down=GPIO.PUD_UP) # IR Sensor 7 - TFT_SCLK
 
     global sensor1, sensor2
     sensor1 = sensor.Measurement(22, 12) # Init both sensors
@@ -670,14 +670,7 @@ class lineFollowThread(QtCore.QThread):
                             break
 
     def pollSensor(self): # Set one motor with no logging
-        output = set()
-        output.add(GPIO.input(IRS1))
-        output.add(GPIO.input(IRS2))
-        output.add(GPIO.input(IRS3))
-        output.add(GPIO.input(IRS4))
-        output.add(GPIO.input(IRS5))
-        output.add(GPIO.input(IRS6))
-        output.add(GPIO.input(IRS7))
+        output = {GPIO.input(IRS1), GPIO.input(IRS2), GPIO.input(IRS3), GPIO.input(IRS4), GPIO.input(IRS5), GPIO.input(IRS6), GPIO.input(IRS7)}
         return output
 
 class MainWindow(QtWidgets.QMainWindow):    
