@@ -639,8 +639,7 @@ class lineFollowThread(QtCore.QThread):
 
     def run(self):
         while True:
-            sensorVal = self.pollSensor()
-            self.LFSignal.emit(sensorVal)
+            self.LFSignal.emit(self.pollSensor())
             if killLineFollowThread == True:
                 break
 
