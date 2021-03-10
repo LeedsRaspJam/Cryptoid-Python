@@ -641,7 +641,7 @@ class lineFollowThread(QtCore.QThread):
         while True:
             self.LFSignal.emit(self.pollSensor())
             if killLineFollowThread == True:
-                self.setLFBox((0, 0, 0, 0, 0, 0, 0))
+                self.LFSignal.emit((0, 0, 0, 0, 0, 0, 0))
                 break
 
             self.usleep(2000)
