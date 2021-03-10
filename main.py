@@ -669,7 +669,7 @@ class lineFollowThread(QtCore.QThread):
                             break
 
     def pollSensor(self): # Set one motor with no logging
-        output = set()
+        output = list()
         output.add(GPIO.input(IRS1))
         print(output)
         output.add(GPIO.input(IRS2))
