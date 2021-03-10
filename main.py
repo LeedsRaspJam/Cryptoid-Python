@@ -796,6 +796,15 @@ class MainWindow(QtWidgets.QMainWindow):
         global killControllerThread
         killControllerThread = True
 
+    def startLF(self): # Start controller polling
+        global killLineFollowThread
+        killLineFollowThread = False
+        self.lineFollowQThread.start()
+
+    def stopLF(self): # Stop controller polling
+        global killLineFollowThread
+        killLineFollowThread = True
+
     def setLED(self): # Set one LED
         ledID, okPressed = QtWidgets.QInputDialog.getInt(self, "LED ID", "LED ID?", 1, 1, 36, 1)
         if okPressed:
@@ -1026,6 +1035,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.monitorQThread = monitorThread()
         self.cameraQThread = cameraThread(self.cameraPixmap)
         self.controllerQThread = controllerThread()
+        self.lineFollowQThread = lineFollowThread()
 
         self.enableUltrasonicPoll.clicked.connect(self.toggleUltrasonicTimer)
         self.enableSysMon.clicked.connect(self.toggleSystemMonitor)
@@ -1039,6 +1049,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.stopAllMtrBtn.clicked.connect(self.stopAllMotorBtn)
         self.startGPBtn.clicked.connect(self.startGP)
         self.stopGPBtn.clicked.connect(self.stopGP)
+        self.startLFBtn.clicked.connect(self.startLF)
+        self.stopLFBtn.clicked.connect(self.stopLF)
         self.reInit.clicked.connect(self.initSTM)
         self.setLEDBtn.clicked.connect(self.setLED)
         self.allLEDBtn.clicked.connect(self.allLED)

@@ -729,6 +729,46 @@
              </widget>
             </item>
             <item>
+             <spacer name="verticalSpacer_6">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="startLFBtn">
+              <property name="text">
+               <string>Start Line Follower</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="verticalSpacer_16">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>20</width>
+                <height>40</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QPushButton" name="stopLFBtn">
+              <property name="text">
+               <string>Stop Line Follower</string>
+              </property>
+             </widget>
+            </item>
+            <item>
              <spacer name="verticalSpacer_8">
               <property name="orientation">
                <enum>Qt::Vertical</enum>
