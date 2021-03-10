@@ -643,14 +643,11 @@ class lineFollowThread(QtCore.QThread):
     def run(self):
         while True:
             sensorVal = self.pollSensor()
-            currentSensor = 1
-            for i in sensorVal:
-                print("Sensor " + str(currentSensor) + ": " + str(i))
-                currentSensor = currentSensor + 1
+            print(sensorVal)
             if killLineFollowThread == True:
                 break
 
-            self.usleep(1000)
+            self.usleep(2000)
 
     def setMotorSilent(self, motorID, direction, speed): # Set one motor with no logging
         motorBuffer[motorID] = [direction, speed]
