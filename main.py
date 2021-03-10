@@ -797,8 +797,8 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def stopLF(self): # Stop LF polling
         global killLineFollowThread
-        self.setLFBox((0, 0, 0, 0, 0, 0, 0))
         killLineFollowThread = True
+        self.setLFBox((0, 0, 0, 0, 0, 0, 0))
 
     def setLFBox(self, sensorVal): # Set LF checkboxes
         checkboxes = (self.LF1, self.LF2, self.LF3, self.LF4, self.LF5, self.LF6, self.LF7)
