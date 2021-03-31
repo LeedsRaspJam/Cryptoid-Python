@@ -639,12 +639,37 @@ class lineFollowThread(QtCore.QThread):
 
     def run(self):
         while True:
-            self.LFSignal.emit(self.pollSensor())
+            sensorData = self.pollSensor()
+            self.LFSignal.emit(sensorData)
+
+            if sensorData[0] == True: # Extreme Left
+                leftSkew = 1
+                rightSkew = 0.5
+            elif sensorData[1] == True: # Left
+                leftSkew = 1
+                rightSkew = 0.75
+            elif sensorData[2] == True: # Middle
+                leftSkew = 1
+                rightSkew = 1
+            elif sensorData[3] == True: # Right
+                leftSkew = 0.75
+                rightSkew = 1
+            elif sensorData[4] == True: # Extreme Right
+                leftSkew = 0.5
+                rightSkew = 1
+
+            baseSpeed = 100
+
+            self.setMotorSilent(1, 1, baseSpeed * rightSkew) # Right back
+            self.setMotorSilent(2, 1, baseSpeed * rightSkew) # Left back
+            self.setMotorSilent(3, 1, baseSpeed * rightSkew) # Right front
+            self.setMotorSilent(4, 1, baseSpeed * leftSkew) # Left front
+
             if killLineFollowThread == True:
                 self.LFSignal.emit([0, 0, 0, 0, 0, 0, 0])
                 break
 
-            self.usleep(2000)
+            self.usleep(250)
 
     def setMotorSilent(self, motorID, direction, speed): # Set one motor with no logging
         motorBuffer[motorID] = [direction, speed]
