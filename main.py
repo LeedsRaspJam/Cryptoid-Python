@@ -661,7 +661,7 @@ class lineFollowThread(QtCore.QThread):
             baseSpeed = 100
 
             self.setMotorSilent(1, 1, baseSpeed * rightSkew) # Right back
-            self.setMotorSilent(2, 1, baseSpeed * rightSkew) # Left back
+            self.setMotorSilent(2, 1, baseSpeed * leftSkew) # Left back
             self.setMotorSilent(3, 1, baseSpeed * rightSkew) # Right front
             self.setMotorSilent(4, 1, baseSpeed * leftSkew) # Left front
 
