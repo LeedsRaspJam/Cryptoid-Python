@@ -667,7 +667,7 @@ class lineFollowThread(QtCore.QThread):
 
             if killLineFollowThread == True:
                 for i in range(4):
-                    stopMotor(self, i+1)
+                    self.stopMotorSilent(i+1)
                 self.LFSignal.emit([0, 0, 0, 0, 0, 0, 0])
                 break
 
@@ -692,6 +692,18 @@ class lineFollowThread(QtCore.QThread):
                         response = stm32.readline()
                         if response.decode() == "OK\r\n":
                             break
+
+    def stopMotorSilent(self, motorID): # Stop one motor with no logging 
+        motorBuffer[motorID] = [0, 0]
+        while True:
+            stm32.write("STPM\r\n".encode())
+            response = stm32.readline()
+            if response.decode() == "OK\r\n":
+                stm32.write(str(motorID).encode())
+                stm32.write("\r\n".encode())
+                response = stm32.readline()
+                if response.decode() == "OK\r\n":
+                    break
 
     def pollSensor(self): # Set one motor with no logging
         output = list()
