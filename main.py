@@ -666,6 +666,8 @@ class lineFollowThread(QtCore.QThread):
             self.setMotorSilent(4, 1, baseSpeed * leftSkew) # Left front
 
             if killLineFollowThread == True:
+                for i in range(4):
+                    stopMotor(self, i+1)
                 self.LFSignal.emit([0, 0, 0, 0, 0, 0, 0])
                 break
 
