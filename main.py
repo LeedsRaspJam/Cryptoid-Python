@@ -643,7 +643,10 @@ class lineFollowThread(QtCore.QThread):
             sensorDataCorrected = list(sensorData)
 
             for x in range(len(sensorDataCorrected)): # invert all values
-                sensorDataCorrected[x] = ~sensorDataCorrected[x]
+                if sensorDataCorrected[x]:
+                    sensorDataCorrected[x] = False
+                else:
+                    sensorDataCorrected[x] = True
 
             self.LFSignal.emit(sensorDataCorrected)
 
