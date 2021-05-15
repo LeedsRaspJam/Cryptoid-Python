@@ -642,26 +642,26 @@ class lineFollowThread(QtCore.QThread):
             sensorData = self.pollSensor()
             self.LFSignal.emit(sensorData)
 
-            if sensorData[0] == True: # Very Very Left
+            if sensorData[0] == False: # Very Very Left
+                leftSkew = 1
+                rightSkew = 0.25
+            elif sensorData[1] == False: # Very Left
                 leftSkew = 1
                 rightSkew = 0.5
-            elif sensorData[1] == True: # Very Left
+            elif sensorData[2] == False: # Left
                 leftSkew = 1
                 rightSkew = 0.75
-            elif sensorData[2] == True: # Left
+            elif sensorData[3] == False: # Middle
                 leftSkew = 1
                 rightSkew = 1
-            elif sensorData[3] == True: # Middle
+            elif sensorData[4] == False: # Right
+                leftSkew = 0.25
+                rightSkew = 1
+            elif sensorData[5] == False: # Very Right
+                leftSkew = 0.5
+                rightSkew = 1
+            elif sensorData[6] == False: # Very Very Right
                 leftSkew = 0.75
-                rightSkew = 1
-            elif sensorData[4] == True: # Right
-                leftSkew = 0.5
-                rightSkew = 1
-            elif sensorData[5] == True: # Very Right
-                leftSkew = 0.5
-                rightSkew = 1
-            elif sensorData[6] == True: # Very Very Right
-                leftSkew = 0.5
                 rightSkew = 1
 
             baseSpeed = 200
