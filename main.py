@@ -640,7 +640,12 @@ class lineFollowThread(QtCore.QThread):
     def run(self):
         while True:
             sensorData = self.pollSensor()
-            self.LFSignal.emit(sensorData)
+            sensorDataCorrected = list(sensorData)
+
+            for x in range(len(sensorDataCorrected)): # invert all values
+                sensorDataCorrected[x] = ~sensorDataCorrected[x]
+
+            self.LFSignal.emit(sensorDataCorrected)
 
             if sensorData[0] == False: # Very Very Left
                 leftSkew = 1
