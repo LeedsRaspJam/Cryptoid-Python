@@ -358,10 +358,10 @@ def gpioInit(self):
     IRS1 = 13
     IRS2 = 6
     IRS3 = 5
-    IRS4 = 24
-    IRS5 = 19
-    IRS6 = 21
-    IRS7 = 23
+    IRS4 = 8
+    IRS5 = 10
+    IRS6 = 9
+    IRS7 = 11
 
     GPIO.setup(IRS1, GPIO.IN, pull_up_down=GPIO.PUD_UP) # IR Sensor 1 - TFT_LCD
     GPIO.setup(IRS2, GPIO.IN, pull_up_down=GPIO.PUD_UP) # IR Sensor 2 - TFT_DC
