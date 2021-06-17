@@ -868,6 +868,12 @@
         </item>
         <item>
          <widget class="QPushButton" name="startLFBtn">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>75</height>
+           </size>
+          </property>
           <property name="text">
            <string>Start Line Follower</string>
           </property>
@@ -888,6 +894,12 @@
         </item>
         <item>
          <widget class="QPushButton" name="stopLFBtn">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>75</height>
+           </size>
+          </property>
           <property name="text">
            <string>Stop Line Follower</string>
           </property>
@@ -1091,6 +1103,12 @@
         </item>
         <item>
          <widget class="QPushButton" name="toggleGrabBtn">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>55</height>
+           </size>
+          </property>
           <property name="text">
            <string>Grab/Ungrab</string>
           </property>
@@ -1098,6 +1116,12 @@
         </item>
         <item>
          <widget class="QPushButton" name="grabberUpBtn">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>55</height>
+           </size>
+          </property>
           <property name="text">
            <string>Grabber Up</string>
           </property>
@@ -1105,6 +1129,12 @@
         </item>
         <item>
          <widget class="QPushButton" name="grabberStopBtn">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>55</height>
+           </size>
+          </property>
           <property name="text">
            <string>Grabber Stop</string>
           </property>
@@ -1112,6 +1142,12 @@
         </item>
         <item>
          <widget class="QPushButton" name="grabberDownBtn">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>55</height>
+           </size>
+          </property>
           <property name="text">
            <string>Grabber Down</string>
           </property>
