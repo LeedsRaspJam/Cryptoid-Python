@@ -95,8 +95,27 @@
         </item>
         <item>
          <widget class="QPushButton" name="reInit">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>80</height>
+           </size>
+          </property>
           <property name="text">
            <string>Reconnect</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="initExtBtn">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>80</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Init Ext. Pins</string>
           </property>
          </widget>
         </item>
@@ -345,28 +364,12 @@
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_3">
             <item>
-             <spacer name="verticalSpacer_19">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Fixed</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>1</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
              <widget class="QPushButton" name="doAThing">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>110</height>
+               </size>
               </property>
               <property name="text">
                <string>Test Functions</string>
@@ -375,11 +378,11 @@
             </item>
             <item>
              <widget class="QPushButton" name="clearBtn">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>110</height>
+               </size>
               </property>
               <property name="text">
                <string>Clear Log</string>
@@ -388,11 +391,11 @@
             </item>
             <item>
              <widget class="QPushButton" name="resetBtn">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>110</height>
+               </size>
               </property>
               <property name="text">
                <string>Reset STM32</string>
@@ -401,32 +404,16 @@
             </item>
             <item>
              <widget class="QPushButton" name="versBtn">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>110</height>
+               </size>
               </property>
               <property name="text">
                <string>Get STM32 FW Version</string>
               </property>
              </widget>
-            </item>
-            <item>
-             <spacer name="verticalSpacer_20">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeType">
-               <enum>QSizePolicy::Minimum</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>1</height>
-               </size>
-              </property>
-             </spacer>
             </item>
            </layout>
           </item>
@@ -685,117 +672,69 @@
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_4">
             <item>
-             <spacer name="verticalSpacer_13">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
+             <widget class="QPushButton" name="showCameraBtn">
+              <property name="minimumSize">
                <size>
-                <width>20</width>
-                <height>30</height>
+                <width>0</width>
+                <height>75</height>
                </size>
               </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QPushButton" name="showCameraBtn">
               <property name="text">
                <string>Open Camera</string>
               </property>
              </widget>
             </item>
             <item>
-             <spacer name="verticalSpacer_12">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
+             <widget class="QPushButton" name="startRecBtn">
+              <property name="minimumSize">
                <size>
-                <width>20</width>
-                <height>30</height>
+                <width>0</width>
+                <height>75</height>
                </size>
               </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QPushButton" name="startRecBtn">
               <property name="text">
                <string>Start Recording</string>
               </property>
              </widget>
             </item>
             <item>
-             <spacer name="verticalSpacer_11">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
+             <widget class="QPushButton" name="stopRecBtn">
+              <property name="minimumSize">
                <size>
-                <width>20</width>
-                <height>30</height>
+                <width>0</width>
+                <height>75</height>
                </size>
               </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QPushButton" name="stopRecBtn">
               <property name="text">
                <string>Stop Recording</string>
               </property>
              </widget>
             </item>
             <item>
-             <spacer name="verticalSpacer_10">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
+             <widget class="QPushButton" name="startGPBtn">
+              <property name="minimumSize">
                <size>
-                <width>20</width>
-                <height>30</height>
+                <width>0</width>
+                <height>75</height>
                </size>
               </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QPushButton" name="startGPBtn">
               <property name="text">
                <string>Start GP Polling</string>
               </property>
              </widget>
             </item>
             <item>
-             <spacer name="verticalSpacer_9">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
+             <widget class="QPushButton" name="stopGPBtn">
+              <property name="minimumSize">
                <size>
-                <width>20</width>
-                <height>30</height>
+                <width>0</width>
+                <height>75</height>
                </size>
               </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QPushButton" name="stopGPBtn">
               <property name="text">
                <string>Stop GP Polling</string>
               </property>
              </widget>
-            </item>
-            <item>
-             <spacer name="verticalSpacer_6">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>30</height>
-               </size>
-              </property>
-             </spacer>
             </item>
             <item>
              <widget class="QLabel" name="recText">
@@ -829,19 +768,6 @@
                <set>Qt::AlignCenter</set>
               </property>
              </widget>
-            </item>
-            <item>
-             <spacer name="verticalSpacer_14">
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>20</width>
-                <height>30</height>
-               </size>
-              </property>
-             </spacer>
             </item>
            </layout>
           </item>
@@ -1150,13 +1076,6 @@
       </item>
       <item>
        <layout class="QVBoxLayout" name="verticalLayout_16">
-        <item>
-         <widget class="QPushButton" name="initExtBtn">
-          <property name="text">
-           <string>Init Ext. Pins</string>
-          </property>
-         </widget>
-        </item>
         <item>
          <widget class="QPushButton" name="toggleGrabBtn">
           <property name="minimumSize">
