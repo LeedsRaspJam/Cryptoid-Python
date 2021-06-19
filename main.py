@@ -674,10 +674,10 @@ class lineFollowThread(QtCore.QThread):
 
             baseSpeed = 200
 
-            self.setMotorSilent(1, 1, 0)#baseSpeed * rightSkew) # Right back
-            self.setMotorSilent(2, 1, 0)#baseSpeed * leftSkew) # Left back
-            self.setMotorSilent(3, 1, 0)#baseSpeed * rightSkew) # Right front
-            self.setMotorSilent(4, 1, 0)#baseSpeed * leftSkew) # Left front
+            #self.setMotorSilent(1, 1, 0)#baseSpeed * rightSkew) # Right back
+            #self.setMotorSilent(2, 1, 0)#baseSpeed * leftSkew) # Left back
+            #self.setMotorSilent(3, 1, 0)#baseSpeed * rightSkew) # Right front
+            #self.setMotorSilent(4, 1, 0)#baseSpeed * leftSkew) # Left front
 
             if killLineFollowThread == True:
                 for i in range(4):
