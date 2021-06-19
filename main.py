@@ -547,8 +547,8 @@ class controllerThread(QtCore.QThread):
         while True:
             stm32.write("SETM\r\n".encode())
             time.sleep(0.01)
-            #response = stm32.readline()
-            if 1 == 1: #response.decode() == "OK\r\n":
+            response = stm32.readline()
+            if response.decode() == "OK\r\n":
                 stm32.write(str(motorID).encode())
                 stm32.write("\r\n".encode())
                 response = stm32.readline()
