@@ -105,17 +105,17 @@ def beepSPKR(self, freq, duration):
         stm32.write("SPKR\r\n".encode())
         response = stm32.readline()
         self.logTb.append(str(response))
-        if response.decode('UTF8', 'replace') == "OK\r\n":
+        if response.decode() == "OK\r\n":
             stm32.write(str(freq).encode())
             stm32.write("\r\n".encode())
             response = stm32.readline()
             self.logTb.append(str(response))
-            if response.decode('UTF8', 'replace') == "OK\r\n":
+            if response.decode() == "OK\r\n":
                 stm32.write(str(duration).encode())
                 stm32.write("\r\n".encode())
                 response = stm32.readline()
                 self.logTb.append(str(response))
-                if response.decode('UTF8', 'replace') == "OK\r\n":
+                if response.decode() == "OK\r\n":
                     break
 
 def setLED(self, ledID, rValue, gValue, bValue):
@@ -127,22 +127,22 @@ def setLED(self, ledID, rValue, gValue, bValue):
             stm32.write("LEDA\r\n".encode()) # Send command
             response = stm32.readline() # Read response
             self.logTb.append(str(response)) # Print response
-            if response.decode('UTF8', 'replace') == "OK\r\n": # If response recieved
+            if response.decode() == "OK\r\n": # If response recieved
                 stm32.write(str(rValue).encode()) # Send first set of data
                 stm32.write("\r\n".encode()) # Send newline
                 response = stm32.readline() # Get second response
                 self.logTb.append(str(response)) # Print second response
-                if response.decode('UTF8', 'replace') == "OK\r\n": # If response recieved
+                if response.decode() == "OK\r\n": # If response recieved
                     stm32.write(str(gValue).encode()) # Send second set of data
                     stm32.write("\r\n".encode()) # Send newline
                     response = stm32.readline() # Get third response
                     self.logTb.append(str(response)) # Print third response
-                    if response.decode('UTF8', 'replace') == "OK\r\n": # If response recieved
+                    if response.decode() == "OK\r\n": # If response recieved
                         stm32.write(str(bValue).encode()) # Send third set of data
                         stm32.write("\r\n".encode()) # Send newline
                         response = stm32.readline() # Get fourth response
                         self.logTb.append(str(response)) # Print third response
-                        if response.decode('UTF8', 'replace') == "OK\r\n": # If response recieved
+                        if response.decode() == "OK\r\n": # If response recieved
                             break # Sent successfully, break from loop.
 
     else: # If only setting one
@@ -152,27 +152,27 @@ def setLED(self, ledID, rValue, gValue, bValue):
             stm32.write("LEDS\r\n".encode())
             response = stm32.readline()
             self.logTb.append(str(response))
-            if response.decode('UTF8', 'replace') == "OK\r\n":
+            if response.decode() == "OK\r\n":
                 stm32.write(ledID.encode())
                 stm32.write("\r\n".encode())
                 response = stm32.readline()
                 self.logTb.append(str(response))
-                if response.decode('UTF8', 'replace') == "OK\r\n":
+                if response.decode() == "OK\r\n":
                     stm32.write(str(rValue).encode())
                     stm32.write("\r\n".encode())
                     response = stm32.readline()
                     self.logTb.append(str(response))
-                    if response.decode('UTF8', 'replace') == "OK\r\n":
+                    if response.decode() == "OK\r\n":
                         stm32.write(str(gValue).encode())
                         stm32.write("\r\n".encode())
                         response = stm32.readline()
                         self.logTb.append(str(response))
-                        if response.decode('UTF8', 'replace') == "OK\r\n":
+                        if response.decode() == "OK\r\n":
                             stm32.write(str(bValue).encode())
                             stm32.write("\r\n".encode())
                             response = stm32.readline()
                             self.logTb.append(str(response))
-                            if response.decode('UTF8', 'replace') == "OK\r\n":
+                            if response.decode() == "OK\r\n":
                                 break
 
 def setMotor(self, motorID, direction, speed): # Set one motor
@@ -182,22 +182,22 @@ def setMotor(self, motorID, direction, speed): # Set one motor
         stm32.write("SETM\r\n".encode())
         response = stm32.readline()
         self.logTb.append(str(response))
-        if response.decode('UTF8', 'replace') == "OK\r\n":
+        if response.decode() == "OK\r\n":
             stm32.write(str(motorID).encode())
             stm32.write("\r\n".encode())
             response = stm32.readline()
             self.logTb.append(str(response))
-            if response.decode('UTF8', 'replace') == "OK\r\n":
+            if response.decode() == "OK\r\n":
                 stm32.write(str(direction).encode())
                 stm32.write("\r\n".encode())
                 response = stm32.readline()
                 self.logTb.append(str(response))
-                if response.decode('UTF8', 'replace') == "OK\r\n":
+                if response.decode() == "OK\r\n":
                     stm32.write(str(speed).encode())
                     stm32.write("\r\n".encode())
                     response = stm32.readline()
                     self.logTb.append(str(response))
-                    if response.decode('UTF8', 'replace') == "OK\r\n":
+                    if response.decode() == "OK\r\n":
                         break
 
 def stopMotor(self, motorID): # Stop one motor
@@ -207,12 +207,12 @@ def stopMotor(self, motorID): # Stop one motor
         stm32.write("STPM\r\n".encode())
         response = stm32.readline()
         self.logTb.append(str(response))
-        if response.decode('UTF8', 'replace') == "OK\r\n":
+        if response.decode() == "OK\r\n":
             stm32.write(str(motorID).encode())
             stm32.write("\r\n".encode())
             response = stm32.readline()
             self.logTb.append(str(response))
-            if response.decode('UTF8', 'replace') == "OK\r\n":
+            if response.decode() == "OK\r\n":
                 break
 
 def setExtPins(self, type1, type2, type3, type4, type5, type6): # Set STM external pins
@@ -221,37 +221,37 @@ def setExtPins(self, type1, type2, type3, type4, type5, type6): # Set STM extern
         stm32.write("EXTS\r\n".encode())
         response = stm32.readline()
         self.logTb.append(str(response))
-        if response.decode('UTF8', 'replace') == "OK\r\n":
+        if response.decode() == "OK\r\n":
             stm32.write(type1.encode())
             stm32.write("\r\n".encode())
             response = stm32.readline()
             self.logTb.append(str(response))
-            if response.decode('UTF8', 'replace') == "OK\r\n":
+            if response.decode() == "OK\r\n":
                 stm32.write(type2.encode())
                 stm32.write("\r\n".encode())
                 response = stm32.readline()
                 self.logTb.append(str(response))
-                if response.decode('UTF8', 'replace') == "OK\r\n":
+                if response.decode() == "OK\r\n":
                     stm32.write(type3.encode())
                     stm32.write("\r\n".encode())
                     response = stm32.readline()
                     self.logTb.append(str(response))
-                    if response.decode('UTF8', 'replace') == "OK\r\n":
+                    if response.decode() == "OK\r\n":
                         stm32.write(type4.encode())
                         stm32.write("\r\n".encode())
                         response = stm32.readline()
                         self.logTb.append(str(response))
-                        if response.decode('UTF8', 'replace') == "OK\r\n":
+                        if response.decode() == "OK\r\n":
                             stm32.write(type5.encode())
                             stm32.write("\r\n".encode())
                             response = stm32.readline()
                             self.logTb.append(str(response))
-                            if response.decode('UTF8', 'replace') == "OK\r\n":
+                            if response.decode() == "OK\r\n":
                                 stm32.write(type6.encode())
                                 stm32.write("\r\n".encode())
                                 response = stm32.readline()
                                 self.logTb.append(str(response))
-                                if response.decode('UTF8', 'replace') == "OK\r\n":
+                                if response.decode() == "OK\r\n":
                                     break
 
 def setServo180(self, id, angle): # Set 180 degree servo
@@ -260,17 +260,17 @@ def setServo180(self, id, angle): # Set 180 degree servo
         stm32.write("SRVO\r\n".encode())
         response = stm32.readline()
         self.logTb.append(str(response))
-        if response.decode('UTF8', 'replace') == "OK\r\n":
+        if response.decode() == "OK\r\n":
             stm32.write(str(id).encode())
             stm32.write("\r\n".encode())
             response = stm32.readline()
             self.logTb.append(str(response))
-            if response.decode('UTF8', 'replace') == "OK\r\n":
+            if response.decode() == "OK\r\n":
                 stm32.write(str(angle).encode())
                 stm32.write("\r\n".encode())
                 response = stm32.readline()
                 self.logTb.append(str(response))
-                if response.decode('UTF8', 'replace') == "OK\r\n":
+                if response.decode() == "OK\r\n":
                     break
 
 def setServo360(self, id, initialAngle, delayTime, stopAngle): # Set 360 degree servo
@@ -279,17 +279,17 @@ def setServo360(self, id, initialAngle, delayTime, stopAngle): # Set 360 degree 
         stm32.write("SRVO\r\n".encode())
         response = stm32.readline()
         self.logTb.append(str(response))
-        if response.decode('UTF8', 'replace') == "OK\r\n":
+        if response.decode() == "OK\r\n":
             stm32.write(str(id).encode())
             stm32.write("\r\n".encode())
             response = stm32.readline()
             self.logTb.append(str(response))
-            if response.decode('UTF8', 'replace') == "OK\r\n":
+            if response.decode() == "OK\r\n":
                 stm32.write(str(initialAngle).encode())
                 stm32.write("\r\n".encode())
                 response = stm32.readline()
                 self.logTb.append(str(response))
-                if response.decode('UTF8', 'replace') == "OK\r\n":
+                if response.decode() == "OK\r\n":
                     break
 
     time.sleep(delayTime) # Wait for the specified time
@@ -299,17 +299,17 @@ def setServo360(self, id, initialAngle, delayTime, stopAngle): # Set 360 degree 
         stm32.write("SRVO\r\n".encode())
         response = stm32.readline()
         self.logTb.append(str(response))
-        if response.decode('UTF8', 'replace') == "OK\r\n":
+        if response.decode() == "OK\r\n":
             stm32.write(str(id).encode())
             stm32.write("\r\n".encode())
             response = stm32.readline()
             self.logTb.append(str(response))
-            if response.decode('UTF8', 'replace') == "OK\r\n":
+            if response.decode() == "OK\r\n":
                 stm32.write(str(stopAngle).encode())
                 stm32.write("\r\n".encode())
                 response = stm32.readline()
                 self.logTb.append(str(response))
-                if response.decode('UTF8', 'replace') == "OK\r\n":
+                if response.decode() == "OK\r\n":
                     break
 
 def setServo360A(self, id, angle): # Set 360 degree servo without delay time
@@ -318,17 +318,17 @@ def setServo360A(self, id, angle): # Set 360 degree servo without delay time
             stm32.write("SRVO\r\n".encode())
             response = stm32.readline()
             self.logTb.append(str(response))
-            if response.decode('UTF8', 'replace') == "OK\r\n":
+            if response.decode() == "OK\r\n":
                 stm32.write(str(id).encode())
                 stm32.write("\r\n".encode())
                 response = stm32.readline()
                 self.logTb.append(str(response))
-                if response.decode('UTF8', 'replace') == "OK\r\n":
+                if response.decode() == "OK\r\n":
                     stm32.write(str(angle).encode())
                     stm32.write("\r\n".encode())
                     response = stm32.readline()
                     self.logTb.append(str(response))
-                    if response.decode('UTF8', 'replace') == "OK\r\n":
+                    if response.decode() == "OK\r\n":
                         break
 
 def setSTM32Text(self, state):
@@ -548,19 +548,19 @@ class controllerThread(QtCore.QThread):
             stm32.write("SETM\r\n".encode())
             time.sleep(0.01)
             response = stm32.readline()
-            if response.decode('UTF8', 'replace') == "OK\r\n":
+            if response.decode() == "OK\r\n":
                 stm32.write(str(motorID).encode())
                 stm32.write("\r\n".encode())
                 response = stm32.readline()
-                if response.decode('UTF8', 'replace') == "OK\r\n":
+                if response.decode() == "OK\r\n":
                     stm32.write(str(direction).encode())
                     stm32.write("\r\n".encode())
                     response = stm32.readline()
-                    if response.decode('UTF8', 'replace') == "OK\r\n":
+                    if response.decode() == "OK\r\n":
                         stm32.write(str(speed).encode())
                         stm32.write("\r\n".encode())
                         response = stm32.readline()
-                        if response.decode('UTF8', 'replace') == "OK\r\n":
+                        if response.decode() == "OK\r\n":
                             break
 
     def controllerPoll(self):
@@ -693,19 +693,19 @@ class lineFollowThread(QtCore.QThread):
         while True:
             stm32.write("SETM\r\n".encode())
             response = stm32.readline()
-            if response.decode('UTF8', 'replace') == "OK\r\n":
+            if response.decode() == "OK\r\n":
                 stm32.write(str(motorID).encode())
                 stm32.write("\r\n".encode())
                 response = stm32.readline()
-                if response.decode('UTF8', 'replace') == "OK\r\n":
+                if response.decode() == "OK\r\n":
                     stm32.write(str(direction).encode())
                     stm32.write("\r\n".encode())
                     response = stm32.readline()
-                    if response.decode('UTF8', 'replace') == "OK\r\n":
+                    if response.decode() == "OK\r\n":
                         stm32.write(str(speed).encode())
                         stm32.write("\r\n".encode())
                         response = stm32.readline()
-                        if response.decode('UTF8', 'replace') == "OK\r\n":
+                        if response.decode() == "OK\r\n":
                             break
 
     def stopMotorSilent(self, motorID): # Stop one motor with no logging 
@@ -713,11 +713,11 @@ class lineFollowThread(QtCore.QThread):
         while True:
             stm32.write("STPM\r\n".encode())
             response = stm32.readline()
-            if response.decode('UTF8', 'replace') == "OK\r\n":
+            if response.decode() == "OK\r\n":
                 stm32.write(str(motorID).encode())
                 stm32.write("\r\n".encode())
                 response = stm32.readline()
-                if response.decode('UTF8', 'replace') == "OK\r\n":
+                if response.decode() == "OK\r\n":
                     break
 
     def pollSensor(self): # Set one motor with no logging
@@ -782,7 +782,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.logTb.append("INIT")
             response = stm32.readline()
             self.logTb.append(str(response))
-            if response.decode('UTF8', 'replace') == "OK\r\n":
+            if response.decode() == "OK\r\n":
                 self.logTb.append("STM32 is working")
                 setSTM32Text(self, True)
                 currentColour = "green"
